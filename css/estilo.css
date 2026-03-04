@@ -3,5 +3,12 @@ body {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+    color: green; /* Color verde para el texto principal */
 }
+
+h1 {
+    font-family: 'Montserrat', sans-serif;
+    color: red;
+    font-weight: 700; /* Asegura que use la negrita */}
+
 
