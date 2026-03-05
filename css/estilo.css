@@ -7,8 +7,8 @@
     margin-bottom: 0;
 }
 
-.site-header h1 {
-    margin: 0;
+.site-header .site-title {
+    margin: 0; /* Elimina el margen solo para este h1 */
     font-size: 2rem;
     color: #333;
     font-family: 'Roboto', sans-serif;
