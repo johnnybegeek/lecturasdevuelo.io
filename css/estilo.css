@@ -74,12 +74,12 @@
 /* Espaciado para el contenido principal */
 body {
     margin: 0;
-    padding-top: 70px;
+    padding-top: 20px;
     font-family: 'Roboto', sans-serif;
 }
 
 main {
-    padding: 2px;
+    padding: 20px;
     max-width: 800px;
     margin: 0 auto;
 }
