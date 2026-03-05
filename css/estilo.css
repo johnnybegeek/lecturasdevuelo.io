@@ -9,8 +9,8 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     font-family: 'Roboto', sans-serif;
     display: flex;
-    justify-content: space-between;
-    align-items: centre;
+    justify-content: center;
+    align-items: center;
 }
 
 .menu-toggle {
