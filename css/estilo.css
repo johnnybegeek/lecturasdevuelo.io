@@ -71,15 +71,40 @@
     }
 }
 
-/* Espaciado para el contenido principal */
+/* Estilos generales y tipografía */
 body {
     margin: 0;
     padding-top: 20px;
     font-family: 'Roboto', sans-serif;
+    background-color: #F5F5DC; /* Blanco hueso para el fondo */
+    color: #333333; /* Texto principal en gris oscuro */
 }
 
+/* Contenido principal */
 main {
     padding: 20px;
     max-width: 800px;
     margin: 0 auto;
 }
+
+/* Estilos para encabezados */
+h1, h2, h3 {
+    color: #0F499A; /* Azul oscuro para los encabezados */
+}
+
+/* Estilos para enlaces */
+a {
+    color: #F7CC2D; /* Amarillo para los enlaces */
+    text-decoration: none; /* Opcional: quita el subrayado de los enlaces */
+    padding: 2px 4px; /* Espacio alrededor del texto para mejor visualización del fondo */
+    border-radius: 3px; /* Bordes redondeados para los enlaces */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave para los cambios */
+}
+
+/* Estilo para los enlaces al pasar el mouse */
+a:hover {
+    background-color: #0F499A; /* Fondo azul al pasar el mouse */
+    color: #F7CC2D; /* Texto amarillo para contraste */
+    text-decoration: underline; /* Subraya los enlaces al pasar el mouse */
+}
+
