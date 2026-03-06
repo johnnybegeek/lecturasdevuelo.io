@@ -115,3 +115,71 @@ a:hover {
     color: #0F499A; /* Texto azul celeste muy claro al pasar el mouse */
     text-decoration: underline; /* Subraya los enlaces al pasar el mouse */
 }
+
+/* Estilos para la barra de navegación fija en el footer */
+.footer-fijo {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #0F499A; /* Fondo azul por defecto */
+    color: #F8E7A5; /* Color del texto por defecto */
+    padding: 10px 20px;
+    z-index: 100;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.footer-fijo:hover {
+    background: #F8E7A5; /* Cambia el fondo de la barra al pasar el mouse */
+}
+
+.menu-footer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 30px;
+}
+
+.menu-footer a {
+    background-color: #0F499A; /* Fondo azul por defecto */
+    color: #F8E7A5; /* Texto amarillo por defecto */
+    text-decoration: none;
+    font-weight: 700;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.menu-footer a:hover {
+    background-color: #F8E7A5; /* Fondo amarillo al pasar el mouse */
+    color: #0F499A; /* Texto azul al pasar el mouse */
+}
+
+/* Ajustes para móviles */
+@media (max-width: 600px) {
+    .menu-footer ul {
+        display: none; /* Oculta los enlaces por defecto en móviles */
+        flex-direction: column;
+        position: absolute;
+        bottom: 60px;
+        left: 0;
+        width: 100%;
+        background: #0F499A;
+        padding: 0;
+        text-align: center;
+    }
+
+    .menu-footer ul.active {
+        display: flex; /* Muestra los enlaces al hacer clic */
+    }
+
+    .menu-footer a {
+        padding: 15px;
+        border-top: 1px solid #444;
+    }
+}
