@@ -148,6 +148,15 @@ a:hover {
     background: #F8E7A5; /* Cambia el fondo de la barra al pasar el mouse */
 }
 
+.footer-menu-toggle {
+    display: none; /* Oculto por defecto en escritorio */
+    background: none; /* Sin fondo para el botón del menú */
+    border: none; /* Sin borde para el botón del menú */
+    color: white; /* Color del texto del botón */
+    font-size: 24px; /* Tamaño del texto del botón */
+    cursor: pointer; /* Cambia el cursor a mano al pasar sobre el botón */
+}
+
 .menu-footer ul {
     list-style: none; /* Quita los puntos de la lista */
     margin: 0; /* Quita los márgenes por defecto */
@@ -173,6 +182,10 @@ a:hover {
 
 /* Ajustes para móviles */
 @media (max-width: 600px) {
+    .footer-menu-toggle {
+        display: block; /* Visible en móviles */
+    }
+
     .menu-footer ul {
         display: none; /* Oculta los enlaces por defecto en móviles */
         flex-direction: column; /* Apila los elementos verticalmente en móviles */
@@ -192,19 +205,5 @@ a:hover {
     .menu-footer a {
         padding: 15px; /* Espacio alrededor del texto en móviles */
         border-top: 1px solid #444; /* Borde superior para separar elementos */
-    }
-
-
-    /* Estilo para el botón del menú del footer */
-    .footer-menu-toggle {
-        display: block; /* Muestra el botón en móviles */
-        background: none;
-        border: none;
-        color: white;
-        font-size: 24px;
-        cursor: pointer;
-        position: absolute;
-        bottom: 10px;
-        right: 20px;
     }
 }
