@@ -1,4 +1,4 @@
-/* ajustes para el logotipo */
+/* ajustes para el logotipo al inicio de la página */
 .logo-header {
     display: flex; /* Muestra el logotipo y el texto en línea */
     align-items: center; /* Centra verticalmente */
@@ -10,7 +10,7 @@
     width: auto; /* Ancho automático para mantener la proporción */
 }
 
-/* Estilos para la barra de navegación fija */
+/* Estilos para la barra de navegación fija superior */
 .header-fijo {
     position: sticky; /* Mantiene la barra fija en la parte superior al hacer scroll */
     top: 0; /* Posición de la barra desde la parte superior de la ventana */
@@ -29,14 +29,14 @@
     background: #F8E7A5; /* Cambia el fondo de la barra al pasar el mouse */
 }
     /* Estilos para el botón menú hamburguesa */
-.menu-toggle {
+    .menu-toggle {
     background: none; /* Sin fondo para el botón del menú */
     border: none; /* Sin borde para el botón del menú */
     color: white; /* Color del texto del botón */
     font-size: 24px; /* Tamaño del texto del botón */
     cursor: pointer; /* Cambia el cursor a mano al pasar sobre el botón */
     display: none; /* Oculto por defecto en escritorio */
-}
+    }
 
 .menu-principal ul {
     list-style: none; /* Quita los puntos de la lista */
@@ -89,7 +89,7 @@
     }
 }
 
-/* Estilos generales y tipografía */
+/* Estilo general y tipografía */
 body {
     margin: 0; /* Quita los márgenes por defecto del cuerpo */
     padding-top: 20px; /* Espacio en la parte superior del cuerpo */
@@ -206,4 +206,26 @@ a:hover {
         padding: 15px; /* Espacio alrededor del texto en móviles */
         border-top: 1px solid #444; /* Borde superior para separar elementos */
     }
+}
+
+.callout-verde {
+    border: 2px solid #f3dc0a; /* Borde sólido de 2 píxeles y color verde (#4CAF50) */
+    border-radius: 8px; /* Esquinas redondeadas con un radio de 8 píxeles */
+    padding: 15px; /* Espacio interno de 15 píxeles en todos los lados (contenido no pegado al borde) */
+    margin: 10px auto; /* Margen superior/inferior de 10 píxeles y margen izquierdo/derecho 'auto' (centra el elemento) */
+    background-color: rgba(31, 10, 224, 0.8); /* Color de fondo negro con 80% de opacidad (semi-transparente) */
+    color: #ecf0f1; /* Color del texto en tono claro (casi blanco) para contraste */
+    font-family: Arial, sans-serif; /* Fuente principal Arial, con genérica sans-serif como alternativa */
+    font-size: 16px; /* Tamaño de fuente de 16 píxeles */
+    line-height: 1.5; /* Altura de línea 1.5 veces el tamaño de la fuente (mejora legibilidad) */
+    max-width: 700px; /* Ancho máximo del recuadro: 800 píxeles (evita que ocupe todo el ancho de pantalla) */
+}
+
+.callout-verde a {
+    color: #3498db; /* Color para los enlaces */
+    text-decoration: none;
+}
+
+.callout-verde a:hover {
+    text-decoration: underline;
 }
