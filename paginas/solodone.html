@@ -1,0 +1,32 @@
+<html>
+    <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Roadmap</title>
+</head>
+<body>
+  <h1>Proyectos Finalizados</h1>
+  <ul id="lista-proyectos">
+    <!-- Los enlaces se filtrarán con JavaScript -->
+  </ul>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const proyectos = [
+        { url: "proyecto1.html", status: "wip", name: "Proyecto 1" },
+        { url: "proyecto2.html", status: "done", name: "Proyecto 2" },
+        { url: "proyecto3.html", status: "wip", name: "Proyecto 3" }
+      ];
+
+      const lista = document.getElementById('lista-proyectos');
+      proyectos.forEach(proyecto => {
+        if (proyecto.status === "done") {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = proyecto.url;
+          a.textContent = `${proyecto.name} (Finalizado)`;
+          li.appendChild(a);
+          lista.appendChild(li);
+        }
+      });
+    });
+  </script>
+</body></html>
