@@ -1,3 +1,12 @@
+/* ajustes para que la imagen esté centrada y ocupe el 100% del ancho de su contenedor, manteniendo la proporción, pero sin exceder los 600 píxeles de ancho. */
+.responsive-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 600px; /*el que desees*/
+    margin: 0 auto;
+}
+
 /* ajustes para el logotipo al inicio de la página */
 .logo-header {
     display: flex; /* Muestra el logotipo y el texto en línea */
