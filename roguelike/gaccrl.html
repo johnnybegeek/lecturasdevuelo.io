@@ -2,86 +2,494 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Roguelike Accesible</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roguelike ASCII - Versión Accesible</title>
     <style>
-        body { background-color: #000; color: #fff; font-family: sans-serif; margin: 0; padding: 20px; }
+        :root {
+            --bg-color: #000;
+            --text-color: #fff;
+            --wall-color: #555;
+            --floor-color: #888;
+            --player-color: #0f0;
+            --exit-color: #f00;
+            --border-color: #333;
+            --focus-outline: 2px solid #0f0;
+        }
 
-        #main-container {
-            display: grid;
-            grid-template-columns: 1fr 300px;
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: "Courier New", monospace;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin: 0 0 10px 0;
+        }
+
+        main {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: center; /* Centra el contenido en pantallas grandes */
             gap: 20px;
-            max-width: 1200px;
-            margin: auto;
+            flex-wrap: wrap;
         }
 
         #game {
-            font-family: monospace;
-            white-space: pre;
-            background: #111;
-            color: #fff;
-            padding: 15px;
-            border: 1px solid #333;
             font-size: 20px;
-            min-height: 400px; /* Esto asegura que el cuadro tenga altura mínima */
+            line-height: 1.5;
+            white-space: pre;
+            background-color: #111;
+            padding: 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+
+            /* CORRECCIÓN DE ANCHO AQUÍ */
+            flex: 0 0 auto;
+            width: fit-content;
+            overflow: hidden;
+            position: relative;
         }
 
-        .controls { background: #1a1a1a; padding: 20px; border-radius: 8px; border: 1px solid #444; }
-        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+        #game:focus {
+            outline: var(--focus-outline);
+        }
+
+        .screen-reader-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .controls {
+            flex: 1;
+            min-width: 250px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            color: #ccc;
+        }
+
+        .controls p {
+            margin: 0 0 10px 0;
+            font-size: 1rem;
+            text-align: left;
+        }
+
+        .instructions {
+            background-color: #1a1a1a;
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .instructions h2 {
+            font-size: 1.2rem;
+            margin-top: 0;
+            color: var(--text-color);
+        }
+
+        .instructions ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0 0 0;
+        }
+
+        .instructions li {
+            padding: 5px 0;
+        }
+
+        .wall {
+            color: var(--wall-color);
+            background-color: transparent;
+        }
+        .floor {
+            color: var(--floor-color);
+            background-color: transparent;
+        }
+        .player {
+            color: var(--player-color);
+            font-weight: bold;
+            background-color: transparent;
+        }
+        .exit {
+            color: var(--exit-color);
+            font-weight: bold;
+            background-color: transparent;
+        }
+
+        .cell {
+            display: inline-block;
+            min-width: 1em;
+            text-align: center;
+        }
+
+        @media (prefers-contrast: high) {
+            :root {
+                --bg-color: #000;
+                --text-color: #fff;
+                --wall-color: #fff;
+                --floor-color: #aaa;
+                --player-color: #ffff00;
+                --exit-color: #ff0000;
+                --border-color: #fff;
+            }
+            body { background-color: var(--bg-color); color: var(--text-color); }
+            #game { background-color: var(--bg-color); border-color: var(--border-color); }
+            #position-info {
+                background-color: #000;
+                color: #fff;
+                border-color: #fff;
+            }
+            .reset-btn {
+                background-color: #000;
+                color: #fff;
+                border-color: #fff;
+            }
+            .reset-btn:hover {
+                background-color: #fff;
+                color: #000;
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg-color: #f5f5f5;
+                --text-color: #333;
+                --wall-color: #333;
+                --floor-color: #666;
+                --player-color: #006600;
+                --exit-color: #cc0000;
+                --border-color: #333;
+            }
+            body { background-color: var(--bg-color); color: var(--text-color); }
+            #game { background-color: #e0e0e0; border-color: var(--border-color); }
+            .controls { color: #333; }
+            .instructions { background-color: #e0e0e0; border-color: var(--border-color); }
+            #position-info {
+                background-color: #d0d0d0;
+                color: #333;
+                border-color: #666;
+            }
+            .reset-btn {
+                background-color: #d0d0d0;
+                color: #333;
+                border-color: #666;
+            }
+            .reset-btn:hover {
+                background-color: #c0c0c0;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * { transition: none !important; animation: none !important; }
+        }
+
+        @media (max-width: 600px) {
+            #game { font-size: 14px; } /* Ajustado levemente para pantallas muy pequeñas */
+            h1 { font-size: 1.5rem; }
+        }
+
+        button:focus, a:focus, input:focus, select:focus, textarea:focus {
+            outline: var(--focus-outline);
+        }
+
+        .reset-btn {
+            background-color: #3a3a3a;
+            color: #fff;
+            border: 1px solid #555;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-top: 10px;
+            transition: background-color 0.2s;
+        }
+        .reset-btn:hover { background-color: #4a4a4a; }
+        .reset-btn:focus { outline: var(--focus-outline); }
+
+        .victory-message {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #1a1a1a;
+            color: var(--text-color);
+            padding: 30px;
+            border: 2px solid var(--player-color);
+            border-radius: 8px;
+            text-align: center;
+            z-index: 1000;
+            max-width: 80%;
+        }
+        .victory-message h2 { color: var(--player-color); margin-top: 0; }
+        .victory-message p { margin-bottom: 20px; }
+        .victory-message button {
+            background-color: var(--player-color);
+            color: var(--bg-color);
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .victory-message button:focus { outline: var(--focus-outline); }
+
+        #position-info {
+            background-color: #2a2a2a;
+            color: #fff;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            main { flex-direction: column; align-items: center; }
+            .controls { width: 100%; text-align: center; }
+            .controls p { text-align: center; }
+        }
     </style>
 </head>
 <body>
+    <header>
+        <h1>Roguelike ASCII</h1>
+        <p id="status-message" class="screen-reader-only" aria-live="polite" aria-atomic="true">
+            Juego de exploración. Usa las teclas de flecha o WASD para moverte.
+        </p>
+    </header>
 
-    <h1>Roguelike ASCII</h1>
-    <div id="announcer" class="sr-only" aria-live="polite"></div>
+    <main>
+        <div id="game"
+             role="application"
+             aria-label="Mapa del juego. Usa las teclas de flecha o WASD para moverte."
+             tabindex="0">
+        </div>
 
-    <div id="main-container">
-        <div id="game" aria-hidden="true"></div>
+        <section class="controls">
+            <div id="position-info" aria-live="polite">
+                Posición: Fila 1, Columna 1
+            </div>
 
-        <aside class="controls">
-            <h2>Instrucciones</h2>
-            <p><strong>Movimiento:</strong> Flechas o WASD.</p>
-            <p><strong>Inspeccionar:</strong> Pulsa 'H'.</p>
-            <p>Turnos: <span id="turn-counter">0</span></p>
-        </aside>
+            <p><strong>Controles:</strong> Usa las teclas de flecha (↑ ↓ ← →) o WASD para moverte.</p>
+
+            <div class="instructions">
+                <h2>Instrucciones</h2>
+                <ul>
+                    <li><strong>@</strong> - Tú (jugador)</li>
+                    <li><strong>#</strong> - Pared (no puedes pasar)</li>
+                    <li><strong>.</strong> - Suelo (puedes caminar)</li>
+                    <li><strong>&gt;</strong> - Salida (¡Encuéntrala para ganar!)</li>
+                </ul>
+            </div>
+
+            <button class="reset-btn" id="reset-btn" aria-label="Reiniciar el juego">
+                Reiniciar Juego
+            </button>
+        </section>
+    </main>
+
+    <div id="victory-modal" class="victory-message" role="alertdialog" aria-labelledby="victory-title" aria-modal="true" style="display: none;">
+        <h2 id="victory-title">¡Nivel Completado!</h2>
+        <p>Has encontrado la salida. ¿Quieres jugar de nuevo?</p>
+        <button id="continue-btn" autofocus>Continuar</button>
     </div>
 
     <script>
-        // --- Lógica del juego ---
-        const WIDTH = 40;
-        const HEIGHT = 20;
+        const WIDTH = 25;
+        const HEIGHT = 15;
         let playerX = 1;
         let playerY = 1;
         let map = [];
-        let turns = 0;
+        let exitX = 0;
+        let exitY = 0;
+
+        const gameElement = document.getElementById('game');
+        const statusMessage = document.getElementById('status-message');
+        const positionInfo = document.getElementById('position-info');
+        const victoryModal = document.getElementById('victory-modal');
+        const continueBtn = document.getElementById('continue-btn');
+        const resetBtn = document.getElementById('reset-btn');
 
         function initMap() {
             map = [];
             for (let y = 0; y < HEIGHT; y++) {
                 map[y] = [];
                 for (let x = 0; x < WIDTH; x++) {
-                    map[y][x] = (y === 0 || y === HEIGHT - 1 || x === 0 || x === WIDTH - 1) ? '#' : '.';
+                    if (y === 0 || y === HEIGHT - 1 || x === 0 || x === WIDTH - 1) {
+                        map[y][x] = '#';
+                    } else if (Math.random() < 0.15) {
+                        map[y][x] = '#';
+                    } else {
+                        map[y][x] = '.';
+                    }
                 }
             }
+
+            do {
+                exitX = Math.floor(Math.random() * (WIDTH - 2)) + 1;
+                exitY = Math.floor(Math.random() * (HEIGHT - 2)) + 1;
+            } while (exitX === playerX && exitY === playerY);
+
+            map[exitY][exitX] = '>';
             map[playerY][playerX] = '@';
+            updatePositionInfo();
+            gameElement.focus();
         }
 
         function drawMap() {
-            let html = "";
+            let rows = [];
             for (let y = 0; y < HEIGHT; y++) {
-                html += map[y].join("") + "\n";
+                let row = [];
+                for (let x = 0; x < WIDTH; x++) {
+                    let cell = map[y][x];
+                    let className = '';
+                    let ariaLabel = '';
+                    switch (cell) {
+                        case '#': className = 'wall'; ariaLabel = 'Pared'; break;
+                        case '.': className = 'floor'; ariaLabel = 'Suelo'; break;
+                        case '@': className = 'player'; ariaLabel = 'Jugador'; break;
+                        case '>': className = 'exit'; ariaLabel = 'Salida'; break;
+                    }
+                    row.push(`<span class="cell ${className}" role="img" aria-label="${ariaLabel}">${cell}</span>`);
+                }
+                rows.push(row.join(''));
             }
-            document.getElementById('game').textContent = html; // Usamos textContent para evitar problemas de seguridad
+            gameElement.innerHTML = rows.join('<br>');
         }
 
-        function updateGameStatus(message) {
-            document.getElementById('announcer').textContent = message;
-            document.getElementById('turn-counter').textContent = turns;
+        function updatePositionInfo() {
+            positionInfo.textContent = `Posición: Fila ${playerY + 1}, Columna ${playerX + 1}`;
+            statusMessage.textContent = `Posición actual: fila ${playerY + 1}, columna ${playerX + 1}. ${getSurroundingDescription()}`;
         }
 
-        // --- Carga inicial: IMPORTANTE PARA QUE SE VEA ---
+        function getSurroundingDescription() {
+            const directions = [
+                { dx: 0, dy: -1, name: 'arriba' },
+                { dx: 0, dy: 1, name: 'abajo' },
+                { dx: -1, dy: 0, name: 'izquierda' },
+                { dx: 1, dy: 0, name: 'derecha' }
+            ];
+            const descriptions = [];
+            for (const dir of directions) {
+                const nx = playerX + dir.dx;
+                const ny = playerY + dir.dy;
+                if (map[ny] && map[ny][nx]) {
+                    const cell = map[ny][nx];
+                    let desc = '';
+                    switch (cell) {
+                        case '#': desc = 'pared'; break;
+                        case '.': desc = 'suelo'; break;
+                        case '>': desc = 'salida'; break;
+                        default: desc = 'espacio vacío';
+                    }
+                    descriptions.push(`${dir.name}: ${desc}`);
+                }
+            }
+            return descriptions.join(', ');
+        }
+
+        function movePlayer(dx, dy) {
+            const newX = playerX + dx;
+            const newY = playerY + dy;
+            if (map[newY] && map[newY][newX]) {
+                if (map[newY][newX] === '>') {
+                    victoryModal.style.display = 'block';
+                    continueBtn.focus();
+                } else if (map[newY][newX] !== '#') {
+                    map[playerY][playerX] = '.';
+                    playerX = newX;
+                    playerY = newY;
+                    map[playerY][playerX] = '@';
+                    drawMap();
+                    updatePositionInfo();
+                    statusMessage.textContent = `Te has movido a fila ${playerY + 1}, columna ${playerX + 1}. ${getSurroundingDescription()}`;
+                } else {
+                    statusMessage.textContent = `No puedes moverte allí. Hay una pared en dirección ${dx > 0 ? 'derecha' : dx < 0 ? 'izquierda' : dy < 0 ? 'arriba' : 'abajo'}.`;
+                }
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            const keys = {
+                'ArrowUp': [0, -1], 'w': [0, -1], 'W': [0, -1],
+                'ArrowDown': [0, 1], 's': [0, 1], 'S': [0, 1],
+                'ArrowLeft': [-1, 0], 'a': [-1, 0], 'A': [-1, 0],
+                'ArrowRight': [1, 0], 'd': [1, 0], 'D': [1, 0]
+            };
+            if (e.key in keys) {
+                e.preventDefault();
+                const [dx, dy] = keys[e.key];
+                movePlayer(dx, dy);
+            }
+            if (e.key === 'Escape' && victoryModal.style.display === 'block') {
+                victoryModal.style.display = 'none';
+                initMap();
+                drawMap();
+                gameElement.focus();
+            }
+        });
+
+        continueBtn.addEventListener('click', () => {
+            victoryModal.style.display = 'none';
+            initMap();
+            drawMap();
+            gameElement.focus();
+        });
+
+        continueBtn.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                victoryModal.style.display = 'none';
+                initMap();
+                drawMap();
+                gameElement.focus();
+            }
+        });
+
+        resetBtn.addEventListener('click', () => {
+            initMap();
+            drawMap();
+            gameElement.focus();
+        });
+
+        resetBtn.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                initMap();
+                drawMap();
+                gameElement.focus();
+            }
+        });
+
         initMap();
         drawMap();
-        console.log("Juego cargado correctamente");
+        gameElement.tabIndex = 0;
     </script>
 </body>
 </html>
