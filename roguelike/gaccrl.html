@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Roguelike Accesible</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: sans-serif; margin: 0; padding: 20px; }
+
+        #main-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        #game {
+            font-family: monospace;
+            white-space: pre;
+            background: #111;
+            color: #fff;
+            padding: 15px;
+            border: 1px solid #333;
+            font-size: 20px;
+            min-height: 400px; /* Esto asegura que el cuadro tenga altura mínima */
+        }
+
+        .controls { background: #1a1a1a; padding: 20px; border-radius: 8px; border: 1px solid #444; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+    </style>
+</head>
+<body>
+
+    <h1>Roguelike ASCII</h1>
+    <div id="announcer" class="sr-only" aria-live="polite"></div>
+
+    <div id="main-container">
+        <div id="game" aria-hidden="true"></div>
+
+        <aside class="controls">
+            <h2>Instrucciones</h2>
+            <p><strong>Movimiento:</strong> Flechas o WASD.</p>
+            <p><strong>Inspeccionar:</strong> Pulsa 'H'.</p>
+            <p>Turnos: <span id="turn-counter">0</span></p>
+        </aside>
+    </div>
+
+    <script>
+        // --- Lógica del juego ---
+        const WIDTH = 40;
+        const HEIGHT = 20;
+        let playerX = 1;
+        let playerY = 1;
+        let map = [];
+        let turns = 0;
+
+        function initMap() {
+            map = [];
+            for (let y = 0; y < HEIGHT; y++) {
+                map[y] = [];
+                for (let x = 0; x < WIDTH; x++) {
+                    map[y][x] = (y === 0 || y === HEIGHT - 1 || x === 0 || x === WIDTH - 1) ? '#' : '.';
+                }
+            }
+            map[playerY][playerX] = '@';
+        }
+
+        function drawMap() {
+            let html = "";
+            for (let y = 0; y < HEIGHT; y++) {
+                html += map[y].join("") + "\n";
+            }
+            document.getElementById('game').textContent = html; // Usamos textContent para evitar problemas de seguridad
+        }
+
+        function updateGameStatus(message) {
+            document.getElementById('announcer').textContent = message;
+            document.getElementById('turn-counter').textContent = turns;
+        }
+
+        // --- Carga inicial: IMPORTANTE PARA QUE SE VEA ---
+        initMap();
+        drawMap();
+        console.log("Juego cargado correctamente");
+    </script>
+</body>
+</html>
