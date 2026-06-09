@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roguelike ASCII - Versión Accesible</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Roguelike ASCII</h1>
+        <p id="status-message" class="screen-reader-only" aria-live="polite" aria-atomic="true">
+            Juego de exploración. Usa las teclas de flecha o WASD para moverte.
+        </p>
+    </header>
+
+    <main>
+        <div id="game"
+             role="application"
+             aria-label="Mapa del juego. Usa las teclas de flecha o WASD para moverte."
+             tabindex="0">
+        </div>
+
+        <section class="controls">
+            <div id="position-info" aria-live="polite">
+                Posición: Fila 1, Columna 1
+            </div>
+
+            <p><strong>Controles:</strong> Usa las teclas de flecha (↑ ↓ ← →) o WASD para moverte.</p>
+
+            <div class="instructions">
+                <h2>Instrucciones</h2>
+                <ul>
+                    <li><strong>@</strong> - Tú (jugador)</li>
+                    <li><strong>#</strong> - Pared (no puedes pasar)</li>
+                    <li><strong>.</strong> - Suelo (puedes caminar)</li>
+                    <li><strong>&gt;</strong> - Salida (¡Encuéntrala para ganar!)</li>
+                </ul>
+            </div>
+
+            <button class="reset-btn" id="reset-btn" aria-label="Reiniciar el juego">
+                Reiniciar Juego
+            </button>
+        </section>
+    </main>
+
+    <div id="victory-modal" class="victory-message" role="alertdialog" aria-labelledby="victory-title" aria-modal="true" style="display: none;">
+        <h2 id="victory-title">¡Nivel Completado!</h2>
+        <p>Has encontrado la salida. ¿Quieres jugar de nuevo?</p>
+        <button id="continue-btn" autofocus>Continuar</button>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
