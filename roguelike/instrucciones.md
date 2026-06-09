@@ -1,5 +1,3 @@
-Si estás usando GitHub Pages para desplegar el HTML de tu Roguelike y quieres que la gente pueda jugar a la versión de esa rama secundaria sin tocar la versión de main, puedes cambiar la rama de publicación:
-
 Entra a tu repositorio en GitHub.
 
 Ve a la pestaña Settings (Configuración) en la barra superior.
