@@ -9,25 +9,11 @@
 </head>
 <body>
     <header class="site-header" role="banner">
-        <!-- 1. Identidad de la web -->
-        <div class="logo-header">
-            <a href="/index.html" aria-label="Lecturas de Vuelo - Volver a la página de inicio">
-                <img
-                    src="/paginas/imagenes/logoblog.avif"
-                    alt=""
-                    class="logo-img"
-                    width="100"
-                    height="100"
-                    loading="lazy"
-                    decoding="async"
-                >
-            </a>
-            <h1 id="site-title">Lecturas de Vuelo</h1>
-        </div>
-        <p class="site-tagline" aria-labelledby="site-title">Artículos a baja altitud</p>
+        <!-- 1. Identidad de la web (cargada desde includes/header.html) -->
+        <div data-include="includes/header.html"></div>
 
         <!-- 2. Navegación Principal (cargada desde includes/nav.html) -->
-        <div id="nav-container" data-include="includes/nav.html"></div>
+        <div data-include="includes/nav.html"></div>
     </header>
 
     <!-- Contenido principal de la página -->
@@ -49,17 +35,8 @@
         <br> <!-- Salto de línea para espacio -->
     </main>
 
-    <!-- Barra de navegación inferior fija -->
-    <footer class="footer-fijo">
-        <button class="footer-menu-toggle" aria-label="Abrir menú">☰</button> <!-- Botón del menú hamburguesa para móviles en el footer -->
-        <nav class="menu-footer">
-            <ul>
-                <li><a href="/paginas/pruebas.html">Quién</a></li> <!-- Enlace a información sobre el autor -->
-                <li><a href="/paginas/why.html">¿Por qué?</a></li> <!-- Enlace a la motivación o propósito del sitio -->
-                <li><a href="/paginas/pruebas.html">Créditos</a></li> <!-- Enlace a los créditos o agradecimientos -->
-            </ul>
-        </nav>
-    </footer>
+    <!-- Footer (cargado desde includes/footer.html) -->
+    <div data-include="includes/footer.html"></div>
 
     <!-- Scripts para la funcionalidad del menú -->
     <script>
