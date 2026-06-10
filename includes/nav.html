@@ -1,0 +1,30 @@
+<!-- 2. Navegación Principal -->
+<nav class="menu-principal header-fijo" aria-label="Menú principal del sitio">
+    <!-- Botones interactivos -->
+    <button
+        class="menu-toggle"
+        aria-label="Abrir menú principal"
+        aria-expanded="false"
+        aria-controls="main-menu"
+    >
+        <span aria-hidden="true">☰</span>
+    </button>
+
+    <button
+        id="theme-toggle"
+        aria-label="Alternar entre modo día y noche"
+        aria-pressed="false"
+    >
+        <span aria-hidden="true">🌙</span>
+    </button>
+
+    <!-- Lista de enlaces -->
+    <ul id="main-menu" role="menubar">
+        <li role="none"><a href="/index.html" role="menuitem">Home</a></li>
+        <li role="none"><a href="/paginas/enroute.html" role="menuitem">En Route</a></li>
+        <li role="none"><a href="/paginas/arrivals.html" role="menuitem">Arrivals</a></li>
+        <li role="none"><a href="/paginas/navdata.html" role="menuitem">NavData</a></li>
+        <li role="none"><a href="/paginas/hub.html" role="menuitem">Hub</a></li>
+        <li role="none"><a href="/paginas/departures.html" role="menuitem">Departures</a></li>
+    </ul>
+</nav>
