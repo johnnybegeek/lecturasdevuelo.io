@@ -6,51 +6,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/estilo.css">
 </head>
+
 <body>
-    <!-- Cabecera con logotipo y título -->
-    <div class="logo-header">
-        <img src="../paginas/imagenes/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="logo-img"> <!-- Logotipo del sitio -->
-        <h1>WIP: Work In Progress</h1> <!-- Título principal del sitio -->
-    </div>
-    <p>Lecturas de vuelo</p> <!-- nombre de la web -->
+    <header class="site-header" role="banner">
+        <!-- 1. Identidad de la web (cargada desde includes/header.html) -->
+        <div data-include="../includes/header.html"></div>
 
-    <!-- Barra de navegación superior fija -->
-    <header class="header-fijo">
-        <button class="menu-toggle" aria-label="Abrir menú">☰</button> <!-- Botón del menú hamburguesa para móviles -->
-        <nav class="menu-principal">
-            <ul>
-                <li><a href="/index.html">Home</a></li> <!-- Enlace a la página principal -->
-                <li><a href="/paginas/wip.html">Departures</a></li> <!-- Enlace a la sección de proyectos en marcha -->
-                <li><a href="/paginas/pruebas.html">Arrivals</a></li> <!-- Enlace a la sección de archivo -->
-                <li><a href="/paginas/pruebas.html">NavData</a></li> <!-- Enlace a la sección de recursos -->
-                <li><a href="/paginas/pruebas.html">Hub</a></li> <!-- Enlace a Áreas -->
-                <li><a href="/paginas/pruebas.html">Gates</a></li> <!-- Enlace ideas breves o blog -->
-
-            </ul>
-        </nav>
+        <!-- 2. Navegación Principal (cargada desde includes/nav.html) -->
+        <div data-include="../includes/nav.html"></div>
     </header>
+
     <main>
         <p>Aquí encontraréis el roadmap del proceso de como está tomando forma esta web.</p>
         <p>Secciones:</p>
         <ul>
-            <li><a href="/index.html">Memoria</a>: Lo realizado hasta el momento.</li> <!-- Enlace a la página Memoria -->
-            <li><a href="/index.html">Roadmap</a>: Futuras implementaciones.</li> <!-- Enlace a la página Roadmap -->
-    
+            <li><a href="/index.html">Memoria</a>: Lo realizado hasta el momento.</li>
+            <li><a href="/index.html">Roadmap</a>: Futuras implementaciones.</li>
         </ul>
     </main>
-    <footer class="footer-fijo">
-        <nav class="menu-footer">
-            <ul>
-                <li><a href="/paginas/pruebas.html">Quién</a></li>
-                <li><a href="/paginas/why.html">¿Por qué?</a></li>
-                <li><a href="/paginas/pruebas.html">Créditos</a></li>
-            </ul>
-        </nav>
-    </footer>
+
+    <!-- Footer (cargado desde includes/footer.html) -->
+    <div data-include="../includes/footer.html"></div>
+
+    <!-- Scripts para la funcionalidad del menú -->
     <script>
-        // JavaScript para el menú hamburguesa
-        document.querySelector('.menu-toggle').addEventListener('click', function() {
-            document.querySelector('.menu-principal ul').classList.toggle('active');
+        // Función para cargar includes
+        function loadIncludes() {
+            const includeElements = document.querySelectorAll('[data-include]');
+            includeElements.forEach(async (element) => {
+                const filePath = element.getAttribute('data-include');
+                try {
+                    const response = await fetch(filePath);
+                    if (response.ok) {
+                        const html = await response.text();
+                        element.innerHTML = html;
+                        // Re-asignar event listeners después de cargar el HTML
+                        initNavListeners();
+                    } else {
+                        console.error(`Error al cargar ${filePath}: ${response.statusText}`);
+                    }
+                } catch (error) {
+                    console.error(`Error al cargar ${filePath}:`, error);
+                }
+            });
+        }
+
+        // Inicializar listeners de navegación (para el menú y el tema)
+        function initNavListeners() {
+            // Menú hamburguesa
+            const menuToggle = document.querySelector('.menu-toggle');
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    const menu = document.getElementById('main-menu');
+                    const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                    this.setAttribute('aria-expanded', !isExpanded);
+                    menu.classList.toggle('active');
+                });
+            }
+
+            // Botón de tema
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    const isPressed = this.getAttribute('aria-pressed') === 'true';
+                    this.setAttribute('aria-pressed', !isPressed);
+                    document.body.classList.toggle('dark-mode');
+                    this.querySelector('span').textContent = !isPressed ? '☀️' : '🌙';
+                });
+            }
+
+            // Menú footer (si existe)
+            const footerToggle = document.querySelector('.footer-menu-toggle');
+            if (footerToggle) {
+                footerToggle.addEventListener('click', function() {
+                    document.querySelector('.menu-footer ul').classList.toggle('active');
+                });
+            }
+        }
+
+        // Cargar includes al iniciar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            loadIncludes();
         });
     </script>
 </body>
