@@ -18,6 +18,7 @@
     <!-- Barra de navegación superior fija -->
     <header class="header-fijo">
         <button class="menu-toggle" aria-label="Abrir menú">☰</button> <!-- Botón del menú hamburguesa para móviles -->
+        <button id="theme-toggle" aria-label="Alternar modo día/noche">🌙</button>
         <nav class="menu-principal">
             <ul>
                 <li><a href="/index.html">Home</a></li> <!-- Enlace a la página principal -->
@@ -73,6 +74,15 @@
         document.querySelector('.footer-menu-toggle').addEventListener('click', function() {
             document.querySelector('.menu-footer ul').classList.toggle('active'); // Alterna la clase 'active' para mostrar/ocultar el menú del footer
         });
+        // JavaScript para el modo día/noche
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        // Cambiar el emoji del botón
+        themeToggle.textContent = document.body.classList.contains('dark-mode')
+            ? '☀️'
+            : '🌙';
+    });
     </script>
 </body>
 </html>
