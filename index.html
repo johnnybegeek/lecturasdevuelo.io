@@ -8,26 +8,52 @@
     <link rel="stylesheet" href="css/estilo.css"> <!-- Enlace al archivo de estilos CSS -->
 </head>
 <body>
-    <!-- Cabecera con logotipo y título -->
-    <div class="logo-header">
-        <img src="../paginas/imagenes/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="logo-img"> <!-- Logotipo del sitio -->
-        <h1>Lecturas de Vuelo</h1> <!-- Título principal del sitio -->
-    </div>
-    <p>Artículos a baja altitud</p> <!-- Eslogan o descripción del sitio -->
+    <header class="site-header" role="banner">
+        <!-- 1. Identidad de la web -->
+        <div class="logo-header">
+            <a href="/index.html" aria-label="Lecturas de Vuelo - Volver a la página de inicio">
+                <img
+                    src="/paginas/imagenes/logoblog.avif"
+                    alt=""
+                    class="logo-img"
+                    width="100"
+                    height="100"
+                    loading="lazy"
+                    decoding="async"
+                >
+            </a>
+            <h1 id="site-title">Lecturas de Vuelo</h1>
+        </div>
+        <p class="site-tagline" aria-labelledby="site-title">Artículos a baja altitud</p>
 
-    <!-- Barra de navegación superior fija -->
-    <header class="header-fijo">
-        <button class="menu-toggle" aria-label="Abrir menú">☰</button> <!-- Botón del menú hamburguesa para móviles -->
-        <button id="theme-toggle" aria-label="Alternar modo día/noche">🌙</button>
-        <nav class="menu-principal">
-            <ul>
-                <li><a href="/index.html">Home</a></li> <!-- Enlace a la página principal -->
-                <li><a href="/paginas/enroute.html">En Route</a></li> <!-- Enlace a la sección de proyectos en marcha -->
-                <li><a href="/paginas/arrivals.html">Arrivals</a></li> <!-- Enlace a la sección de archivo -->
-                <li><a href="/paginas/navdata.html">NavData</a></li> <!-- Enlace a la sección de recursos -->
-                <li><a href="/paginas/hub.html">Hub</a></li> <!-- Enlace a Áreas -->
-                <li><a href="/paginas/departures.html">Departures</a></li> <!-- Enlace ideas breves o blog -->
+        <!-- 2. Navegación Principal -->
+        <nav class="menu-principal header-fijo" aria-label="Menú principal del sitio">
+            <!-- Botones interactivos -->
+            <button
+                class="menu-toggle"
+                aria-label="Abrir menú principal"
+                aria-expanded="false"
+                aria-controls="main-menu"
+            >
+                <span aria-hidden="true">☰</span>
+            </button>
 
+            <button
+                id="theme-toggle"
+                aria-label="Alternar entre modo día y noche"
+                aria-pressed="false"
+            >
+                <span aria-hidden="true">🌙</span>
+            </button>
+
+            <!-- Lista de enlaces -->
+            <ul id="main-menu" role="menubar">
+                <li role="none"><a href="/index.html" role="menuitem">Home</a></li>
+                <li role="none"><a href="/paginas/enroute.html" role="menuitem">En Route</a></li>
+                <li role="none"><a href="/paginas/arrivals.html" role="menuitem">Arrivals</a></li>
+                <li role="none"><a href="/paginas/navdata.html" role="menuitem">NavData</a></li>
+                <li role="none"><a href="/paginas/hub.html" role="menuitem">Hub</a></li>
+                <li role="none"><a href="/paginas/departures.html" role="menuitem">Departures</a></li>
             </ul>
         </nav>
     </header>
@@ -67,22 +93,25 @@
     <script>
         // JavaScript para el menú hamburguesa del header
         document.querySelector('.menu-toggle').addEventListener('click', function() {
-            document.querySelector('.menu-principal ul').classList.toggle('active'); // Alterna la clase 'active' para mostrar/ocultar el menú principal
+            const menu = document.getElementById('main-menu');
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+            this.setAttribute('aria-expanded', !isExpanded);
+            menu.classList.toggle('active');
+        });
+
+        // JavaScript para el botón de tema (modo día/noche)
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            const isPressed = this.getAttribute('aria-pressed') === 'true';
+            this.setAttribute('aria-pressed', !isPressed);
+            document.body.classList.toggle('dark-mode');
+            // Cambiar el emoji del botón
+            this.querySelector('span').textContent = !isPressed ? '☀️' : '🌙';
         });
 
         // JavaScript para el menú hamburguesa del footer
         document.querySelector('.footer-menu-toggle').addEventListener('click', function() {
-            document.querySelector('.menu-footer ul').classList.toggle('active'); // Alterna la clase 'active' para mostrar/ocultar el menú del footer
+            document.querySelector('.menu-footer ul').classList.toggle('active');
         });
-        // JavaScript para el modo día/noche
-    const themeToggle = document.getElementById('theme-toggle');
-    themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        // Cambiar el emoji del botón
-        themeToggle.textContent = document.body.classList.contains('dark-mode')
-            ? '☀️'
-            : '🌙';
-    });
     </script>
 </body>
 </html>
