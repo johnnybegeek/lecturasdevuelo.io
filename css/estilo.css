@@ -55,7 +55,7 @@ body.dark-mode {
     background: #0F499A;
     color: #F8E7A5;
     min-height: auto;
-    padding: 0.5rem 20px;
+    padding: 2px 20px;
     z-index: 100;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     display: flex;
@@ -135,7 +135,7 @@ body.dark-mode {
 @media (max-width: 600px) {
     /* Ajustar la barra para móvil: padding vertical mínimo para tacto */
     .header-fijo {
-        padding: 0.5rem 20px;
+        padding: 4px 20px;
     }
 
     /* Mostrar botones de control en móvil */
