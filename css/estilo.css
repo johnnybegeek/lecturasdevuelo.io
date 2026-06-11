@@ -53,7 +53,7 @@ body.dark-mode {
     top: 0;
     background: #0F499A;
     color: #F8E7A5;
-    padding: 10px 20px;
+    padding: 6px 20px;
     z-index: 100;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     display: flex;
@@ -79,7 +79,7 @@ body.dark-mode {
     background: none;
     border: none;
     color: white;
-    font-size: 24px;
+    font-size: 20px;
     cursor: pointer;
     display: none; /* Oculto en escritorio, visible en móvil */
 }
@@ -89,9 +89,9 @@ body.dark-mode {
     background: none;
     border: none;
     color: white;
-    font-size: 20px;
+    font-size: 16px;
     cursor: pointer;
-    padding: 5px 10px;
+    padding: 3px 8px;
 }
 
 .menu-principal ul {
@@ -99,7 +99,7 @@ body.dark-mode {
     margin: 0;
     padding: 0;
     display: flex;
-    gap: 30px;
+    gap: 20px;
 }
 
 .menu-principal a,
@@ -108,7 +108,9 @@ body.dark-mode {
     color: #F8E7A5;
     text-decoration: none;
     font-weight: 700;
-    padding: 5px 10px;
+    padding: 3px 10px;
+    font-size: 0.9em;
+    line-height: 1.2;
     border-radius: 4px;
     transition: background-color 0.3s, color 0.3s;
     border: none;
@@ -123,6 +125,11 @@ body.dark-mode {
 
 /* Ajustes para móviles */
 @media (max-width: 600px) {
+    /* Ajustar la barra para móvil: más padding vertical para mejor tacto */
+    .header-fijo {
+        padding: 10px 20px;
+    }
+
     /* Mostrar botones de control en móvil */
     .menu-toggle,
     #theme-toggle {
@@ -148,9 +155,11 @@ body.dark-mode {
         display: flex;
     }
 
-    /* Estilos para enlaces en móvil */
+    /* Estilos para enlaces en móvil (más padding para mejor tacto) */
     .menu-principal a {
-        padding: 15px;
+        padding: 15px 10px;
+        font-size: 1em; /* Volver a tamaño normal en móvil */
+        line-height: 1.5;
         border-top: 1px solid #444;
         width: 100%;
         text-align: center;
