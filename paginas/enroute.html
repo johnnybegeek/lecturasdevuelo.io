@@ -11,7 +11,7 @@
 <body>
     <!-- Cabecera con logotipo y título -->
     <div class="logo-header">
-        <img src="../paginas/imagenes/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="logo-img"> <!-- Logotipo del sitio -->
+        <a href="/index.html"><img src="../paginas/imagenes/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="logo-img"></a> <!-- Logotipo del sitio -->
         <h1>En Route</h1> <!-- Título principal de esta página -->
     </div>
     <p>Lecturas de vuelo: Artículos a baja altitud</p> <!-- Título de la web + Eslogan del sitio -->
@@ -26,6 +26,7 @@
                 <li><a href="/paginas/hub.html">Hub</a></li>
                 <li><a href="/paginas/pruebas.html">Who</a></li>
                 <li><button class="menu-toggle" aria-label="Abrir menú">☰</button></li>
+                <li><button id="theme-toggle" aria-label="Alternar entre modo día y noche" aria-pressed="false"><span aria-hidden="true">🌙</span></button></li>
             </ul>
         </nav>
     </header>
@@ -49,6 +50,14 @@
         document.querySelector('.menu-toggle').addEventListener('click', function() {
             document.querySelector('.menu-principal ul').classList.toggle('active'); // Alterna la clase 'active' para mostrar/ocultar el menú principal
         });
+
+        // JavaScript para el botón de día/noche
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+            });
+        }
     </script>
 </body>
 </html>
