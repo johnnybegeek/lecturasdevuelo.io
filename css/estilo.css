@@ -53,7 +53,7 @@ body.dark-mode {
     top: 0;
     background: #0F499A;
     color: #F8E7A5;
-    padding: 6px 20px;
+    padding: 0 20px;
     z-index: 100;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     display: flex;
@@ -82,6 +82,8 @@ body.dark-mode {
     font-size: 20px;
     cursor: pointer;
     display: none; /* Oculto en escritorio, visible en móvil */
+    padding: 0;
+    line-height: 1;
 }
 
 /* Estilos para el botón de tema (día/noche) */
@@ -91,7 +93,8 @@ body.dark-mode {
     color: white;
     font-size: 16px;
     cursor: pointer;
-    padding: 3px 8px;
+    padding: 0 8px;
+    line-height: 1;
 }
 
 .menu-principal ul {
@@ -108,9 +111,9 @@ body.dark-mode {
     color: #F8E7A5;
     text-decoration: none;
     font-weight: 700;
-    padding: 3px 10px;
+    padding: 0 10px;
     font-size: 0.9em;
-    line-height: 1.2;
+    line-height: 1;
     border-radius: 4px;
     transition: background-color 0.3s, color 0.3s;
     border: none;
@@ -125,9 +128,9 @@ body.dark-mode {
 
 /* Ajustes para móviles */
 @media (max-width: 600px) {
-    /* Ajustar la barra para móvil: más padding vertical para mejor tacto */
+    /* Ajustar la barra para móvil: padding vertical mínimo para tacto */
     .header-fijo {
-        padding: 10px 20px;
+        padding: 5px 20px;
     }
 
     /* Mostrar botones de control en móvil */
@@ -141,7 +144,7 @@ body.dark-mode {
         display: none;
         flex-direction: column;
         position: absolute;
-        top: 60px;
+        top: 40px;
         left: 0;
         width: 100%;
         background: #0F499A;
@@ -155,11 +158,11 @@ body.dark-mode {
         display: flex;
     }
 
-    /* Estilos para enlaces en móvil (más padding para mejor tacto) */
+    /* Estilos para enlaces en móvil (padding vertical para tacto) */
     .menu-principal a {
-        padding: 15px 10px;
+        padding: 12px 10px;
         font-size: 1em; /* Volver a tamaño normal en móvil */
-        line-height: 1.5;
+        line-height: 1;
         border-top: 1px solid #444;
         width: 100%;
         text-align: center;
