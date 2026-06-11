@@ -62,6 +62,14 @@ body.dark-mode {
     transition: background-color 0.3s;
 }
 
+/* Contenedor principal de navegación: contiene el menú de enlaces y los botones de control */
+.menu-principal {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+
 .header-fijo:hover {
     background: #F8E7A5;
 }
@@ -73,7 +81,17 @@ body.dark-mode {
     color: white;
     font-size: 24px;
     cursor: pointer;
-    display: none;
+    display: none; /* Oculto en escritorio, visible en móvil */
+}
+
+/* Estilos para el botón de tema (día/noche) */
+#theme-toggle {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px 10px;
 }
 
 .menu-principal ul {
@@ -84,7 +102,8 @@ body.dark-mode {
     gap: 30px;
 }
 
-.menu-principal a {
+.menu-principal a,
+.menu-principal button:not(.menu-toggle):not(#theme-toggle) {
     background-color: #0F499A;
     color: #F8E7A5;
     text-decoration: none;
@@ -92,19 +111,25 @@ body.dark-mode {
     padding: 5px 10px;
     border-radius: 4px;
     transition: background-color 0.3s, color 0.3s;
+    border: none;
+    cursor: pointer;
 }
 
-.menu-principal a:hover {
+.menu-principal a:hover,
+.menu-principal button:not(.menu-toggle):not(#theme-toggle):hover {
     background-color: #F8E7A5;
     color: #0F499A;
 }
 
 /* Ajustes para móviles */
 @media (max-width: 600px) {
-    .menu-toggle {
+    /* Mostrar botones de control en móvil */
+    .menu-toggle,
+    #theme-toggle {
         display: block;
     }
 
+    /* Ocultar el menú de enlaces por defecto en móvil */
     .menu-principal ul {
         display: none;
         flex-direction: column;
@@ -115,15 +140,26 @@ body.dark-mode {
         background: #0F499A;
         padding: 0;
         text-align: center;
+        z-index: 1000;
     }
 
+    /* Mostrar el menú cuando está activo */
     .menu-principal ul.active {
         display: flex;
     }
 
+    /* Estilos para enlaces en móvil */
     .menu-principal a {
         padding: 15px;
         border-top: 1px solid #444;
+        width: 100%;
+        text-align: center;
+        display: block;
+    }
+
+    /* Estilos para botones de control en móvil */
+    .menu-principal > button {
+        margin-left: 10px;
     }
 }
 
