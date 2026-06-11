@@ -18,15 +18,17 @@
     <!-- Barra de navegación superior fija -->
     <header class="header-fijo">
         <nav class="menu-principal">
+            <!-- Lista de enlaces de navegación (se oculta en móvil) -->
             <ul>
                 <li><a href="/paginas/departures.html">Departures</a></li>
                 <li><a href="/paginas/arrivals.html">Arrivals</a></li>
                 <li><a href="/paginas/navdata.html">NavData</a></li>
                 <li><a href="/paginas/hub.html">Hub</a></li>
                 <li><a href="/paginas/pruebas.html">Who</a></li>
-                <li><button id="theme-toggle" aria-label="Alternar entre modo día y noche" aria-pressed="false"><span aria-hidden="true">🌙</span></button></li>
-                <li><button class="menu-toggle" aria-label="Abrir menú">☰</button></li>
             </ul>
+            <!-- Botones de control: tema y menú hamburguesa (siempre visibles) -->
+            <button id="theme-toggle" aria-label="Alternar entre modo día y noche" aria-pressed="false"><span aria-hidden="true">🌙</span></button>
+            <button class="menu-toggle" aria-label="Abrir menú">☰</button>
         </nav>
     </header>
 
@@ -51,18 +53,23 @@
         <br> <!-- Salto de línea para espacio -->
     </main>
 
-    <!-- Scripts para la funcionalidad del menú -->
+    <!-- Scripts para la funcionalidad del menú y el tema -->
     <script>
-        // JavaScript para el menú hamburguesa del header
+        /* Menú hamburguesa: alterna la visibilidad del menú de enlaces en móvil */
         document.querySelector('.menu-toggle').addEventListener('click', function() {
-            document.querySelector('nav.menu-principal ul').classList.toggle('active'); // Alterna la clase 'active' para mostrar/ocultar el menú principal
+            document.querySelector('nav.menu-principal ul').classList.toggle('active');
         });
 
-        // JavaScript para el botón de día/noche
+        /* Botón de tema (día/noche): alterna entre modo claro y oscuro */
         const themeToggle = document.getElementById('theme-toggle');
         if (themeToggle) {
             themeToggle.addEventListener('click', function() {
                 document.body.classList.toggle('dark-mode');
+                /* Cambiar el emoji del botón según el estado del tema */
+                const isDark = document.body.classList.contains('dark-mode');
+                this.querySelector('span').textContent = isDark ? '☀️' : '🌙';
+                /* Actualizar el estado aria-pressed para accesibilidad */
+                this.setAttribute('aria-pressed', isDark);
             });
         }
     </script>
