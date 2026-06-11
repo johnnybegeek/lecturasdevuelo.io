@@ -9,12 +9,26 @@
 </head>
 
 <body>
-    <header class="site-header" role="banner">
-        <!-- 1. Identidad de la web (cargada desde includes/header.html) -->
-        <div data-include="../includes/header.html"></div>
+    <!-- Cabecera con logotipo y título -->
+    <div class="logo-header">
+        <a href="/index.html"><img src="../paginas/imagenes/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="logo-img"></a> <!-- Logotipo del sitio -->
+        <h1>En Route</h1> <!-- Título principal de esta página -->
+    </div>
+    <p>Lecturas de vuelo: Artículos a baja altitud</p> <!-- Título de la web + Eslogan del sitio -->
 
-        <!-- 2. Navegación Principal (cargada desde includes/nav.html) -->
-        <div data-include="../includes/nav.html"></div>
+    <!-- Barra de navegación superior fija -->
+    <header class="header-fijo">
+        <nav class="menu-principal">
+            <ul>
+                <li><a href="/paginas/departures.html">Departures</a></li>
+                <li><a href="/paginas/arrivals.html">Arrivals</a></li>
+                <li><a href="/paginas/navdata.html">NavData</a></li>
+                <li><a href="/paginas/hub.html">Hub</a></li>
+                <li><a href="/paginas/pruebas.html">Who</a></li>
+                <li><button class="menu-toggle" aria-label="Abrir menú">☰</button></li>
+                <li><button id="theme-toggle" aria-label="Alternar entre modo día y noche" aria-pressed="false"><span aria-hidden="true">🌙</span></button></li>
+            </ul>
+        </nav>
     </header>
 
     <!-- callout para resumir la sección -->
@@ -30,10 +44,20 @@
         <br> <!-- Salto de línea para espacio -->
     </main>
 
-    <!-- Footer (cargado desde includes/footer.html) -->
-    <div data-include="../includes/footer.html"></div>
-
     <!-- Scripts para la funcionalidad del menú -->
-    <script src="../js/includes.js"></script>
+    <script>
+        // JavaScript para el menú hamburguesa del header
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.menu-principal ul').classList.toggle('active'); // Alterna la clase 'active' para mostrar/ocultar el menú principal
+        });
+
+        // JavaScript para el botón de día/noche
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+            });
+        }
+    </script>
 </body>
 </html>

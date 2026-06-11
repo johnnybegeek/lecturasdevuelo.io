@@ -1,0 +1,15 @@
+```text
+# Ignorar archivos del sistema de macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Archivos temporales de carpetas de macOS
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Opcional: Ignorar configuraciones locales de VSCodium
+.vscode/
