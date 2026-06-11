@@ -24,8 +24,8 @@
                 <li><a href="/paginas/navdata.html">NavData</a></li>
                 <li><a href="/paginas/hub.html">Hub</a></li>
                 <li><a href="/paginas/pruebas.html">Who</a></li>
-                <li><button class="menu-toggle" aria-label="Abrir menú">☰</button></li>
                 <li><button id="theme-toggle" aria-label="Alternar entre modo día y noche" aria-pressed="false"><span aria-hidden="true">🌙</span></button></li>
+                <li><button class="menu-toggle" aria-label="Abrir menú">☰</button></li>
             </ul>
         </nav>
     </header>
@@ -55,7 +55,7 @@
     <script>
         // JavaScript para el menú hamburguesa del header
         document.querySelector('.menu-toggle').addEventListener('click', function() {
-            document.querySelector('.menu-principal ul').classList.toggle('active'); // Alterna la clase 'active' para mostrar/ocultar el menú principal
+            document.querySelector('nav.menu-principal ul').classList.toggle('active'); // Alterna la clase 'active' para mostrar/ocultar el menú principal
         });
 
         // JavaScript para el botón de día/noche
