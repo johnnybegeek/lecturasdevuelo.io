@@ -51,9 +51,11 @@ body.dark-mode {
 .header-fijo {
     position: sticky;
     top: 0;
+    width: 100%;
     background: #0F499A;
     color: #F8E7A5;
-    padding: 10px 20px;
+    min-height: auto;
+    padding: 2px 20px;
     z-index: 100;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     display: flex;
@@ -79,9 +81,12 @@ body.dark-mode {
     background: none;
     border: none;
     color: white;
-    font-size: 24px;
+    font-size: 20px;
     cursor: pointer;
     display: none; /* Oculto en escritorio, visible en móvil */
+    padding: 0;
+    margin: 0;
+    line-height: 1;
 }
 
 /* Estilos para el botón de tema (día/noche) */
@@ -89,9 +94,11 @@ body.dark-mode {
     background: none;
     border: none;
     color: white;
-    font-size: 20px;
+    font-size: 16px;
     cursor: pointer;
-    padding: 5px 10px;
+    padding: 0 8px;
+    margin: 0;
+    line-height: 1;
 }
 
 .menu-principal ul {
@@ -99,7 +106,7 @@ body.dark-mode {
     margin: 0;
     padding: 0;
     display: flex;
-    gap: 30px;
+    gap: 20px;
 }
 
 .menu-principal a,
@@ -108,7 +115,10 @@ body.dark-mode {
     color: #F8E7A5;
     text-decoration: none;
     font-weight: 700;
-    padding: 5px 10px;
+    padding: 0 10px;
+    margin: 0;
+    font-size: 0.9em;
+    line-height: 1.5;
     border-radius: 4px;
     transition: background-color 0.3s, color 0.3s;
     border: none;
@@ -123,6 +133,11 @@ body.dark-mode {
 
 /* Ajustes para móviles */
 @media (max-width: 600px) {
+    /* Ajustar la barra para móvil: padding vertical mínimo para tacto */
+    .header-fijo {
+        padding: 4px 20px;
+    }
+
     /* Mostrar botones de control en móvil */
     .menu-toggle,
     #theme-toggle {
@@ -134,7 +149,7 @@ body.dark-mode {
         display: none;
         flex-direction: column;
         position: absolute;
-        top: 60px;
+        top: 40px;
         left: 0;
         width: 100%;
         background: #0F499A;
@@ -148,9 +163,11 @@ body.dark-mode {
         display: flex;
     }
 
-    /* Estilos para enlaces en móvil */
+    /* Estilos para enlaces en móvil (padding vertical para tacto) */
     .menu-principal a {
-        padding: 15px;
+        padding: 0.75rem 10px;
+        font-size: 1em; /* Volver a tamaño normal en móvil */
+        line-height: 1.5;
         border-top: 1px solid #444;
         width: 100%;
         text-align: center;
@@ -191,86 +208,7 @@ a:hover {
     text-decoration: underline;
 }
 
-/* Estilos para la barra de navegación fija en el footer */
-.footer-fijo {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background: #0F499A;
-    color: #F8E7A5;
-    padding: 10px 20px;
-    z-index: 100;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
-    font-family: 'Verdana', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background-color 0.3s;
-}
 
-.footer-fijo:hover {
-    background: #F8E7A5;
-}
-
-.footer-menu-toggle {
-    display: none;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.menu-footer ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    gap: 30px;
-}
-
-.menu-footer a {
-    background-color: #0F499A;
-    color: #F8E7A5;
-    text-decoration: none;
-    font-weight: 700;
-    padding: 5px 10px;
-    border-radius: 4px;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.menu-footer a:hover {
-    background-color: #F8E7A5;
-    color: #0F499A;
-}
-
-/* Ajustes para móviles */
-@media (max-width: 600px) {
-    .footer-menu-toggle {
-        display: block;
-    }
-
-    .menu-footer ul {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        bottom: 60px;
-        left: 0;
-        width: 100%;
-        background: #0F499A;
-        padding: 0;
-        text-align: center;
-    }
-
-    .menu-footer ul.active {
-        display: flex;
-    }
-
-    .menu-footer a {
-        padding: 15px;
-        border-top: 1px solid #444;
-    }
-}
 
 .callout-verde {
     border: 2px solid #f3dc0a;
@@ -302,7 +240,7 @@ color: white;
 font-size: 20px;
 cursor: pointer;
 margin-left: 10px;
-padding: 5px;
+padding: 0 5px;
 border-radius: 50%;
 transition: transform 0.2s;
 }
