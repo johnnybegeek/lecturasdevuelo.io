@@ -1,10 +1,10 @@
 // Constantes de texto para las páginas
 const TEXT_CONSTANTS = {
-  departures: "Departures prueba",
-  arrivals: "Arrivals prueba",
-  navdata: "NavData prueba",
-  hub: "Hub prueba",
-  who: "Who prueba"
+  departures: "Blog y enlaces a <a href="/games/roguelike/gaccrl.html">juegos</a>. Un espacio de ideas y reflexiones en marcha.</p>",
+  arrivals: "Asuntos completados o archivados, por si buscas inspiración.",
+  navdata: "Recursos online que me resultan útiles y que quizás también pueden servirte.",
+  hub: "Áreas temáticas que más me interesan.",
+  who: "Quién está detrás de todo esto."
 };
 
 // Función para aplicar las constantes a los elementos con clase 'callout-verde'
