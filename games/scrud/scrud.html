@@ -306,25 +306,46 @@
             let defeats1 = 0; // Derrotas del ejército 1 (cuando el dado del ejército 2 es mayor)
             let defeats2 = 0; // Derrotas del ejército 2 (cuando el dado del ejército 1 es mayor)
             
-            // Determinar el mínimo de dados a comparar
-            const minLength = Math.min(army1Dice.length, army2Dice.length);
+            // Determinar el máximo de pares a comparar
+            const maxLength = Math.max(army1Dice.length, army2Dice.length);
+            
+            // Obtener el dado más bajo de cada bando para la regla 4
+            const lowestDice1 = army1Dice.length > 0 ? army1Dice[army1Dice.length - 1] : 0;
+            const lowestDice2 = army2Dice.length > 0 ? army2Dice[army2Dice.length - 1] : 0;
             
             // Comparar por pares
-            for (let i = 0; i < minLength; i++) {
+            for (let i = 0; i < maxLength; i++) {
                 const dice1 = army1Dice[i];
                 const dice2 = army2Dice[i];
                 
                 const resultElement = document.createElement('div');
                 resultElement.className = 'result-item';
                 
-                if (dice1 > dice2) {
-                    resultElement.innerHTML = `<span class="winner">🟢 ${dice1}</span> vs <span class="loser">🔴 ${dice2}</span> - Victoria Jugador 1`;
-                    defeats2++;
-                } else if (dice2 > dice1) {
-                    resultElement.innerHTML = `<span class="loser">🟢 ${dice1}</span> vs <span class="winner">🔴 ${dice2}</span> - Victoria Jugador 2`;
-                    defeats1++;
-                } else {
-                    resultElement.innerHTML = `<span class="draw">🟢 ${dice1}</span> vs <span class="draw">🔴 ${dice2}</span> - Empate (se ignora)`;
+                // Caso A: Ambos bandos tienen dados disponibles para este par
+                if (dice1 !== undefined && dice2 !== undefined) {
+                    if (dice1 > dice2) {
+                        resultElement.innerHTML = `<span class="winner">🟢 ${dice1}</span> vs <span class="loser">🔴 ${dice2}</span> - Victoria Jugador 1`;
+                        defeats2++;
+                    } else if (dice2 > dice1) {
+                        resultElement.innerHTML = `<span class="loser">🟢 ${dice1}</span> vs <span class="winner">🔴 ${dice2}</span> - Victoria Jugador 2`;
+                        defeats1++;
+                    } else {
+                        resultElement.innerHTML = `<span class="draw">🟢 ${dice1}</span> vs <span class="draw">🔴 ${dice2}</span> - Empate (se ignora)`;
+                    }
+                }
+                // Caso B: Dados sobrantes de un bando
+                else {
+                    const isExtraArmy1 = dice1 !== undefined;
+                    const extraDiceValue = isExtraArmy1 ? dice1 : dice2;
+                    const armyLabel = isExtraArmy1 ? "Jugador 1" : "Jugador 2";
+                    const enemyLowestDice = isExtraArmy1 ? lowestDice2 : lowestDice1;
+                    
+                    // REGLA 4: Ignorar dados sobrantes si su puntuación es menor que el dado más bajo del bando contrario
+                    if (extraDiceValue < enemyLowestDice) {
+                        resultElement.innerHTML = `<span class="draw">Dado extra ${armyLabel} (${extraDiceValue})</span> - Ignorado (menor que el más bajo enemigo: ${enemyLowestDice})`;
+                    } else {
+                        resultElement.innerHTML = `<span class="draw">Dado extra ${armyLabel} (${extraDiceValue})</span> - Remanente táctico (sin par para resolver)`;
+                    }
                 }
                 
                 comparisonResults.appendChild(resultElement);
