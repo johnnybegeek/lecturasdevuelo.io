@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roguelike ASCII - Versión Accesible</title>
+    <!-- Metadatos de la página -->
+    <title>Lecturas de Vuelo: Roguelike ASCII</title> <!-- Título de la página que aparece en la pestaña del navegador -->
+    <meta charset="utf-8"> <!-- Define la codificación de caracteres para la página -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Configura la vista para dispositivos móviles -->
+    <link rel="stylesheet" href="../../css/estilo.css"> <!-- Enlace al archivo de estilos CSS -->
     <style>
+        /* Estilos específicos para el juego Roguelike ASCII */
         :root {
             --bg-color: #000;
             --text-color: #fff;
@@ -16,15 +19,10 @@
             --focus-outline: 2px solid #0f0;
         }
 
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
+        .roguelike-container {
             background-color: var(--bg-color);
             color: var(--text-color);
             font-family: "Courier New", monospace;
-            margin: 0;
             padding: 20px;
             display: flex;
             flex-direction: column;
@@ -32,23 +30,18 @@
             min-height: 100vh;
         }
 
-        header {
+        .roguelike-header {
             text-align: center;
             margin-bottom: 20px;
         }
 
-        h1 {
-            font-size: 2rem;
-            margin: 0 0 10px 0;
-        }
-
-        main {
+        .roguelike-main {
             width: 100%;
             max-width: 1000px;
             display: flex;
             flex-direction: row;
             align-items: flex-start;
-            justify-content: center; /* Centra el contenido en pantallas grandes */
+            justify-content: center;
             gap: 20px;
             flex-wrap: wrap;
         }
@@ -61,8 +54,6 @@
             padding: 15px;
             border: 2px solid var(--border-color);
             border-radius: 4px;
-
-            /* CORRECCIÓN DE ANCHO AQUÍ */
             flex: 0 0 auto;
             width: fit-content;
             overflow: hidden;
@@ -85,7 +76,7 @@
             border: 0;
         }
 
-        .controls {
+        .roguelike-controls {
             flex: 1;
             min-width: 250px;
             display: flex;
@@ -94,32 +85,32 @@
             color: #ccc;
         }
 
-        .controls p {
+        .roguelike-controls p {
             margin: 0 0 10px 0;
             font-size: 1rem;
             text-align: left;
         }
 
-        .instructions {
+        .roguelike-instructions {
             background-color: #1a1a1a;
             padding: 15px;
             border-radius: 4px;
             border: 1px solid var(--border-color);
         }
 
-        .instructions h2 {
+        .roguelike-instructions h2 {
             font-size: 1.2rem;
             margin-top: 0;
             color: var(--text-color);
         }
 
-        .instructions ul {
+        .roguelike-instructions ul {
             list-style: none;
             padding: 0;
             margin: 10px 0 0 0;
         }
 
-        .instructions li {
+        .roguelike-instructions li {
             padding: 5px 0;
         }
 
@@ -158,19 +149,19 @@
                 --exit-color: #ff0000;
                 --border-color: #fff;
             }
-            body { background-color: var(--bg-color); color: var(--text-color); }
+            .roguelike-container { background-color: var(--bg-color); color: var(--text-color); }
             #game { background-color: var(--bg-color); border-color: var(--border-color); }
             #position-info {
                 background-color: #000;
                 color: #fff;
                 border-color: #fff;
             }
-            .reset-btn {
+            .roguelike-reset-btn {
                 background-color: #000;
                 color: #fff;
                 border-color: #fff;
             }
-            .reset-btn:hover {
+            .roguelike-reset-btn:hover {
                 background-color: #fff;
                 color: #000;
             }
@@ -186,21 +177,21 @@
                 --exit-color: #cc0000;
                 --border-color: #333;
             }
-            body { background-color: var(--bg-color); color: var(--text-color); }
+            .roguelike-container { background-color: var(--bg-color); color: var(--text-color); }
             #game { background-color: #e0e0e0; border-color: var(--border-color); }
-            .controls { color: #333; }
-            .instructions { background-color: #e0e0e0; border-color: var(--border-color); }
+            .roguelike-controls { color: #333; }
+            .roguelike-instructions { background-color: #e0e0e0; border-color: var(--border-color); }
             #position-info {
                 background-color: #d0d0d0;
                 color: #333;
                 border-color: #666;
             }
-            .reset-btn {
+            .roguelike-reset-btn {
                 background-color: #d0d0d0;
                 color: #333;
                 border-color: #666;
             }
-            .reset-btn:hover {
+            .roguelike-reset-btn:hover {
                 background-color: #c0c0c0;
             }
         }
@@ -210,15 +201,10 @@
         }
 
         @media (max-width: 600px) {
-            #game { font-size: 14px; } /* Ajustado levemente para pantallas muy pequeñas */
-            h1 { font-size: 1.5rem; }
+            #game { font-size: 14px; }
         }
 
-        button:focus, a:focus, input:focus, select:focus, textarea:focus {
-            outline: var(--focus-outline);
-        }
-
-        .reset-btn {
+        .roguelike-reset-btn {
             background-color: #3a3a3a;
             color: #fff;
             border: 1px solid #555;
@@ -229,10 +215,10 @@
             margin-top: 10px;
             transition: background-color 0.2s;
         }
-        .reset-btn:hover { background-color: #4a4a4a; }
-        .reset-btn:focus { outline: var(--focus-outline); }
+        .roguelike-reset-btn:hover { background-color: #4a4a4a; }
+        .roguelike-reset-btn:focus { outline: var(--focus-outline); }
 
-        .victory-message {
+        .roguelike-victory-message {
             position: fixed;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
@@ -245,9 +231,9 @@
             z-index: 1000;
             max-width: 80%;
         }
-        .victory-message h2 { color: var(--player-color); margin-top: 0; }
-        .victory-message p { margin-bottom: 20px; }
-        .victory-message button {
+        .roguelike-victory-message h2 { color: var(--player-color); margin-top: 0; }
+        .roguelike-victory-message p { margin-bottom: 20px; }
+        .roguelike-victory-message button {
             background-color: var(--player-color);
             color: var(--bg-color);
             border: none;
@@ -256,7 +242,7 @@
             cursor: pointer;
             border-radius: 4px;
         }
-        .victory-message button:focus { outline: var(--focus-outline); }
+        .roguelike-victory-message button:focus { outline: var(--focus-outline); }
 
         #position-info {
             background-color: #2a2a2a;
@@ -270,57 +256,111 @@
         }
 
         @media (max-width: 768px) {
-            main { flex-direction: column; align-items: center; }
-            .controls { width: 100%; text-align: center; }
-            .controls p { text-align: center; }
+            .roguelike-main { flex-direction: column; align-items: center; }
+            .roguelike-controls { width: 100%; text-align: center; }
+            .roguelike-controls p { text-align: center; }
         }
     </style>
 </head>
+
 <body>
-    <header>
-        <h1>Roguelike ASCII</h1>
-        <p id="status-message" class="screen-reader-only" aria-live="polite" aria-atomic="true">
-            Juego de exploración. Usa las teclas de flecha o WASD para moverte.
-        </p>
+    <!-- Cabecera con logotipo y título -->
+    <div class="logo-header">
+        <a href="/index.html"><img src="../../paginas/imagenes/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="logo-img"></a> <!-- Logotipo del sitio -->
+        <h1>Roguelike ASCII</h1> <!-- Título principal de esta página -->
+    </div>
+    <p>Lecturas de vuelo: Artículos a baja altitud</p> <!-- Título de la web + Eslogan del sitio -->
+
+    <!-- Barra de navegación superior fija -->
+    <header class="header-fijo">
+        <nav class="menu-principal">
+            <!-- Lista de enlaces de navegación (se oculta en móvil) -->
+            <ul>
+                <li><a href="/paginas/departures.html">Departures</a></li>
+                <li><a href="/paginas/arrivals.html">Arrivals</a></li>
+                <li><a href="/paginas/navdata.html">NavData</a></li>
+                <li><a href="/paginas/hub.html">Hub</a></li>
+                <li><a href="/paginas/pruebas.html">Who</a></li>
+            </ul>
+            <!-- Botones de control: tema y menú hamburguesa (siempre visibles) -->
+            <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+            <button id="theme-toggle" aria-label="Alternar entre modo día y noche" aria-pressed="false"><span aria-hidden="true">🌙</span></button>
+        </nav>
     </header>
 
-    <main>
-        <div id="game"
-             role="application"
-             aria-label="Mapa del juego. Usa las teclas de flecha o WASD para moverte."
-             tabindex="0">
-        </div>
-
-        <section class="controls">
-            <div id="position-info" aria-live="polite">
-                Posición: Fila 1, Columna 1
-            </div>
-
-            <p><strong>Controles:</strong> Usa las teclas de flecha (↑ ↓ ← →) o WASD para moverte.</p>
-
-            <div class="instructions">
-                <h2>Instrucciones</h2>
-                <ul>
-                    <li><strong>@</strong> - Tú (jugador)</li>
-                    <li><strong>#</strong> - Pared (no puedes pasar)</li>
-                    <li><strong>.</strong> - Suelo (puedes caminar)</li>
-                    <li><strong>&gt;</strong> - Salida (¡Encuéntrala para ganar!)</li>
-                </ul>
-            </div>
-
-            <button class="reset-btn" id="reset-btn" aria-label="Reiniciar el juego">
-                Reiniciar Juego
-            </button>
-        </section>
-    </main>
-
-    <div id="victory-modal" class="victory-message" role="alertdialog" aria-labelledby="victory-title" aria-modal="true" style="display: none;">
-        <h2 id="victory-title">¡Nivel Completado!</h2>
-        <p>Has encontrado la salida. ¿Quieres jugar de nuevo?</p>
-        <button id="continue-btn" autofocus>Continuar</button>
+    <!-- callout para resumir la sección -->
+    <div class="callout-verde">
+        <p> Juego Roguelike ASCII accesible.
+        <br> Usa las teclas de flecha (↑ ↓ ← →) o WASD para moverte y encuentra la salida.
+        </p>
     </div>
 
+    <!-- Contenido principal del juego -->
+    <div class="roguelike-container">
+        <div class="roguelike-header">
+            <p id="status-message" class="screen-reader-only" aria-live="polite" aria-atomic="true">
+                Juego de exploración. Usa las teclas de flecha o WASD para moverte.
+            </p>
+        </div>
+
+        <div class="roguelike-main">
+            <div id="game"
+                 role="application"
+                 aria-label="Mapa del juego. Usa las teclas de flecha o WASD para moverte."
+                 tabindex="0">
+            </div>
+
+            <section class="roguelike-controls">
+                <div id="position-info" aria-live="polite">
+                    Posición: Fila 1, Columna 1
+                </div>
+
+                <p><strong>Controles:</strong> Usa las teclas de flecha (↑ ↓ ← →) o WASD para moverte.</p>
+
+                <div class="roguelike-instructions">
+                    <h2>Instrucciones</h2>
+                    <ul>
+                        <li><strong>@</strong> - Tú (jugador)</li>
+                        <li><strong>#</strong> - Pared (no puedes pasar)</li>
+                        <li><strong>.</strong> - Suelo (puedes caminar)</li>
+                        <li><strong>&gt;</strong> - Salida (¡Encuéntrala para ganar!)</li>
+                    </ul>
+                </div>
+
+                <button class="roguelike-reset-btn" id="reset-btn" aria-label="Reiniciar el juego">
+                    Reiniciar Juego
+                </button>
+            </section>
+        </div>
+
+        <div id="victory-modal" class="roguelike-victory-message" role="alertdialog" aria-labelledby="victory-title" aria-modal="true" style="display: none;">
+            <h2 id="victory-title">¡Nivel Completado!</h2>
+            <p>Has encontrado la salida. ¿Quieres jugar de nuevo?</p>
+            <button id="continue-btn" autofocus>Continuar</button>
+        </div>
+    </div>
+
+    <!-- Scripts para la funcionalidad del menú y el tema -->
     <script>
+        /* Menú hamburguesa: alterna la visibilidad del menú de enlaces en móvil */
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.menu-principal ul').classList.toggle('active');
+        });
+
+        /* Botón de tema (día/noche): alterna entre modo claro y oscuro */
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                /* Cambiar el emoji del botón según el estado del tema */
+                const isDark = document.body.classList.contains('dark-mode');
+                this.querySelector('span').textContent = isDark ? '☀️' : '🌙';
+                /* Actualizar el estado aria-pressed para accesibilidad */
+                this.setAttribute('aria-pressed', isDark);
+            });
+        }
+
+        /* Funcionalidad del juego Roguelike ASCII */
         const WIDTH = 25;
         const HEIGHT = 15;
         let playerX = 1;
