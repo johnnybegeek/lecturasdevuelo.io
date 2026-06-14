@@ -9,7 +9,7 @@ Este documento describe los pasos seguidos para crear el juego **Maravia: Genera
 
 ### 1. **Estructura del Proyecto**
 - Se creó una carpeta llamada `Maravia` dentro del directorio `games/` del repositorio `lecturasdevuelo.io`.
-- Dentro de esta carpeta, se generó el archivo `index.html`, que contiene el código HTML, CSS y JavaScript del juego.
+- Dentro de esta carpeta, se generó el archivo `maravia.html`, que contiene el código HTML, CSS y JavaScript del juego.
 
 ### 2. **Diseño de la Interfaz (HTML)**
 - Se diseñó una interfaz simple con:
@@ -49,7 +49,7 @@ Este documento describe los pasos seguidos para crear el juego **Maravia: Genera
 - Se añadió un enlace al juego en la página `games/juegos.html`:
   ```html
   <h2>Maravia</h2>
-  <a href="/games/Maravia/index.html">Generador de palabras aleatorias</a>
+  <a href="/games/Maravia/maravia.html">Generador de palabras aleatorias</a>
   ```
 
 ### 7. **Pruebas**
@@ -69,8 +69,8 @@ Este documento describe los pasos seguidos para crear el juego **Maravia: Genera
 ---
 
 ## Ruta del Juego
-- **URL Relativa**: `/games/Maravia/index.html`
-- **Ubicación en el Repositorio**: [`games/Maravia/index.html`](./index.html)
+- **URL Relativa**: `/games/Maravia/maravia.html`
+- **Ubicación en el Repositorio**: [`games/Maravia/maravia.html`](./maravia.html)
 
 ---
 
