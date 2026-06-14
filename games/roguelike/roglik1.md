@@ -114,3 +114,15 @@ Este documento describe los pasos seguidos para crear el juego **Roglik1: Roguel
   - Objetos para recolectar.
   - Múltiples niveles.
   - Guardado de progreso.
+
+---
+
+## Tareas Pendientes
+
+### Ajustar roglik1
+- Hay que incluirlo en una página canónica de lecturas de vuelo.
+- Hay que cambiar los colores del mensaje de victoria, no se ven nada bien.
+
+### Más versiones de roglik1
+- Añadir algún enemigo que persiga al jugador.
+- Añadir que siempre haya un punto rodeado por 4 paredes ortogonales. El jugador debe golpearlas 2-3 veces para romperlas y conseguir la llave. En ese momento aparece la puerta de salida.
