@@ -7,47 +7,19 @@ const TEXT_CONSTANTS = {
   who: "Quién está detrás de todo esto."
 };
 
-// Función para aplicar las constantes a los elementos con clase 'callout-verde'
-function applyConstantsToCallouts() {
-  const callouts = document.querySelectorAll('.callout-verde');
-  const pageName = document.querySelector('h1').textContent.trim();
-  
-  callouts.forEach(callout => {
-    const p = callout.querySelector('p');
-    if (p && TEXT_CONSTANTS[pageName.toLowerCase()]) {
-      p.innerHTML = TEXT_CONSTANTS[pageName.toLowerCase()];
-    }
-  });
-}
+// Función genérica para aplicar los textos definidos en TEXT_CONSTANTS
+function applyTextConstants() {
+  // Selecciona todos los elementos con el atributo `data-text-key`
+  const elements = document.querySelectorAll('[data-text-key]');
 
-// Función para aplicar las constantes a los párrafos de index.html
-function applyConstantsToIndex() {
-  const descriptions = document.querySelectorAll('main p');
-  const mappings = {
-    'Departures': TEXT_CONSTANTS.departures,
-    'Arrivals': TEXT_CONSTANTS.arrivals,
-    'NavData': TEXT_CONSTANTS.navdata,
-    'Hub': TEXT_CONSTANTS.hub,
-    'Who': TEXT_CONSTANTS.who
-  };
-  
-  descriptions.forEach(p => {
-    const h2 = p.previousElementSibling;
-    if (h2 && h2.tagName === 'H2') {
-      const title = h2.querySelector('a').textContent.trim();
-      if (mappings[title]) {
-        p.textContent = mappings[title];
-      }
+  elements.forEach(element => {
+    const key = element.getAttribute('data-text-key');
+    if (TEXT_CONSTANTS[key]) {
+      // Reemplaza el contenido del elemento con el texto correspondiente
+      element.textContent = TEXT_CONSTANTS[key];
     }
   });
 }
 
 // Aplicar las constantes al cargar la página
-document.addEventListener('DOMContentLoaded', function() {
-  if (document.querySelector('.callout-verde')) {
-    applyConstantsToCallouts();
-  }
-  if (document.querySelector('main p')) {
-    applyConstantsToIndex();
-  }
-});
+document.addEventListener('DOMContentLoaded', applyTextConstants);
