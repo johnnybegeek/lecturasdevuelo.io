@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Metadatos de la página -->
+    <title>Lecturas de Vuelo: S.C.R.U.D.</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/estilo.css">
+    <style>
+        /* Estilos específicos para S.C.R.U.D. */
+        .game-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: var(--bg-secondary, #f5f5f5);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .dark-mode .game-container {
+            background-color: var(--bg-secondary-dark, #2a2a2a);
+        }
+        .army-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid var(--border-color, #ddd);
+            border-radius: 5px;
+        }
+        .dark-mode .army-section {
+            border-color: var(--border-color-dark, #444);
+        }
+        .army-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--text-primary, #333);
+        }
+        .dark-mode .army-title {
+            color: var(--text-primary-dark, #eee);
+        }
+        .dice-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .dice {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            background-color: var(--dice-bg, #fff);
+            border: 2px solid var(--dice-border, #333);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .dark-mode .dice {
+            background-color: var(--dice-bg-dark, #333);
+            border-color: var(--dice-border-dark, #fff);
+            color: var(--text-primary-dark, #eee);
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: var(--btn-bg, #4CAF50);
+            color: var(--btn-text, #fff);
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: var(--btn-hover, #45a049);
+        }
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: var(--results-bg, #e8f5e9);
+            border-radius: 5px;
+        }
+        .dark-mode .results {
+            background-color: var(--results-bg-dark, #1e3d2a);
+        }
+        .result-item {
+            margin: 5px 0;
+            padding: 5px;
+        }
+        .winner {
+            font-weight: bold;
+            color: var(--winner-color, #2E7D32);
+        }
+        .loser {
+            font-weight: bold;
+            color: var(--loser-color, #D32F2F);
+        }
+        .draw {
+            font-style: italic;
+            color: var(--draw-color, #666);
+        }
+        .dark-mode .winner {
+            color: var(--winner-color-dark, #81C784);
+        }
+        .dark-mode .loser {
+            color: var(--loser-color-dark, #EF9A9A);
+        }
+        .dark-mode .draw {
+            color: var(--draw-color-dark, #aaa);
+        }
+        .summary {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: var(--summary-bg, #fff3e0);
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .dark-mode .summary {
+            background-color: var(--summary-bg-dark, #3a2e1e);
+        }
+        input[type="number"] {
+            padding: 8px;
+            width: 60px;
+            text-align: center;
+            border: 1px solid var(--input-border, #ccc);
+            border-radius: 4px;
+            background-color: var(--input-bg, #fff);
+            color: var(--input-text, #333);
+        }
+        .dark-mode input[type="number"] {
+            border-color: var(--input-border-dark, #555);
+            background-color: var(--input-bg-dark, #444);
+            color: var(--input-text-dark, #eee);
+        }
+        .label {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .unit-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Cabecera con logotipo y título -->
+    <div class="logo-header">
+        <a href="/index.html"><img src="../../paginas/imagenes/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="logo-img"></a>
+        <h1>S.C.R.U.D.</h1>
+    </div>
+    <p>Lecturas de vuelo: Artículos a baja altitud</p>
+
+    <!-- Barra de navegación superior fija -->
+    <header class="header-fijo">
+        <nav class="menu-principal">
+            <!-- Lista de enlaces de navegación (se oculta en móvil) -->
+            <ul>
+                <li><a href="/paginas/departures.html">Departures</a></li>
+                <li><a href="/paginas/arrivals.html">Arrivals</a></li>
+                <li><a href="/paginas/navdata.html">NavData</a></li>
+                <li><a href="/paginas/hub.html">Hub</a></li>
+                <li><a href="/paginas/pruebas.html">Who</a></li>
+            </ul>
+            <!-- Botones de control: tema y menú hamburguesa (siempre visibles) -->
+            <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+            <button id="theme-toggle" aria-label="Alternar entre modo día y noche" aria-pressed="false"><span aria-hidden="true">🌙</span></button>
+        </nav>
+    </header>
+
+    <!-- callout para resumir la sección -->
+    <div class="callout-verde">
+        <p> S.C.R.U.D. (Simple Combat Resolution Using Dice) - Resuelve combates rápidamente tirando dados.
+        <br> 1 dado de 6 caras = 1 unidad de combate. Cada 3 derrotas eliminan 1 unidad enemiga.
+        </p>
+    </div>
+
+    <!-- Contenido principal de la página -->
+    <main>
+        <div class="game-container">
+            <h2>Configuración del Combate</h2>
+            
+            <div class="unit-info">
+                <div>
+                    <label class="label" for="army1-units">Unidades Jugador 1:</label>
+                    <input type="number" id="army1-units" min="1" max="20" value="5">
+                </div>
+                <div>
+                    <label class="label" for="army2-units">Unidades Jugador 2:</label>
+                    <input type="number" id="army2-units" min="1" max="20" value="5">
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button id="roll-btn">🎲 Tirar Dados</button>
+                <button id="reset-btn">🔄 Reiniciar</button>
+            </div>
+            
+            <div class="army-section">
+                <h3 class="army-title">🟢 Jugador 1</h3>
+                <div class="dice-container" id="army1-dice"></div>
+                <div class="unit-info">
+                    <span>Unidades restantes: <strong id="army1-remaining">5</strong></span>
+                    <span>Derrotas: <strong id="army1-defeats">0</strong></span>
+                    <span>Unidades eliminadas: <strong id="army1-lost">0</strong></span>
+                </div>
+            </div>
+            
+            <div class="army-section">
+                <h3 class="army-title">🔴 Jugador 2</h3>
+                <div class="dice-container" id="army2-dice"></div>
+                <div class="unit-info">
+                    <span>Unidades restantes: <strong id="army2-remaining">5</strong></span>
+                    <span>Derrotas: <strong id="army2-defeats">0</strong></span>
+                    <span>Unidades eliminadas: <strong id="army2-lost">0</strong></span>
+                </div>
+            </div>
+            
+            <div class="results" id="results">
+                <h3>Resultados de la Comparación</h3>
+                <div id="comparison-results"></div>
+            </div>
+            
+            <div class="summary" id="summary">
+                <h3>Resumen del Combate</h3>
+                <p id="summary-text">Configura las unidades y haz clic en "Tirar Dados" para comenzar.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts para la funcionalidad del juego -->
+    <script>
+        // Elementos del DOM
+        const rollBtn = document.getElementById('roll-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const army1UnitsInput = document.getElementById('army1-units');
+        const army2UnitsInput = document.getElementById('army2-units');
+        const army1DiceContainer = document.getElementById('army1-dice');
+        const army2DiceContainer = document.getElementById('army2-dice');
+        const comparisonResults = document.getElementById('comparison-results');
+        const summaryText = document.getElementById('summary-text');
+        
+        const army1Remaining = document.getElementById('army1-remaining');
+        const army2Remaining = document.getElementById('army2-remaining');
+        const army1Defeats = document.getElementById('army1-defeats');
+        const army2Defeats = document.getElementById('army2-defeats');
+        const army1Lost = document.getElementById('army1-lost');
+        const army2Lost = document.getElementById('army2-lost');
+        
+        // Estado del juego
+        let army1Dice = [];
+        let army2Dice = [];
+        
+        // Función para tirar los dados
+        function rollDice() {
+            const army1Units = parseInt(army1UnitsInput.value) || 1;
+            const army2Units = parseInt(army2UnitsInput.value) || 1;
+            
+            // Limpiar resultados anteriores
+            army1Dice = [];
+            army2Dice = [];
+            comparisonResults.innerHTML = '';
+            
+            // Tirar dados para cada ejército
+            for (let i = 0; i < army1Units; i++) {
+                army1Dice.push(Math.floor(Math.random() * 6) + 1);
+            }
+            for (let i = 0; i < army2Units; i++) {
+                army2Dice.push(Math.floor(Math.random() * 6) + 1);
+            }
+            
+            // Ordenar de mayor a menor
+            army1Dice.sort((a, b) => b - a);
+            army2Dice.sort((a, b) => b - a);
+            
+            // Mostrar los dados
+            displayDice(army1DiceContainer, army1Dice, 'army1');
+            displayDice(army2DiceContainer, army2Dice, 'army2');
+            
+            // Comparar los dados
+            compareDice();
+        }
+        
+        // Función para mostrar los dados
+        function displayDice(container, dice, army) {
+            container.innerHTML = '';
+            dice.forEach((value, index) => {
+                const diceElement = document.createElement('div');
+                diceElement.className = 'dice';
+                diceElement.textContent = value;
+                diceElement.id = `${army}-dice-${index}`;
+                container.appendChild(diceElement);
+            });
+        }
+        
+        // Función para comparar los dados según las reglas S.C.R.U.D.
+        function compareDice() {
+            // Resetear contadores
+            let defeats1 = 0; // Derrotas del ejército 1 (cuando el dado del ejército 2 es mayor)
+            let defeats2 = 0; // Derrotas del ejército 2 (cuando el dado del ejército 1 es mayor)
+            
+            // Determinar el máximo de pares a comparar
+            const maxLength = Math.max(army1Dice.length, army2Dice.length);
+            
+            // Obtener el dado más bajo de cada bando para la regla 4
+            const lowestDice1 = army1Dice.length > 0 ? army1Dice[army1Dice.length - 1] : 0;
+            const lowestDice2 = army2Dice.length > 0 ? army2Dice[army2Dice.length - 1] : 0;
+            
+            // Comparar por pares
+            for (let i = 0; i < maxLength; i++) {
+                const dice1 = army1Dice[i];
+                const dice2 = army2Dice[i];
+                
+                const resultElement = document.createElement('div');
+                resultElement.className = 'result-item';
+                
+                // Caso A: Ambos bandos tienen dados disponibles para este par
+                if (dice1 !== undefined && dice2 !== undefined) {
+                    if (dice1 > dice2) {
+                        resultElement.innerHTML = `<span class="winner">🟢 ${dice1}</span> vs <span class="loser">🔴 ${dice2}</span> - Victoria Jugador 1`;
+                        defeats2++;
+                    } else if (dice2 > dice1) {
+                        resultElement.innerHTML = `<span class="loser">🟢 ${dice1}</span> vs <span class="winner">🔴 ${dice2}</span> - Victoria Jugador 2`;
+                        defeats1++;
+                    } else {
+                        resultElement.innerHTML = `<span class="draw">🟢 ${dice1}</span> vs <span class="draw">🔴 ${dice2}</span> - Empate (se ignora)`;
+                    }
+                }
+                // Caso B: Dados sobrantes de un bando
+                else {
+                    const isExtraArmy1 = dice1 !== undefined;
+                    const extraDiceValue = isExtraArmy1 ? dice1 : dice2;
+                    const armyLabel = isExtraArmy1 ? "Jugador 1" : "Jugador 2";
+                    const enemyLowestDice = isExtraArmy1 ? lowestDice2 : lowestDice1;
+                    
+                    // REGLA 4: Ignorar dados sobrantes si su puntuación es menor que el dado más bajo del bando contrario
+                    if (extraDiceValue < enemyLowestDice) {
+                        resultElement.innerHTML = `<span class="draw">Dado extra ${armyLabel} (${extraDiceValue})</span> - Ignorado (menor que el más bajo enemigo: ${enemyLowestDice})`;
+                    } else {
+                        resultElement.innerHTML = `<span class="draw">Dado extra ${armyLabel} (${extraDiceValue})</span> - Remanente táctico (sin par para resolver)`;
+                    }
+                }
+                
+                comparisonResults.appendChild(resultElement);
+            }
+            
+            // Calcular unidades eliminadas (cada 3 derrotas = 1 unidad eliminada)
+            const unitsLost1 = Math.floor(defeats1 / 3);
+            const unitsLost2 = Math.floor(defeats2 / 3);
+            
+            // Actualizar estadísticas
+            const initialUnits1 = parseInt(army1UnitsInput.value) || 1;
+            const initialUnits2 = parseInt(army2UnitsInput.value) || 1;
+            
+            army1Remaining.textContent = initialUnits1 - unitsLost1;
+            army2Remaining.textContent = initialUnits2 - unitsLost2;
+            army1Defeats.textContent = defeats1;
+            army2Defeats.textContent = defeats2;
+            army1Lost.textContent = unitsLost1;
+            army2Lost.textContent = unitsLost2;
+            
+            // Mostrar resumen
+            updateSummary(initialUnits1, initialUnits2, unitsLost1, unitsLost2, defeats1, defeats2);
+        }
+        
+        // Función para actualizar el resumen
+        function updateSummary(initial1, initial2, lost1, lost2, defeats1, defeats2) {
+            const remaining1 = initial1 - lost1;
+            const remaining2 = initial2 - lost2;
+            
+            let summary = `<strong>Resultado:</strong> `;
+            
+            if (remaining1 > remaining2) {
+                summary += `🟢 Jugador 1 GANÓ con ${remaining1} unidades restantes vs ${remaining2} del Jugador 2.`;
+            } else if (remaining2 > remaining1) {
+                summary += `🔴 Jugador 2 GANÓ con ${remaining2} unidades restantes vs ${remaining1} del Jugador 1.`;
+            } else {
+                summary += `🤝 EMPATE - Ambos jugadores tienen ${remaining1} unidades restantes.`;
+            }
+            
+            summary += `<br><br><strong>Detalles:</strong>`;
+            summary += `<br>🟢 Jugador 1: ${initial1} unidades iniciales, ${lost1} eliminadas (${defeats1} derrotas)`;
+            summary += `<br>🔴 Jugador 2: ${initial2} unidades iniciales, ${lost2} eliminadas (${defeats2} derrotas)`;
+            
+            summaryText.innerHTML = summary;
+        }
+        
+        // Función para reiniciar el juego
+        function resetGame() {
+            army1Dice = [];
+            army2Dice = [];
+            army1DiceContainer.innerHTML = '';
+            army2DiceContainer.innerHTML = '';
+            comparisonResults.innerHTML = '';
+            
+            const initialUnits1 = parseInt(army1UnitsInput.value) || 1;
+            const initialUnits2 = parseInt(army2UnitsInput.value) || 1;
+            
+            army1Remaining.textContent = initialUnits1;
+            army2Remaining.textContent = initialUnits2;
+            army1Defeats.textContent = '0';
+            army2Defeats.textContent = '0';
+            army1Lost.textContent = '0';
+            army2Lost.textContent = '0';
+            
+            summaryText.innerHTML = 'Configura las unidades y haz clic en "Tirar Dados" para comenzar.';
+        }
+        
+        // Event listeners
+        rollBtn.addEventListener('click', rollDice);
+        resetBtn.addEventListener('click', resetGame);
+        
+        // Inicializar el juego
+        resetGame();
+    </script>
+
+    <!-- Scripts para la funcionalidad del menú y el tema -->
+    <script>
+        /* Menú hamburguesa: alterna la visibilidad del menú de enlaces en móvil */
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.menu-principal ul').classList.toggle('active');
+        });
+
+        /* Botón de tema (día/noche): alterna entre modo claro y oscuro */
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                /* Cambiar el emoji del botón según el estado del tema */
+                const isDark = document.body.classList.contains('dark-mode');
+                this.querySelector('span').textContent = isDark ? '☀️' : '🌙';
+                /* Actualizar el estado aria-pressed para accesibilidad */
+                this.setAttribute('aria-pressed', isDark);
+            });
+        }
+    </script>
+</body>
+</html>
