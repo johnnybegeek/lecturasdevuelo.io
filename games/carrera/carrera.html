@@ -145,8 +145,8 @@
         }
 
         .cell {
-            width: 30px;
-            height: 30px;
+            width: 50px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -303,11 +303,15 @@
         }
 
         .cell-number {
-            font-size: 0.6em;
-            color: #666;
             position: absolute;
-            bottom: 2px;
-            right: 2px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5em;
+            color: #333;
+            z-index: 0;
+            opacity: 0.3;
+            pointer-events: none;
         }
 
         @media (max-width: 768px) {
@@ -324,9 +328,13 @@
             }
             
             .cell {
-                width: 20px;
-                height: 20px;
-                font-size: 0.8em;
+                width: 35px;
+                height: 35px;
+                font-size: 1em;
+            }
+            
+            .cell-number {
+                font-size: 1.2em;
             }
         }
     </style>
@@ -531,13 +539,11 @@
                     cell.classList.add('empty');
                 }
 
-                // Número de casilla (opcional, para referencia)
-                if (pos % 5 === 0 || pos === 0 || pos === START_POSITION) {
-                    const cellNumber = document.createElement('span');
-                    cellNumber.className = 'cell-number';
-                    cellNumber.textContent = pos;
-                    cell.appendChild(cellNumber);
-                }
+                // Número de casilla en TODAS las casillas
+                const cellNumber = document.createElement('span');
+                cellNumber.className = 'cell-number';
+                cellNumber.textContent = pos;
+                cell.appendChild(cellNumber);
 
                 cell.dataset.position = pos;
                 cell.id = `cell-${pos}`;
