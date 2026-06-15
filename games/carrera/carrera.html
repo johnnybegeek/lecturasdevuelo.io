@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrera Roguelike</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #121212;
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #ffcc00;
+            text-shadow: 0 0 10px #ffcc00;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            text-align: center;
+        }
+
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .input-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            background-color: #1e1e1e;
+            padding: 15px;
+            border: 2px solid #444;
+            border-radius: 5px;
+        }
+
+        .player-inputs {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+        }
+
+        .player-input {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .player-label {
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .player-color {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        input[type="number"] {
+            width: 80px;
+            padding: 8px;
+            background-color: #2a2a2a;
+            color: #fff;
+            border: 1px solid #444;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 1em;
+            text-align: center;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #ffcc00;
+        }
+
+        input[type="number"].hidden {
+            background-color: #333;
+            color: #666;
+            cursor: not-allowed;
+        }
+
+        #engage {
+            width: 200px;
+            padding: 12px 20px;
+            background-color: #ffcc00;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px auto 0;
+            transition: all 0.3s;
+        }
+
+        #engage:hover {
+            background-color: #ffe066;
+            transform: scale(1.05);
+        }
+
+        #engage:disabled {
+            background-color: #444;
+            color: #888;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .board-container {
+            background-color: #1e1e1e;
+            border: 2px solid #444;
+            border-radius: 5px;
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        .board {
+            display: grid;
+            grid-template-rows: repeat(6, 1fr);
+            gap: 2px;
+            min-width: max-content;
+        }
+
+        .track {
+            display: flex;
+            gap: 0;
+            height: 40px;
+            align-items: center;
+        }
+
+        .cell {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #2a2a2a;
+            border: 1px solid #3a3a3a;
+            font-size: 1.2em;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .cell.empty {
+            background-color: #222;
+        }
+
+        .cell.start {
+            background-color: #333;
+            color: #888;
+        }
+
+        .cell.finish {
+            background-color: #333;
+            color: #ff0;
+        }
+
+        .player {
+            position: absolute;
+            font-size: 1.5em;
+            z-index: 10;
+        }
+
+        /* Colores de jugadores */
+        .player-0 { color: #00ff00; text-shadow: 0 0 5px #00ff00; }
+        .player-1 { color: #ffffff; text-shadow: 0 0 5px #ffffff; }
+        .player-2 { color: #ffff00; text-shadow: 0 0 5px #ffff00; }
+        .player-3 { color: #000000; text-shadow: 0 0 5px #ffffff; background-color: #ffffff; }
+        .player-4 { color: #0000ff; text-shadow: 0 0 5px #0000ff; }
+        .player-5 { color: #ff0000; text-shadow: 0 0 5px #ff0000; }
+
+        .scores-section {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            width: 100%;
+            background-color: #1e1e1e;
+            padding: 15px;
+            border: 2px solid #444;
+            border-radius: 5px;
+        }
+
+        .score {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding: 10px;
+            background-color: #2a2a2a;
+            border-radius: 5px;
+        }
+
+        .score-label {
+            font-size: 0.8em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .score-value {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .winner-announcement {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #000;
+            color: #ffcc00;
+            padding: 40px;
+            border: 3px solid #ffcc00;
+            border-radius: 10px;
+            text-align: center;
+            z-index: 1000;
+            display: none;
+        }
+
+        .winner-announcement h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .winner-announcement p {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .winner-player {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        #restart {
+            background-color: #ffcc00;
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        #restart:hover {
+            background-color: #ffe066;
+        }
+
+        .cell-number {
+            font-size: 0.6em;
+            color: #666;
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .player-inputs {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .scores-section {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .cell {
+                width: 20px;
+                height: 20px;
+                font-size: 0.8em;
+            }
+            
+            .track {
+                height: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>CARRERA ROGUELIKE</h1>
+    
+    <div class="game-container">
+        <!-- Sección de entrada de movimientos -->
+        <div class="input-section">
+            <div class="player-inputs">
+                <div class="player-input">
+                    <label class="player-label">
+                        <span class="player-color" style="background-color: #00ff00;"></span>
+                        Jugador 1
+                    </label>
+                    <input type="number" id="move-0" value="0" min="-64" max="64">
+                </div>
+                <div class="player-input">
+                    <label class="player-label">
+                        <span class="player-color" style="background-color: #ffffff; border: 1px solid #888;"></span>
+                        Jugador 2
+                    </label>
+                    <input type="number" id="move-1" value="0" min="-64" max="64">
+                </div>
+                <div class="player-input">
+                    <label class="player-label">
+                        <span class="player-color" style="background-color: #ffff00;"></span>
+                        Jugador 3
+                    </label>
+                    <input type="number" id="move-2" value="0" min="-64" max="64">
+                </div>
+                <div class="player-input">
+                    <label class="player-label">
+                        <span class="player-color" style="background-color: #000000; border: 1px solid #fff;"></span>
+                        Jugador 4
+                    </label>
+                    <input type="number" id="move-3" value="0" min="-64" max="64">
+                </div>
+                <div class="player-input">
+                    <label class="player-label">
+                        <span class="player-color" style="background-color: #0000ff;"></span>
+                        Jugador 5
+                    </label>
+                    <input type="number" id="move-4" value="0" min="-64" max="64">
+                </div>
+                <div class="player-input">
+                    <label class="player-label">
+                        <span class="player-color" style="background-color: #ff0000;"></span>
+                        Jugador 6
+                    </label>
+                    <input type="number" id="move-5" value="0" min="-64" max="64">
+                </div>
+            </div>
+            <button id="engage">¡Vamos!</button>
+        </div>
+
+        <!-- Tablero de juego -->
+        <div class="board-container">
+            <div class="board" id="board"></div>
+        </div>
+
+        <!-- Marcadores de zanahorias -->
+        <div class="scores-section">
+            <div class="score">
+                <div class="score-label">
+                    <span class="player-color" style="background-color: #00ff00;"></span>
+                    Jugador 1
+                </div>
+                <div class="score-value" id="score-0">0</div>
+            </div>
+            <div class="score">
+                <div class="score-label">
+                    <span class="player-color" style="background-color: #ffffff; border: 1px solid #888;"></span>
+                    Jugador 2
+                </div>
+                <div class="score-value" id="score-1">0</div>
+            </div>
+            <div class="score">
+                <div class="score-label">
+                    <span class="player-color" style="background-color: #ffff00;"></span>
+                    Jugador 3
+                </div>
+                <div class="score-value" id="score-2">0</div>
+            </div>
+            <div class="score">
+                <div class="score-label">
+                    <span class="player-color" style="background-color: #000000; border: 1px solid #fff;"></span>
+                    Jugador 4
+                </div>
+                <div class="score-value" id="score-3">0</div>
+            </div>
+            <div class="score">
+                <div class="score-label">
+                    <span class="player-color" style="background-color: #0000ff;"></span>
+                    Jugador 5
+                </div>
+                <div class="score-value" id="score-4">0</div>
+            </div>
+            <div class="score">
+                <div class="score-label">
+                    <span class="player-color" style="background-color: #ff0000;"></span>
+                    Jugador 6
+                </div>
+                <div class="score-value" id="score-5">0</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Anuncio de ganador -->
+    <div class="winner-announcement" id="winner-announcement">
+        <h2>¡JUEGO TERMINADO!</h2>
+        <p>El ganador es:</p>
+        <div class="winner-player" id="winner-player"></div>
+        <p id="winner-details"></p>
+        <button id="restart">Reiniciar Juego</button>
+    </div>
+
+    <script>
+        // Configuración del juego
+        const NUM_PLAYERS = 6;
+        const BOARD_SIZE = 65; // Casillas del 64 al 0
+        const START_POSITION = 64;
+        const FINISH_POSITION = 0;
+
+        // Colores de los jugadores
+        const PLAYER_COLORS = [
+            '#00ff00', // Verde
+            '#ffffff', // Blanco
+            '#ffff00', // Amarillo
+            '#000000', // Negro
+            '#0000ff', // Azul
+            '#ff0000'  // Rojo
+        ];
+
+        // Estado del juego
+        let gameState = {
+            players: [],
+            scores: [],
+            gameOver: false,
+            winner: null
+        };
+
+        // Inicializar el juego
+        function initGame() {
+            // Inicializar jugadores
+            gameState.players = [];
+            gameState.scores = [];
+            gameState.gameOver = false;
+            gameState.winner = null;
+
+            for (let i = 0; i < NUM_PLAYERS; i++) {
+                gameState.players.push({
+                    id: i,
+                    position: START_POSITION,
+                    color: PLAYER_COLORS[i],
+                    symbol: '@'
+                });
+                gameState.scores.push(0);
+            }
+
+            // Limpiar inputs
+            for (let i = 0; i < NUM_PLAYERS; i++) {
+                document.getElementById(`move-${i}`).value = '';
+                document.getElementById(`move-${i}`).classList.remove('hidden');
+                document.getElementById(`move-${i}`).disabled = false;
+            }
+
+            // Actualizar UI
+            updateBoard();
+            updateScores();
+            
+            // Mostrar/ocultar elementos
+            document.getElementById('engage').disabled = false;
+            document.getElementById('winner-announcement').style.display = 'none';
+        }
+
+        // Crear el tablero
+        function createBoard() {
+            const boardElement = document.getElementById('board');
+            boardElement.innerHTML = '';
+
+            // Crear 6 pistas (una por jugador)
+            for (let track = 0; track < NUM_PLAYERS; track++) {
+                const trackElement = document.createElement('div');
+                trackElement.className = 'track';
+
+                // Crear 65 casillas (64 a 0)
+                for (let pos = BOARD_SIZE - 1; pos >= 0; pos--) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    
+                    // Marcar casilla de inicio y fin
+                    if (pos === START_POSITION) {
+                        cell.classList.add('start');
+                    } else if (pos === FINISH_POSITION) {
+                        cell.classList.add('finish');
+                    } else {
+                        cell.classList.add('empty');
+                    }
+
+                    // Número de casilla (opcional, para referencia)
+                    if (pos % 5 === 0 || pos === 0 || pos === START_POSITION) {
+                        const cellNumber = document.createElement('span');
+                        cellNumber.className = 'cell-number';
+                        cellNumber.textContent = pos;
+                        cell.appendChild(cellNumber);
+                    }
+
+                    cell.dataset.position = pos;
+                    cell.dataset.track = track;
+                    trackElement.appendChild(cell);
+                }
+
+                boardElement.appendChild(trackElement);
+            }
+        }
+
+        // Actualizar el tablero con las posiciones de los jugadores
+        function updateBoard() {
+            // Limpiar jugadores anteriores
+            document.querySelectorAll('.player').forEach(el => el.remove());
+
+            // Colocar cada jugador en su posición
+            gameState.players.forEach(player => {
+                const track = player.id;
+                const position = player.position;
+
+                // Encontrar la celda correspondiente
+                const cellSelector = `.track[data-track="${track}"] .cell[data-position="${position}"]`;
+                const cell = document.querySelector(cellSelector);
+
+                if (cell) {
+                    const playerElement = document.createElement('span');
+                    playerElement.className = `player player-${player.id}`;
+                    playerElement.textContent = player.symbol;
+                    cell.appendChild(playerElement);
+                }
+            });
+        }
+
+        // Actualizar los marcadores de zanahorias
+        function updateScores() {
+            for (let i = 0; i < NUM_PLAYERS; i++) {
+                document.getElementById(`score-${i}`).textContent = gameState.scores[i];
+            }
+        }
+
+        // Calcular zanahorias según el movimiento
+        function calculateCarrots(movement) {
+            if (movement > 0) {
+                // Avance: fórmula geométrica n * (n + 1) / 2
+                return movement * (movement + 1) / 2;
+            } else if (movement < 0) {
+                // Retroceso: fórmula aritmética -n
+                return movement; // movement ya es negativo
+            }
+            return 0;
+        }
+
+        // Validar movimiento
+        function validateMovement(playerId, movement) {
+            const player = gameState.players[playerId];
+            const newPosition = player.position - movement; // Restamos porque 64 es inicio y 0 es fin
+
+            // Validar límites del tablero
+            if (newPosition < FINISH_POSITION || newPosition > START_POSITION) {
+                return false;
+            }
+            return true;
+        }
+
+        // Ejecutar el turno
+        function executeTurn() {
+            // Obtener movimientos de todos los jugadores
+            const movements = [];
+            let hasInvalidInput = false;
+
+            for (let i = 0; i < NUM_PLAYERS; i++) {
+                const input = document.getElementById(`move-${i}`);
+                const value = parseInt(input.value) || 0;
+                
+                if (value === 0 && input.value === '') {
+                    hasInvalidInput = true;
+                    break;
+                }
+                
+                movements.push(value);
+            }
+
+            if (hasInvalidInput) {
+                alert('Por favor, introduce un número para todos los jugadores.');
+                return;
+            }
+
+            // Validar todos los movimientos
+            let allValid = true;
+            for (let i = 0; i < NUM_PLAYERS; i++) {
+                if (!validateMovement(i, movements[i])) {
+                    allValid = false;
+                    break;
+                }
+            }
+
+            if (!allValid) {
+                alert('Algunos movimientos exceden los límites del tablero (0-64).');
+                return;
+            }
+
+            // Aplicar movimientos y actualizar zanahorias
+            for (let i = 0; i < NUM_PLAYERS; i++) {
+                const movement = movements[i];
+                const player = gameState.players[i];
+
+                // Actualizar posición
+                player.position -= movement; // Restamos porque 64 es inicio y 0 es fin
+
+                // Calcular zanahorias
+                const carrots = calculateCarrots(movement);
+                gameState.scores[i] += carrots;
+            }
+
+            // Ocultar inputs (sombrear)
+            for (let i = 0; i < NUM_PLAYERS; i++) {
+                const input = document.getElementById(`move-${i}`);
+                input.classList.add('hidden');
+                input.disabled = true;
+            }
+
+            // Deshabilitar botón hasta nuevo turno
+            document.getElementById('engage').disabled = true;
+
+            // Actualizar UI
+            updateBoard();
+            updateScores();
+
+            // Verificar fin de juego
+            checkGameOver();
+        }
+
+        // Verificar si el juego ha terminado
+        function checkGameOver() {
+            // Verificar si algún jugador ha alcanzado la meta (casilla 0)
+            const finishedPlayers = gameState.players.filter(p => p.position <= FINISH_POSITION);
+            
+            if (finishedPlayers.length > 0) {
+                gameState.gameOver = true;
+                determineWinner();
+                return;
+            }
+
+            // Si no hay ganador, habilitar el botón para el siguiente turno
+            // Pero primero, dar tiempo a que el usuario vea el resultado
+            setTimeout(() => {
+                for (let i = 0; i < NUM_PLAYERS; i++) {
+                    const input = document.getElementById(`move-${i}`);
+                    input.classList.remove('hidden');
+                    input.disabled = false;
+                    input.value = '';
+                }
+                document.getElementById('engage').disabled = false;
+            }, 1000);
+        }
+
+        // Determinar el ganador
+        function determineWinner() {
+            // 1. Encontrar al jugador que ha llegado más lejos (menor valor de casilla)
+            let furthestPlayer = null;
+            let minPosition = Infinity;
+
+            gameState.players.forEach(player => {
+                if (player.position < minPosition) {
+                    minPosition = player.position;
+                    furthestPlayer = player;
+                }
+            });
+
+            // 2. Entre los jugadores que han llegado igual de lejos, encontrar el con menos zanahorias
+            const candidates = gameState.players.filter(p => p.position === minPosition);
+            
+            if (candidates.length === 1) {
+                gameState.winner = candidates[0];
+            } else {
+                // Si hay empate en distancia, ganar el que tenga menos zanahorias
+                let winner = candidates[0];
+                candidates.forEach(player => {
+                    const currentScore = gameState.scores[player.id];
+                    const winnerScore = gameState.scores[winner.id];
+                    
+                    if (currentScore < winnerScore) {
+                        winner = player;
+                    }
+                });
+                gameState.winner = winner;
+            }
+
+            // Mostrar anuncio de ganador
+            showWinner();
+        }
+
+        // Mostrar el anuncio de ganador
+        function showWinner() {
+            const winner = gameState.winner;
+            const winnerAnnouncement = document.getElementById('winner-announcement');
+            const winnerPlayer = document.getElementById('winner-player');
+            const winnerDetails = document.getElementById('winner-details');
+
+            // Crear elemento de jugador ganador con su color
+            winnerPlayer.innerHTML = `<span class="player player-${winner.id}">${winner.symbol}</span> Jugador ${winner.id + 1}`;
+            winnerDetails.innerHTML = `
+                Posición final: ${winner.position}<br>
+                Zanahorias: ${gameState.scores[winner.id]}
+            `;
+
+            winnerAnnouncement.style.display = 'block';
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // Crear tablero
+            createBoard();
+            
+            // Inicializar juego
+            initGame();
+
+            // Botón de confirmación
+            document.getElementById('engage').addEventListener('click', executeTurn);
+
+            // Botón de reinicio
+            document.getElementById('restart').addEventListener('click', () => {
+                document.getElementById('winner-announcement').style.display = 'none';
+                initGame();
+            });
+
+            // Permitir Enter en los inputs
+            for (let i = 0; i < NUM_PLAYERS; i++) {
+                document.getElementById(`move-${i}`).addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        executeTurn();
+                    }
+                });
+            }
+        });
+
+        // Permitir usar el botón con Enter
+        document.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !document.getElementById('engage').disabled) {
+                executeTurn();
+            }
+        });
+    </script>
+</body>
+</html>
