@@ -131,15 +131,17 @@
             border: 2px solid #444;
             border-radius: 5px;
             padding: 20px;
-            overflow-x: auto;
+            width: 100%;
+            max-width: 100%;
+            overflow: visible;
         }
 
         .board {
-            display: flex;
-            gap: 0;
-            height: 60px;
-            align-items: center;
-            min-width: max-content;
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 2px;
+            width: 100%;
+            justify-items: center;
         }
 
         .cell {
@@ -167,6 +169,35 @@
         .cell.finish {
             background-color: #333;
             color: #ff0;
+        }
+
+        /* Tablero en serpiente (Boustrophedon) */
+        /* Filas pares: izquierda a derecha (normal) */
+        .board > .cell:nth-child(10n+1),
+        .board > .cell:nth-child(10n+2),
+        .board > .cell:nth-child(10n+3),
+        .board > .cell:nth-child(10n+4),
+        .board > .cell:nth-child(10n+5),
+        .board > .cell:nth-child(10n+6),
+        .board > .cell:nth-child(10n+7),
+        .board > .cell:nth-child(10n+8),
+        .board > .cell:nth-child(10n+9),
+        .board > .cell:nth-child(10n+10) {
+            /* Normal flow */
+        }
+
+        /* Filas impares: derecha a izquierda (invertido) */
+        .board > .cell:nth-child(10n+11),
+        .board > .cell:nth-child(10n+12),
+        .board > .cell:nth-child(10n+13),
+        .board > .cell:nth-child(10n+14),
+        .board > .cell:nth-child(10n+15),
+        .board > .cell:nth-child(10n+16),
+        .board > .cell:nth-child(10n+17),
+        .board > .cell:nth-child(10n+18),
+        .board > .cell:nth-child(10n+19),
+        .board > .cell:nth-child(10n+20) {
+            direction: rtl;
         }
 
         .player {
@@ -288,14 +319,14 @@
                 grid-template-columns: repeat(3, 1fr);
             }
             
+            .board {
+                grid-template-columns: repeat(6, 1fr);
+            }
+            
             .cell {
                 width: 20px;
                 height: 20px;
                 font-size: 0.8em;
-            }
-            
-            .board {
-                height: 40px;
             }
         }
     </style>
@@ -353,7 +384,7 @@
             <button id="engage">¡Vamos!</button>
         </div>
 
-        <!-- Tablero de juego - UNA SOLA PISTA para todos los jugadores -->
+        <!-- Tablero de juego - UNA SOLA PISTA en serpiente -->
         <div class="board-container">
             <div class="board" id="board"></div>
         </div>
@@ -426,6 +457,7 @@
         const BOARD_SIZE = 65; // Casillas del 64 al 0
         const START_POSITION = 64;
         const FINISH_POSITION = 0;
+        const CELLS_PER_ROW = 10; // 10 casillas por fila para el tablero en serpiente
 
         // Colores de los jugadores
         const PLAYER_COLORS = [
@@ -480,16 +512,12 @@
             document.getElementById('winner-announcement').style.display = 'none';
         }
 
-        // Crear el tablero - UNA SOLA PISTA
+        // Crear el tablero - UNA SOLA PISTA en serpiente
         function createBoard() {
             const boardElement = document.getElementById('board');
             boardElement.innerHTML = '';
 
-            // Crear UNA SOLA pista para todos los jugadores
-            const trackElement = document.createElement('div');
-            trackElement.className = 'track';
-
-            // Crear 65 casillas (64 a 0)
+            // Crear 65 casillas (64 a 0) en orden lineal
             for (let pos = START_POSITION; pos >= FINISH_POSITION; pos--) {
                 const cell = document.createElement('div');
                 cell.className = 'cell';
@@ -513,10 +541,8 @@
 
                 cell.dataset.position = pos;
                 cell.id = `cell-${pos}`;
-                trackElement.appendChild(cell);
+                boardElement.appendChild(cell);
             }
-
-            boardElement.appendChild(trackElement);
         }
 
         // Actualizar el tablero con las posiciones de los jugadores
