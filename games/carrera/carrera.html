@@ -135,17 +135,11 @@
         }
 
         .board {
-            display: grid;
-            grid-template-rows: repeat(6, 1fr);
-            gap: 2px;
-            min-width: max-content;
-        }
-
-        .track {
             display: flex;
             gap: 0;
-            height: 40px;
+            height: 60px;
             align-items: center;
+            min-width: max-content;
         }
 
         .cell {
@@ -178,6 +172,7 @@
         .player {
             font-size: 1.5em;
             font-weight: bold;
+            display: inline;
         }
 
         /* Colores de jugadores */
@@ -299,8 +294,8 @@
                 font-size: 0.8em;
             }
             
-            .track {
-                height: 25px;
+            .board {
+                height: 40px;
             }
         }
     </style>
@@ -358,7 +353,7 @@
             <button id="engage">¡Vamos!</button>
         </div>
 
-        <!-- Tablero de juego -->
+        <!-- Tablero de juego - UNA SOLA PISTA para todos los jugadores -->
         <div class="board-container">
             <div class="board" id="board"></div>
         </div>
@@ -485,45 +480,43 @@
             document.getElementById('winner-announcement').style.display = 'none';
         }
 
-        // Crear el tablero
+        // Crear el tablero - UNA SOLA PISTA
         function createBoard() {
             const boardElement = document.getElementById('board');
             boardElement.innerHTML = '';
 
-            // Crear 6 pistas (una por jugador)
-            for (let track = 0; track < NUM_PLAYERS; track++) {
-                const trackElement = document.createElement('div');
-                trackElement.className = 'track';
-                trackElement.dataset.track = track;
+            // Crear UNA SOLA pista para todos los jugadores
+            const trackElement = document.createElement('div');
+            trackElement.className = 'track';
 
-                // Crear 65 casillas (64 a 0)
-                for (let pos = START_POSITION; pos >= FINISH_POSITION; pos--) {
-                    const cell = document.createElement('div');
-                    cell.className = 'cell';
-                    
-                    // Marcar casilla de inicio y fin
-                    if (pos === START_POSITION) {
-                        cell.classList.add('start');
-                    } else if (pos === FINISH_POSITION) {
-                        cell.classList.add('finish');
-                    } else {
-                        cell.classList.add('empty');
-                    }
-
-                    // Número de casilla (opcional, para referencia)
-                    if (pos % 5 === 0 || pos === 0 || pos === START_POSITION) {
-                        const cellNumber = document.createElement('span');
-                        cellNumber.className = 'cell-number';
-                        cellNumber.textContent = pos;
-                        cell.appendChild(cellNumber);
-                    }
-
-                    cell.dataset.position = pos;
-                    trackElement.appendChild(cell);
+            // Crear 65 casillas (64 a 0)
+            for (let pos = START_POSITION; pos >= FINISH_POSITION; pos--) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                
+                // Marcar casilla de inicio y fin
+                if (pos === START_POSITION) {
+                    cell.classList.add('start');
+                } else if (pos === FINISH_POSITION) {
+                    cell.classList.add('finish');
+                } else {
+                    cell.classList.add('empty');
                 }
 
-                boardElement.appendChild(trackElement);
+                // Número de casilla (opcional, para referencia)
+                if (pos % 5 === 0 || pos === 0 || pos === START_POSITION) {
+                    const cellNumber = document.createElement('span');
+                    cellNumber.className = 'cell-number';
+                    cellNumber.textContent = pos;
+                    cell.appendChild(cellNumber);
+                }
+
+                cell.dataset.position = pos;
+                cell.id = `cell-${pos}`;
+                trackElement.appendChild(cell);
             }
+
+            boardElement.appendChild(trackElement);
         }
 
         // Actualizar el tablero con las posiciones de los jugadores
@@ -536,12 +529,8 @@
 
             // Colocar cada jugador en su posición de visualización
             gameState.players.forEach(player => {
-                const track = player.id;
                 const position = player.displayPosition;
-
-                // Encontrar la celda correspondiente en la pista del jugador
-                const cellSelector = `.track[data-track="${track}"] .cell[data-position="${position}"]`;
-                const cell = document.querySelector(cellSelector);
+                const cell = document.getElementById(`cell-${position}`);
 
                 if (cell) {
                     const playerElement = document.createElement('span');
@@ -552,8 +541,7 @@
             });
         }
 
-        // Resolver colisiones: TODOS los jugadores comparten el mismo espacio de casillas 0-64
-        // Cada jugador tiene su propia pista, pero la posición es la misma para todos
+        // Resolver colisiones: TODOS los jugadores comparten el mismo tablero de casillas 0-64
         // Si múltiples jugadores intentan estar en la misma casilla, se colocan en la casilla anterior libre
         function resolveCollisions() {
             // Crear un array con las posiciones deseadas de todos los jugadores
