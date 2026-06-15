@@ -176,9 +176,8 @@
         }
 
         .player {
-            position: absolute;
             font-size: 1.5em;
-            z-index: 10;
+            font-weight: bold;
         }
 
         /* Colores de jugadores */
@@ -462,8 +461,8 @@
             for (let i = 0; i < NUM_PLAYERS; i++) {
                 gameState.players.push({
                     id: i,
-                    accumulatedPosition: START_POSITION, // Posición acumulada
-                    displayPosition: START_POSITION, // Posición donde se muestra la @
+                    accumulatedPosition: START_POSITION, // Posición acumulada real
+                    displayPosition: START_POSITION, // Posición donde se muestra
                     color: PLAYER_COLORS[i],
                     symbol: '@'
                 });
@@ -532,7 +531,7 @@
             // Limpiar jugadores anteriores
             document.querySelectorAll('.player').forEach(el => el.remove());
 
-            // Primero, resolver colisiones y asignar posiciones de visualización
+            // Resolver colisiones y asignar posiciones de visualización
             resolveCollisions();
 
             // Colocar cada jugador en su posición de visualización
@@ -540,7 +539,7 @@
                 const track = player.id;
                 const position = player.displayPosition;
 
-                // Encontrar la celda correspondiente
+                // Encontrar la celda correspondiente en la pista del jugador
                 const cellSelector = `.track[data-track="${track}"] .cell[data-position="${position}"]`;
                 const cell = document.querySelector(cellSelector);
 
@@ -553,39 +552,37 @@
             });
         }
 
-        // Resolver colisiones: todos los jugadores comparten el mismo tablero de casillas 0-64
+        // Resolver colisiones: TODOS los jugadores comparten el mismo espacio de casillas 0-64
+        // Cada jugador tiene su propia pista, pero la posición es la misma para todos
         // Si múltiples jugadores intentan estar en la misma casilla, se colocan en la casilla anterior libre
         function resolveCollisions() {
-            // Crear un array con las posiciones acumuladas deseadas de todos los jugadores
-            const positionsWithPlayers = [];
-            gameState.players.forEach(player => {
-                positionsWithPlayers.push({
-                    playerId: player.id,
-                    desiredPosition: player.accumulatedPosition
-                });
-            });
+            // Crear un array con las posiciones deseadas de todos los jugadores
+            const playersWithPositions = gameState.players.map(player => ({
+                playerId: player.id,
+                desiredPosition: player.accumulatedPosition
+            }));
 
             // Ordenar por posición deseada (de menor a mayor, es decir, de meta a inicio)
-            positionsWithPlayers.sort((a, b) => a.desiredPosition - b.desiredPosition);
+            playersWithPositions.sort((a, b) => a.desiredPosition - b.desiredPosition);
 
             // Asignar posiciones de visualización resolviendo colisiones
             const occupiedPositions = new Set();
             
-            // Procesar jugadores en orden de posición deseada (de meta a inicio)
-            positionsWithPlayers.forEach(item => {
+            // Procesar jugadores en orden de posición deseada
+            playersWithPositions.forEach(item => {
                 const player = gameState.players[item.playerId];
                 let targetPosition = item.desiredPosition;
 
                 // Buscar la posición libre más cercana hacia atrás (hacia números más altos)
-                // Es decir, si la casilla 10 está ocupada, probar 11, 12, etc.
-                while (occupiedPositions.has(targetPosition) && targetPosition <= START_POSITION) {
+                // Si la casilla 10 está ocupada, probar 11, 12, etc.
+                while (occupiedPositions.has(targetPosition) && targetPosition < START_POSITION) {
                     targetPosition++;
                 }
 
-                // Si llegamos más allá del inicio, buscar hacia adelante (hacia números más bajos)
-                if (targetPosition > START_POSITION) {
+                // Si llegamos al final (64) y está ocupado, buscar hacia adelante (hacia números más bajos)
+                if (occupiedPositions.has(targetPosition)) {
                     targetPosition = item.desiredPosition;
-                    while (occupiedPositions.has(targetPosition) && targetPosition >= FINISH_POSITION) {
+                    while (occupiedPositions.has(targetPosition) && targetPosition > FINISH_POSITION) {
                         targetPosition--;
                     }
                 }
@@ -619,7 +616,7 @@
         // Validar movimiento
         function validateMovement(playerId, movement) {
             const player = gameState.players[playerId];
-            const newPosition = player.accumulatedPosition - movement; // Restamos porque 64 es inicio y 0 es fin
+            const newPosition = player.accumulatedPosition - movement;
 
             // Validar límites del tablero
             if (newPosition < FINISH_POSITION || newPosition > START_POSITION) {
@@ -671,7 +668,7 @@
                 const player = gameState.players[i];
 
                 // Actualizar posición acumulada
-                player.accumulatedPosition -= movement; // Restamos porque 64 es inicio y 0 es fin
+                player.accumulatedPosition -= movement;
 
                 // Calcular zanahorias
                 const carrots = calculateCarrots(movement);
@@ -708,7 +705,6 @@
             }
 
             // Si no hay ganador, habilitar el botón para el siguiente turno
-            // Pero primero, dar tiempo a que el usuario vea el resultado
             setTimeout(() => {
                 for (let i = 0; i < NUM_PLAYERS; i++) {
                     const input = document.getElementById(`move-${i}`);
