@@ -185,7 +185,7 @@
         .player-0 { color: #00ff00; text-shadow: 0 0 5px #00ff00; }
         .player-1 { color: #ffffff; text-shadow: 0 0 5px #ffffff; }
         .player-2 { color: #ffff00; text-shadow: 0 0 5px #ffff00; }
-        .player-3 { color: #000000; text-shadow: 0 0 5px #ffffff; background-color: #ffffff; }
+        .player-3 { color: #000000; text-shadow: 0 0 5px #ffffff; background-color: #ffffff; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
         .player-4 { color: #0000ff; text-shadow: 0 0 5px #0000ff; }
         .player-5 { color: #ff0000; text-shadow: 0 0 5px #ff0000; }
 
@@ -221,6 +221,12 @@
         .score-value {
             font-size: 1.5em;
             font-weight: bold;
+        }
+
+        .position-info {
+            font-size: 0.8em;
+            color: #888;
+            margin-top: 5px;
         }
 
         .winner-announcement {
@@ -312,42 +318,42 @@
                         <span class="player-color" style="background-color: #00ff00;"></span>
                         Jugador 1
                     </label>
-                    <input type="number" id="move-0" value="0" min="-64" max="64">
+                    <input type="number" id="move-0" value="" min="-64" max="64">
                 </div>
                 <div class="player-input">
                     <label class="player-label">
                         <span class="player-color" style="background-color: #ffffff; border: 1px solid #888;"></span>
                         Jugador 2
                     </label>
-                    <input type="number" id="move-1" value="0" min="-64" max="64">
+                    <input type="number" id="move-1" value="" min="-64" max="64">
                 </div>
                 <div class="player-input">
                     <label class="player-label">
                         <span class="player-color" style="background-color: #ffff00;"></span>
                         Jugador 3
                     </label>
-                    <input type="number" id="move-2" value="0" min="-64" max="64">
+                    <input type="number" id="move-2" value="" min="-64" max="64">
                 </div>
                 <div class="player-input">
                     <label class="player-label">
                         <span class="player-color" style="background-color: #000000; border: 1px solid #fff;"></span>
                         Jugador 4
                     </label>
-                    <input type="number" id="move-3" value="0" min="-64" max="64">
+                    <input type="number" id="move-3" value="" min="-64" max="64">
                 </div>
                 <div class="player-input">
                     <label class="player-label">
                         <span class="player-color" style="background-color: #0000ff;"></span>
                         Jugador 5
                     </label>
-                    <input type="number" id="move-4" value="0" min="-64" max="64">
+                    <input type="number" id="move-4" value="" min="-64" max="64">
                 </div>
                 <div class="player-input">
                     <label class="player-label">
                         <span class="player-color" style="background-color: #ff0000;"></span>
                         Jugador 6
                     </label>
-                    <input type="number" id="move-5" value="0" min="-64" max="64">
+                    <input type="number" id="move-5" value="" min="-64" max="64">
                 </div>
             </div>
             <button id="engage">¡Vamos!</button>
@@ -366,6 +372,7 @@
                     Jugador 1
                 </div>
                 <div class="score-value" id="score-0">0</div>
+                <div class="position-info" id="position-0">Pos: 64</div>
             </div>
             <div class="score">
                 <div class="score-label">
@@ -373,6 +380,7 @@
                     Jugador 2
                 </div>
                 <div class="score-value" id="score-1">0</div>
+                <div class="position-info" id="position-1">Pos: 64</div>
             </div>
             <div class="score">
                 <div class="score-label">
@@ -380,6 +388,7 @@
                     Jugador 3
                 </div>
                 <div class="score-value" id="score-2">0</div>
+                <div class="position-info" id="position-2">Pos: 64</div>
             </div>
             <div class="score">
                 <div class="score-label">
@@ -387,6 +396,7 @@
                     Jugador 4
                 </div>
                 <div class="score-value" id="score-3">0</div>
+                <div class="position-info" id="position-3">Pos: 64</div>
             </div>
             <div class="score">
                 <div class="score-label">
@@ -394,6 +404,7 @@
                     Jugador 5
                 </div>
                 <div class="score-value" id="score-4">0</div>
+                <div class="position-info" id="position-4">Pos: 64</div>
             </div>
             <div class="score">
                 <div class="score-label">
@@ -401,6 +412,7 @@
                     Jugador 6
                 </div>
                 <div class="score-value" id="score-5">0</div>
+                <div class="position-info" id="position-5">Pos: 64</div>
             </div>
         </div>
     </div>
@@ -450,7 +462,8 @@
             for (let i = 0; i < NUM_PLAYERS; i++) {
                 gameState.players.push({
                     id: i,
-                    position: START_POSITION,
+                    accumulatedPosition: START_POSITION, // Posición acumulada
+                    displayPosition: START_POSITION, // Posición donde se muestra la @
                     color: PLAYER_COLORS[i],
                     symbol: '@'
                 });
@@ -482,9 +495,10 @@
             for (let track = 0; track < NUM_PLAYERS; track++) {
                 const trackElement = document.createElement('div');
                 trackElement.className = 'track';
+                trackElement.dataset.track = track;
 
                 // Crear 65 casillas (64 a 0)
-                for (let pos = BOARD_SIZE - 1; pos >= 0; pos--) {
+                for (let pos = START_POSITION; pos >= FINISH_POSITION; pos--) {
                     const cell = document.createElement('div');
                     cell.className = 'cell';
                     
@@ -506,7 +520,6 @@
                     }
 
                     cell.dataset.position = pos;
-                    cell.dataset.track = track;
                     trackElement.appendChild(cell);
                 }
 
@@ -519,10 +532,13 @@
             // Limpiar jugadores anteriores
             document.querySelectorAll('.player').forEach(el => el.remove());
 
-            // Colocar cada jugador en su posición
+            // Primero, resolver colisiones y asignar posiciones de visualización
+            resolveCollisions();
+
+            // Colocar cada jugador en su posición de visualización
             gameState.players.forEach(player => {
                 const track = player.id;
-                const position = player.position;
+                const position = player.displayPosition;
 
                 // Encontrar la celda correspondiente
                 const cellSelector = `.track[data-track="${track}"] .cell[data-position="${position}"]`;
@@ -537,10 +553,54 @@
             });
         }
 
-        // Actualizar los marcadores de zanahorias
+        // Resolver colisiones: todos los jugadores comparten el mismo tablero de casillas 0-64
+        // Si múltiples jugadores intentan estar en la misma casilla, se colocan en la casilla anterior libre
+        function resolveCollisions() {
+            // Crear un array con las posiciones acumuladas deseadas de todos los jugadores
+            const positionsWithPlayers = [];
+            gameState.players.forEach(player => {
+                positionsWithPlayers.push({
+                    playerId: player.id,
+                    desiredPosition: player.accumulatedPosition
+                });
+            });
+
+            // Ordenar por posición deseada (de menor a mayor, es decir, de meta a inicio)
+            positionsWithPlayers.sort((a, b) => a.desiredPosition - b.desiredPosition);
+
+            // Asignar posiciones de visualización resolviendo colisiones
+            const occupiedPositions = new Set();
+            
+            // Procesar jugadores en orden de posición deseada (de meta a inicio)
+            positionsWithPlayers.forEach(item => {
+                const player = gameState.players[item.playerId];
+                let targetPosition = item.desiredPosition;
+
+                // Buscar la posición libre más cercana hacia atrás (hacia números más altos)
+                // Es decir, si la casilla 10 está ocupada, probar 11, 12, etc.
+                while (occupiedPositions.has(targetPosition) && targetPosition <= START_POSITION) {
+                    targetPosition++;
+                }
+
+                // Si llegamos más allá del inicio, buscar hacia adelante (hacia números más bajos)
+                if (targetPosition > START_POSITION) {
+                    targetPosition = item.desiredPosition;
+                    while (occupiedPositions.has(targetPosition) && targetPosition >= FINISH_POSITION) {
+                        targetPosition--;
+                    }
+                }
+
+                // Asegurar que la posición está dentro de los límites
+                player.displayPosition = Math.max(FINISH_POSITION, Math.min(START_POSITION, targetPosition));
+                occupiedPositions.add(player.displayPosition);
+            });
+        }
+
+        // Actualizar los marcadores de zanahorias y posiciones
         function updateScores() {
             for (let i = 0; i < NUM_PLAYERS; i++) {
                 document.getElementById(`score-${i}`).textContent = gameState.scores[i];
+                document.getElementById(`position-${i}`).textContent = `Pos: ${gameState.players[i].displayPosition}`;
             }
         }
 
@@ -559,7 +619,7 @@
         // Validar movimiento
         function validateMovement(playerId, movement) {
             const player = gameState.players[playerId];
-            const newPosition = player.position - movement; // Restamos porque 64 es inicio y 0 es fin
+            const newPosition = player.accumulatedPosition - movement; // Restamos porque 64 es inicio y 0 es fin
 
             // Validar límites del tablero
             if (newPosition < FINISH_POSITION || newPosition > START_POSITION) {
@@ -578,7 +638,7 @@
                 const input = document.getElementById(`move-${i}`);
                 const value = parseInt(input.value) || 0;
                 
-                if (value === 0 && input.value === '') {
+                if (input.value === '' && value === 0) {
                     hasInvalidInput = true;
                     break;
                 }
@@ -610,8 +670,8 @@
                 const movement = movements[i];
                 const player = gameState.players[i];
 
-                // Actualizar posición
-                player.position -= movement; // Restamos porque 64 es inicio y 0 es fin
+                // Actualizar posición acumulada
+                player.accumulatedPosition -= movement; // Restamos porque 64 es inicio y 0 es fin
 
                 // Calcular zanahorias
                 const carrots = calculateCarrots(movement);
@@ -639,7 +699,7 @@
         // Verificar si el juego ha terminado
         function checkGameOver() {
             // Verificar si algún jugador ha alcanzado la meta (casilla 0)
-            const finishedPlayers = gameState.players.filter(p => p.position <= FINISH_POSITION);
+            const finishedPlayers = gameState.players.filter(p => p.accumulatedPosition <= FINISH_POSITION);
             
             if (finishedPlayers.length > 0) {
                 gameState.gameOver = true;
@@ -662,19 +722,19 @@
 
         // Determinar el ganador
         function determineWinner() {
-            // 1. Encontrar al jugador que ha llegado más lejos (menor valor de casilla)
+            // 1. Encontrar al jugador que ha llegado más lejos (menor valor de casilla acumulada)
             let furthestPlayer = null;
             let minPosition = Infinity;
 
             gameState.players.forEach(player => {
-                if (player.position < minPosition) {
-                    minPosition = player.position;
+                if (player.accumulatedPosition < minPosition) {
+                    minPosition = player.accumulatedPosition;
                     furthestPlayer = player;
                 }
             });
 
             // 2. Entre los jugadores que han llegado igual de lejos, encontrar el con menos zanahorias
-            const candidates = gameState.players.filter(p => p.position === minPosition);
+            const candidates = gameState.players.filter(p => p.accumulatedPosition === minPosition);
             
             if (candidates.length === 1) {
                 gameState.winner = candidates[0];
@@ -706,7 +766,7 @@
             // Crear elemento de jugador ganador con su color
             winnerPlayer.innerHTML = `<span class="player player-${winner.id}">${winner.symbol}</span> Jugador ${winner.id + 1}`;
             winnerDetails.innerHTML = `
-                Posición final: ${winner.position}<br>
+                Posición final: ${winner.displayPosition}<br>
                 Zanahorias: ${gameState.scores[winner.id]}
             `;
 
