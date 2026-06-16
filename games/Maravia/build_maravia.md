@@ -14,14 +14,14 @@ Este documento describe los pasos seguidos para crear el juego **Maravia: Genera
 ### 2. **Diseño de la Interfaz (HTML)**
 - Se diseñó una interfaz simple con:
   - Un título: **Maravia**.
-  - Una descripción breve del juego en un `callout-verde`.
+  - Una descripción breve del juego en un `callout`.
   - Un campo de entrada (`input`) para que el usuario introduzca el número de letras (1-5).
   - Un botón (`Enviar`) para generar la palabra aleatoria.
   - Un área (`div`) para mostrar el resultado.
 
 ### 3. **Estilo (CSS)**
 - Se vinculó el archivo de estilos global del sitio (`../css/estilo.css`) para mantener la coherencia visual con el resto de la web.
-- Se utilizaron clases como `logo-header`, `header-fijo`, `menu-principal`, `callout-verde`, y `dark-mode` para el tema oscuro.
+- Se utilizaron clases como `logo-header`, `header-fijo`, `menu-principal`, `callout`, y `dark-mode` para el tema oscuro.
 
 ### 4. **Lógica del Juego (JavaScript)**
 - **Vocales y Consonantes**: Se definieron dos arrays:

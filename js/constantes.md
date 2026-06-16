@@ -30,18 +30,18 @@ const TEXT_CONSTANTS = {
 ---
 
 ### 2. **Función `applyConstantsToCallouts()`**
-Aplica los textos definidos en `TEXT_CONSTANTS` a los elementos HTML con la clase **`callout-verde`**.
+Aplica los textos definidos en `TEXT_CONSTANTS` a los elementos HTML con la clase **`callout`**.
 
 #### 🔍 **Comportamiento:**
-1. Selecciona todos los elementos con la clase `.callout-verde`.
+1. Selecciona todos los elementos con la clase `.callout`.
 2. Obtiene el título de la página desde el elemento `<h1>`.
-3. Para cada `callout-verde`, busca un párrafo (`<p>`) dentro de él.
+3. Para cada `callout`, busca un párrafo (`<p>`) dentro de él.
 4. Si el título de la página coincide con una clave en `TEXT_CONSTANTS` (en minúsculas), reemplaza el contenido del párrafo con el texto correspondiente.
 
 #### 📌 **Ejemplo de Uso:**
 Si la página tiene el título `"Departures"` y hay un elemento como:
 ```html
-<div class="callout-verde">
+<div class="callout">
   <p>Texto predeterminado</p>
 </div>
 ```
@@ -85,7 +85,7 @@ Ejecuta las funciones anteriores cuando el DOM de la página está completamente
 
 ```javascript
 document.addEventListener('DOMContentLoaded', function() {
-  if (document.querySelector('.callout-verde')) {
+  if (document.querySelector('.callout')) {
     applyConstantsToCallouts();
   }
   if (document.querySelector('main p')) {
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
 ```
 
 #### 🔍 **Lógica de Ejecución:**
-- Si la página contiene elementos con la clase `.callout-verde`, ejecuta `applyConstantsToCallouts()`.
+- Si la página contiene elementos con la clase `.callout`, ejecuta `applyConstantsToCallouts()`.
 - Si la página contiene párrafos dentro de `<main>`, ejecuta `applyConstantsToIndex()`.
 
 ---
