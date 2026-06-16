@@ -6,6 +6,7 @@
     <meta charset="utf-8"> <!-- Define la codificación de caracteres para la página -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Configura la vista para dispositivos móviles -->
     <link rel="stylesheet" href="../../css/estilo.css"> <!-- Enlace al archivo de estilos CSS -->
+    <script src="../../js/includes.js"></script>
     <style>
         /* Estilos específicos para el juego Roguelike ASCII */
         :root {
@@ -264,29 +265,8 @@
 </head>
 
 <body>
-    <!-- Cabecera con logotipo y título -->
-    <div class="logo-header">
-        <a href="/index.html"><img src="../../paginas/imagenes/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="logo-img"></a> <!-- Logotipo del sitio -->
-        <h1>Roguelike ASCII</h1> <!-- Título principal de esta página -->
-    </div>
-    <p>Lecturas de vuelo: Artículos a baja altitud</p> <!-- Título de la web + Eslogan del sitio -->
-
-    <!-- Barra de navegación superior fija -->
-    <header class="header-fijo">
-        <nav class="menu-principal">
-            <!-- Lista de enlaces de navegación (se oculta en móvil) -->
-            <ul>
-                <li><a href="/paginas/departures.html">Departures</a></li>
-                <li><a href="/paginas/arrivals.html">Arrivals</a></li>
-                <li><a href="/paginas/navdata.html">NavData</a></li>
-                <li><a href="/paginas/hub.html">Hub</a></li>
-                <li><a href="/paginas/who.html">Who</a></li>
-            </ul>
-            <!-- Botones de control: tema y menú hamburguesa (siempre visibles) -->
-            <button class="menu-toggle" aria-label="Abrir menú">☰</button>
-            <button id="theme-toggle" aria-label="Alternar entre modo día y noche" aria-pressed="false"><span aria-hidden="true">🌙</span></button>
-        </nav>
-    </header>
+    <div data-include="/includes/header.html"></div>
+    <div data-include="/includes/nav.html"></div>
 
     <!-- callout para resumir la sección -->
     <div class="callout">
