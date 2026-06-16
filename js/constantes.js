@@ -5,7 +5,7 @@ const TEXT_CONSTANTS = {
   navdata: "Recursos online que me resultan útiles y que quizás también pueden servirte.",
   hub: "Áreas temáticas que más me interesan.",
   who: "Quién está detrás de todo esto.",
-  juegos: "Prototipos."
+  juegos: "Prototipos.",
 };
 
 // Función genérica para aplicar los textos definidos en TEXT_CONSTANTS
