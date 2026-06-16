@@ -77,7 +77,7 @@ El directorio `paginas/` contiene los archivos HTML que representan las **seccio
 
 ---
 
-### 5. **[`who.html`](who.html)**
+### 5. **[`pruebas.html`](pruebas.html)**
 - **Título**: "Página de Pruebas"
 - **Propósito**: Página **genérica para probar enlaces y funcionalidades**. Aunque su nombre sugiere un uso temporal, en la práctica actúa como la sección **"Who"** (sobre el autor).
 - **Contenido actual**:
@@ -91,7 +91,7 @@ El directorio `paginas/` contiene los archivos HTML que representan las **seccio
   - En el menú de navegación aparece como **"Who"** (no como "Pruebas").
   - Su descripción en la página principal es: *"Quién está detrás de todo esto."*
 - **Nota**:
-  - Hay una **inconsistencia** entre el nombre del archivo (`who.html`) y su propósito real (sección "Who").
+  - Hay una **inconsistencia** entre el nombre del archivo (`pruebas.html`) y su propósito real (sección "Who").
 
 ---
 
@@ -143,12 +143,12 @@ El directorio `paginas/` contiene los archivos HTML que representan las **seccio
 ## 🔗 **Relaciones entre Páginas**
 
 ### **Menú de Navegación Principal**
-Las siguientes páginas aparecen en el menú de navegación de **todas las páginas** (excepto `who.html` y `wip.html`):
+Las siguientes páginas aparecen en el menú de navegación de **todas las páginas** (excepto `pruebas.html` y `wip.html`):
 1. **Departures** → [`departures.html`](departures.html)
 2. **Arrivals** → [`arrivals.html`](arrivals.html)
 3. **NavData** → [`navdata.html`](navdata.html)
 4. **Hub** → [`hub.html`](hub.html)
-5. **Who** → [`who.html`](who.html) *(aunque el archivo se llame `who.html`)*
+5. **Who** → [`pruebas.html`](pruebas.html) *(aunque el archivo se llame `pruebas.html`)*
 
 ### **Enlaces Internos**
 | **Página**       | **Enlaza a**                                                                 | **Contexto**                          |
@@ -161,7 +161,7 @@ Las siguientes páginas aparecen en el menú de navegación de **todas las pági
 | `why.html`       | [https://www.netcup.de](https://www.netcup.de)                           | Opción de alojamiento mencionada      |
 | `why.html`       | [https://www.infomaniak.com](https://www.infomaniak.com)                 | Opción de alojamiento mencionada      |
 | `wip.html`       | [`../index.html`](../index.html)                                          | "Memoria" y "Roadmap"                 |
-| `who.html`   | [`../index.html`](../index.html)                                          | "Volver a la página principal"       |
+| `pruebas.html`   | [`../index.html`](../index.html)                                          | "Volver a la página principal"       |
 
 ---
 
@@ -173,7 +173,7 @@ Las siguientes páginas aparecen en el menú de navegación de **todas las pági
 | `departures.html`| Blog y enlaces a juegos                | Sí (clave: `departures`)| Sí               | Sí                    | No                   |
 | `hub.html`       | Áreas temáticas de interés             | Sí (clave: `hub`)     | Sí               | Sí                    | No                   |
 | `navdata.html`   | Recursos útiles                        | Sí (clave: `navdata`) | Sí               | Sí                    | No                   |
-| `who.html`   | Sobre el autor ("Who")                 | Sí (clave: `who`)     | Sí               | Sí (como "Who")       | No                   |
+| `pruebas.html`   | Sobre el autor ("Who")                 | Sí (clave: `who`)     | Sí               | Sí (como "Who")       | No                   |
 | `why.html`       | Motivación y proceso de la web          | No                    | Sí               | No                    | Sí (3 enlaces)        |
 | `wip.html`       | Roadmap y progreso del sitio           | No                    | No                | No                    | No                   |
 
@@ -182,8 +182,8 @@ Las siguientes páginas aparecen en el menú de navegación de **todas las pági
 ## 📌 **Observaciones y Puntos de Mejora**
 
 ### **Inconsistencias**
-1. **`who.html` vs. "Who"**:
-   - El archivo se llaman `who.html`, pero su propósito es la sección "Who" (sobre el autor).
+1. **`pruebas.html` vs. "Who"**:
+   - El archivo se llaman `pruebas.html`, pero su propósito es la sección "Who" (sobre el autor).
    - **Sugerencia**: Renombrar el archivo a `who.html` para mayor claridad.
 
 2. **Enlaces en `wip.html`**:
@@ -214,7 +214,7 @@ paginas/
 ├── departures.html  # Blog y enlaces a juegos
 ├── hub.html         # Áreas temáticas de interés
 ├── navdata.html     # Recursos útiles
-├── who.html     # Sobre el autor ("Who")
+├── pruebas.html     # Sobre el autor ("Who")
 ├── why.html         # Motivación y proceso de la web
 ├── wip.html         # Roadmap y progreso del sitio
 └── imagenes/        # Imágenes usadas en las páginas
