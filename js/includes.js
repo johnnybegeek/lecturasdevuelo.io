@@ -32,7 +32,7 @@ function initNavListeners() {
         });
     }
 
-    // Botón de tema
+    // Botón de tema dia noche∫
     const themeToggle = document.getElementById('theme-toggle');
     if (themeToggle) {
         themeToggle.addEventListener('click', function() {
