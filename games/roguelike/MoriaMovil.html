@@ -24,14 +24,14 @@
             color: #fff;
         }
 
-        /* Cuarto superior (25% alto) */
+        /* Cuadrante superior (1/5 de pantalla) */
         .header-section {
-            height: 25vh;
+            height: 20vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: #000;
+            background-color: #1E90FF;
             padding: 10px;
             text-align: center;
         }
@@ -42,7 +42,7 @@
         }
 
         .header-section a {
-            color: #1E90FF;
+            color: #fff;
             text-decoration: none;
             font-size: 0.9rem;
         }
@@ -51,9 +51,9 @@
             text-decoration: underline;
         }
 
-        /* Dos cuartos centrales (50% alto) - Tablero de juego */
+        /* Tablero de juego (3/5 de pantalla) */
         .game-section {
-            height: 50vh;
+            height: 60vh;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -96,10 +96,17 @@
             text-align: center;
         }
 
-        /* Cuarto inferior (25% alto) */
+        /* Cuadrante inferior (1/5 de pantalla) */
         .footer-section {
-            height: 25vh;
+            height: 20vh;
             background-color: #1E90FF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            text-align: center;
+            color: #fff;
+            font-size: 1rem;
         }
 
         /* Modal de victoria */
@@ -145,10 +152,10 @@
     </style>
 </head>
 <body>
-    <!-- Cuarto superior: Nombre del juego + enlace a index.html -->
+    <!-- Cuadrante superior: Nombre del juego + enlace a juegos.html -->
     <div class="header-section">
         <h1>MoriaMovil</h1>
-        <a href="/index.html" target="_blank">Volver a Inicio</a>
+        <a href="/games/juegos.html" target="_blank">Volver a Juegos</a>
     </div>
 
     <!-- Dos cuartos centrales: Tablero de juego -->
@@ -156,8 +163,8 @@
         <div id="game" role="application" aria-label="Mapa del juego. Usa swipes para moverte."></div>
     </div>
 
-    <!-- Cuarto inferior: Vacío, fondo #1E90FF -->
-    <div class="footer-section"></div>
+    <!-- Cuadrante inferior: Instrucciones -->
+    <div class="footer-section">Desliza el dedo sobre el tablero para llegar a la salida.</div>
 
     <!-- Modal de victoria -->
     <div id="victory-modal" class="victory-modal" role="alertdialog" aria-labelledby="victory-title" aria-modal="true">
