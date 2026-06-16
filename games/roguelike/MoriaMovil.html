@@ -149,6 +149,23 @@
         .victory-modal button:active {
             background-color: #0a0;
         }
+
+        /* Botón de Reload */
+        .reload-btn {
+            background-color: #ff0;
+            color: #000;
+            border: none;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .reload-btn:active {
+            background-color: #cc0;
+        }
     </style>
 </head>
 <body>
@@ -164,7 +181,10 @@
     </div>
 
     <!-- Cuadrante inferior: Instrucciones -->
-    <div class="footer-section">Desliza el dedo sobre el tablero para llegar a la salida.</div>
+    <div class="footer-section">
+        Desliza el dedo sobre el tablero para llegar a la salida.
+        <button id="reload-btn" class="reload-btn">Reload</button>
+    </div>
 
     <!-- Modal de victoria -->
     <div id="victory-modal" class="victory-modal" role="alertdialog" aria-labelledby="victory-title" aria-modal="true">
@@ -188,6 +208,7 @@
         const gameContainer = document.getElementById('game-container');
         const victoryModal = document.getElementById('victory-modal');
         const continueBtn = document.getElementById('continue-btn');
+        const reloadBtn = document.getElementById('reload-btn');
 
         function initMap() {
             map = [];
@@ -321,6 +342,10 @@
                 victoryModal.style.display = 'none';
                 initMap();
             }
+        });
+
+        reloadBtn.addEventListener('click', () => {
+            initMap();
         });
 
         // Inicializar el juego
