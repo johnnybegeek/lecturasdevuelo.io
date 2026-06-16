@@ -101,12 +101,34 @@
             height: 20vh;
             background-color: #1E90FF;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 10px;
             text-align: center;
             color: #fff;
             font-size: 1rem;
+            gap: 10px;
+        }
+
+        .reload-btn {
+            background-color: #fff;
+            color: #1E90FF;
+            border: none;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
+            font-family: "Courier New", monospace;
+        }
+
+        .reload-btn:hover {
+            background-color: #eee;
+        }
+
+        .reload-btn:active {
+            background-color: #ccc;
         }
 
         /* Modal de victoria */
@@ -164,7 +186,10 @@
     </div>
 
     <!-- Cuadrante inferior: Instrucciones -->
-    <div class="footer-section">Desliza el dedo sobre el tablero para llegar a la salida.</div>
+    <div class="footer-section">
+        <span>Desliza el dedo sobre el tablero para llegar a la salida.</span>
+        <button id="reload-btn" class="reload-btn">Reload</button>
+    </div>
 
     <!-- Modal de victoria -->
     <div id="victory-modal" class="victory-modal" role="alertdialog" aria-labelledby="victory-title" aria-modal="true">
@@ -188,6 +213,7 @@
         const gameContainer = document.getElementById('game-container');
         const victoryModal = document.getElementById('victory-modal');
         const continueBtn = document.getElementById('continue-btn');
+        const reloadBtn = document.getElementById('reload-btn');
 
         function initMap() {
             map = [];
@@ -321,6 +347,10 @@
                 victoryModal.style.display = 'none';
                 initMap();
             }
+        });
+
+        reloadBtn.addEventListener('click', () => {
+            initMap();
         });
 
         // Inicializar el juego
