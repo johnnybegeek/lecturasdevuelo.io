@@ -258,8 +258,8 @@
             const touchEndX = e.changedTouches[0].clientX;
             const touchEndY = e.changedTouches[0].clientY;
 
-            const diffX = touchStartX - touchEndX;
-            const diffY = touchStartY - touchEndY;
+            const diffX = touchEndX - touchStartX;
+            const diffY = touchEndY - touchStartY;
 
             // Umbral mínimo para considerar un swipe
             const threshold = 20;
