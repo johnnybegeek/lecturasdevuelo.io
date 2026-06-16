@@ -113,7 +113,7 @@ El archivo `index.html` sigue la estructura estándar de un documento HTML5, div
             <li><a href="/paginas/arrivals.html">Arrivals</a></li>
             <li><a href="/paginas/navdata.html">NavData</a></li>
             <li><a href="/paginas/hub.html">Hub</a></li>
-            <li><a href="/paginas/pruebas.html">Who</a></li>
+            <li><a href="/paginas/who.html">Who</a></li>
         </ul>
         <button id="theme-toggle" aria-label="Alternar entre modo día y noche" aria-pressed="false"><span aria-hidden="true">🌙</span></button>
         <button class="menu-toggle" aria-label="Abrir menú">☰</button>
@@ -131,7 +131,7 @@ El archivo `index.html` sigue la estructura estándar de un documento HTML5, div
       2. **Arrivals**: [`/paginas/arrivals.html`](paginas/arrivals.html) (Asuntos completados o archivados).
       3. **NavData**: [`/paginas/navdata.html`](paginas/navdata.html) (Recursos útiles).
       4. **Hub**: [`/paginas/hub.html`](paginas/hub.html) (Áreas temáticas).
-      5. **Who**: [`/paginas/pruebas.html`](paginas/pruebas.html) (Proyectos en marcha).
+      5. **Who**: [`/paginas/who.html`](paginas/who.html) (Proyectos en marcha).
     - **Nota**: En móviles, esta lista está oculta por defecto (se muestra al hacer clic en el botón de menú hamburguesa).
   - **Botón de tema (`#theme-toggle`)**:
     - **Funcionalidad**: Alterna entre modo claro y oscuro.
@@ -161,7 +161,7 @@ El archivo `index.html` sigue la estructura estándar de un documento HTML5, div
     <h2><a href="/paginas/hub.html">Hub</a></h2>
     <p data-text-key="hub"></p>
 
-    <h2><a href="/paginas/pruebas.html">Who</a></h2>
+    <h2><a href="/paginas/who.html">Who</a></h2>
     <p data-text-key="who"></p>
 
     <br>
@@ -179,7 +179,7 @@ El archivo `index.html` sigue la estructura estándar de un documento HTML5, div
   | Arrivals     | `/paginas/arrivals.html`        | `arrivals`     | "Asuntos completados o archivados, por si buscas inspiración."         |
   | NavData      | `/paginas/navdata.html`         | `navdata`      | "Recursos online que me resultan útiles y que quizás también pueden servirte." |
   | Hub          | `/paginas/hub.html`             | `hub`          | "Áreas temáticas que más me interesan."                     |
-  | Who          | `/paginas/pruebas.html`         | `who`          | "Quién está detrás de todo esto."                           |
+  | Who          | `/paginas/who.html`         | `who`          | "Quién está detrás de todo esto."                           |
 - **`<br>`**: Salto de línea para espacio adicional al final.
 
 ---
@@ -231,7 +231,7 @@ if (themeToggle) {
 | [`paginas/arrivals.html`](paginas/arrivals.html) | Enlace en el menú y en el contenido principal.                                          | Página de asuntos completados o archivados.                             |
 | [`paginas/navdata.html`](paginas/navdata.html) | Enlace en el menú y en el contenido principal.                                          | Página de recursos útiles.                                               |
 | [`paginas/hub.html`](paginas/hub.html) | Enlace en el menú y en el contenido principal.                                          | Página de áreas temáticas.                                               |
-| [`paginas/pruebas.html`](paginas/pruebas.html) | Enlace en el menú (como "Who") y en el contenido principal.                             | Página de proyectos en marcha.                                           |
+| [`paginas/who.html`](paginas/who.html) | Enlace en el menú (como "Who") y en el contenido principal.                             | Página de proyectos en marcha.                                           |
 | `../paginas/imagenes/logoblog.avif` | Ruta del logotipo en el `<header>`.                                                      | Imagen del logotipo del sitio.                                           |
 
 ---
@@ -268,7 +268,7 @@ if (themeToggle) {
    - La ruta `../paginas/imagenes/logoblog.avif` parece incorrecta (debería ser `paginas/imagenes/logoblog.avif` o `imagenes/logoblog.avif`).
 
 3. **Enlace "Who"**:
-   - El enlace apunta a `pruebas.html` en lugar de `who.html`. Podría ser un error de nombrado.
+   - El enlace apunta a `who.html` en lugar de `who.html`. Podría ser un error de nombrado.
 
 4. **SEO**:
    - Falta meta descripción (`<meta name="description">`) para mejorar el posicionamiento en buscadores.
@@ -293,7 +293,7 @@ lecturasdevuelo.io/
 │   ├── arrivals.html   # Página de Arrivals
 │   ├── navdata.html    # Página de NavData
 │   ├── hub.html        # Página de Hub
-│   └── pruebas.html    # Página de Who (proyectos)
+│   └── who.html    # Página de Who (proyectos)
 └── paginas/imagenes/
     └── logoblog.avif   # Logotipo del sitio
 ```

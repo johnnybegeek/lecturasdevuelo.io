@@ -85,9 +85,9 @@ El directorio `includes/` alberga **componentes HTML modulares** que pueden ser 
     - Contenido: Símbolo ☰ (menú hamburguesa).
   - **Lista de enlaces (`.menu-footer`)**:
     - Enlaces a páginas secundarias:
-      1. **Quién** → `/paginas/pruebas.html` *(Nota: Apunta a `pruebas.html`, que actúa como la sección "Who")*.
+      1. **Quién** → `/paginas/who.html` *(Nota: Apunta a `who.html`, que actúa como la sección "Who")*.
       2. **¿Por qué?** → `/paginas/why.html`
-      3. **Créditos** → `/paginas/pruebas.html` *(Nota: Apunta a `pruebas.html`, pero no hay contenido de créditos en esa página)*.
+      3. **Créditos** → `/paginas/who.html` *(Nota: Apunta a `who.html`, pero no hay contenido de créditos en esa página)*.
 - **Relación con otras páginas**:
   - Este fragmento se incluye en las páginas donde se desea mostrar un pie de página con enlaces secundarios.
 - **Funcionalidad**:
@@ -124,8 +124,8 @@ Los tres archivos en `includes/` están diseñados para trabajar juntos y formar
    - **Sugerencia**: Verificar si este enlace es necesario o si debe eliminarse.
 
 2. **Enlace "Créditos" en `footer.html`**:
-   - El enlace "Créditos" apunta a `/paginas/pruebas.html`, pero esta página no contiene información sobre créditos.
-   - **Sugerencia**: Crear una página dedicada (`creditos.html`) o actualizar `pruebas.html` para incluir esta sección.
+   - El enlace "Créditos" apunta a `/paginas/who.html`, pero esta página no contiene información sobre créditos.
+   - **Sugerencia**: Crear una página dedicada (`creditos.html`) o actualizar `who.html` para incluir esta sección.
 
 3. **Duplicidad de botones de menú hamburguesa**:
    - Tanto `nav.html` como `footer.html` incluyen un botón de menú hamburguesa (`.menu-toggle` y `.footer-menu-toggle`).
