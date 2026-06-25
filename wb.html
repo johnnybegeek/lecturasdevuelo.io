@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worldbuilding Manager</title>
+    <link rel="stylesheet" href="wb.css">
+</head>
+<body>
+    <!-- Skip link for keyboard navigation -->
+    <a href="#main-content" class="skip-link">Saltar al contenido</a>
+
+    <div class="app-container">
+        <header>
+            <div class="header-content">
+                <div class="header-top">
+                    <h1>Worldbuilding Manager</h1>
+                    <div class="header-actions">
+                        <button id="exportBtn" class="btn btn-success" aria-label="Exportar datos a archivo JSON">
+                            <span>📥 Exportar</span>
+                        </button>
+                        <button id="importBtn" class="btn btn-warning" aria-label="Importar datos desde archivo JSON">
+                            <span>📤 Importar</span>
+                        </button>
+                        <input type="file" id="fileInput" accept=".json" style="display: none;" aria-label="Seleccionar archivo JSON para importar">
+                        <button id="resetBtn" class="btn btn-danger" aria-label="Restablecer todos los datos">
+                            <span>🔄 Reset</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="concept-input-container">
+                    <label for="conceptInput">Concepto:</label>
+                    <input 
+                        type="text" 
+                        id="conceptInput" 
+                        placeholder="Nombre de tu mundo o proyecto..."
+                        aria-label="Nombre del concepto o mundo"
+                    >
+                </div>
+            </div>
+        </header>
+
+        <main id="main-content">
+            <div class="categories-grid" id="categoriesGrid"></div>
+        </main>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+    <script src="wb.js"></script>
+</body>
+</html>
