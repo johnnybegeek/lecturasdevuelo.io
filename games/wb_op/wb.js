@@ -39,10 +39,12 @@ const WB = {
     }
   },
 
-  saveState() {
+  saveState(silent = true) {
     try {
       localStorage.setItem(this.config.storageKey, JSON.stringify(this.state));
-      this.showToast('Estado guardado', 'success');
+      if (!silent) {
+        this.showToast('Estado guardado', 'success');
+      }
     } catch (e) {
       console.error('Error guardando:', e);
       this.showToast('Error al guardar', 'error');
@@ -120,7 +122,7 @@ const WB = {
           return;
         }
         this.state = i;
-        this.saveState();
+        this.saveState(false);
         this.renderApp();
         this.showToast('Importado correctamente', 'success');
       } catch (e) {
@@ -207,7 +209,7 @@ const WB = {
 
   updateConcept(n) {
     this.state.conceit = n;
-    this.saveState();
+    this.saveState(); // Guardar silenciosamente
   },
 
   addItem(c) {
@@ -220,7 +222,7 @@ const WB = {
     const allItems = Object.values(this.state.categorias).flat();
     const newId = Math.max(...allItems.map(i => i.id), 0) + 1;
     this.state.categorias[c].push({ id: newId, pregunta: q, respuesta: '', completada: false });
-    this.saveState();
+    this.saveState(); // Guardar silenciosamente
     i.value = '';
     this.renderItems(c);
     this.showToast(`Pregunta añadida a ${c}`, 'success');
@@ -232,7 +234,7 @@ const WB = {
       item.respuesta = r;
       if (r.trim() && !item.completada) item.completada = true;
       else if (!r.trim() && item.completada) item.completada = false;
-      this.saveState();
+      this.saveState(); // Guardar silenciosamente
     }
   },
 
@@ -240,7 +242,7 @@ const WB = {
     const item = this.state.categorias[c].find(i => i.id === id);
     if (item) {
       item.completada = !item.completada;
-      this.saveState();
+      this.saveState(false); // Guardar Y mostrar toast
       this.renderItems(c);
     }
   },
@@ -248,7 +250,7 @@ const WB = {
   deleteItem(c, id) {
     if (!confirm('¿Estás seguro de que quieres eliminar esta pregunta?')) return;
     this.state.categorias[c] = this.state.categorias[c].filter(i => i.id !== id);
-    this.saveState();
+    this.saveState(false); // Guardar Y mostrar toast
     this.renderItems(c);
     this.showToast('Pregunta eliminada', 'warning');
   },
