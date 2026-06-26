@@ -1,3 +1,4 @@
+cat > css/estilo.css << 'EOF'
 :root {
     /* Colores para modo día */
     --dia-bg: #E6E4E0;
@@ -7,26 +8,30 @@
     --warm-text: #2B261F;
 }
 
-/* Estilo general y tipografía */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    overflow-x: hidden;
+}
+
 body {
     margin: 0;
     padding-top: 20px;
     font-family: 'Verdana', sans-serif;
-    /* Modo día por defecto */
     background-color: var(--dia-bg);
     color: var(--dia-text);
-    transition: background-color 0.3s, color 0.3s; /* Transición suave */
+    transition: background-color 0.3s, color 0.3s;
+    overflow-x: hidden;
 }
 
-/* Clase para activar el modo noche */
 body.dark-mode {
     background-color: var(--warm-bg);
     color: var(--warm-text);
 }
 
-/* --- Resto del CSS original (sin cambios) --- */
-
-/* ajustes para que la imagen esté centrada y ocupe el 100% del ancho de su contenedor, manteniendo la proporción, pero sin exceder los 600 píxeles de ancho. */
+/* ajustes para que la imagen esté centrada */
 .responsive-img {
     display: block;
     width: 100%;
@@ -35,16 +40,19 @@ body.dark-mode {
     margin: 0 auto;
 }
 
-/* ajustes para el logotipo al inicio de la página */
+/* ajustes para el logotipo */
 .logo-header {
     display: flex;
     align-items: center;
     gap: 10px;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .logo-img {
     height: 6em;
     width: auto;
+    max-width: 100%;
 }
 
 /* Estilos para la barra de navegación fija superior */
@@ -62,34 +70,34 @@ body.dark-mode {
     justify-content: center;
     align-items: center;
     transition: background-color 0.3s;
+    margin: 0;
+    box-sizing: border-box;
 }
 
-/* Contenedor principal de navegación: contiene el menú de enlaces y los botones de control */
 .menu-principal {
     display: flex;
     align-items: center;
     width: 100%;
     justify-content: center;
+    max-width: 100%;
 }
 
 .header-fijo:hover {
     background: #F8E7A5;
 }
 
-/* Estilos para el botón menú hamburguesa */
 .menu-toggle {
     background: none;
     border: none;
     color: white;
     font-size: 20px;
     cursor: pointer;
-    display: none; /* Oculto en escritorio, visible en móvil */
+    display: none;
     padding: 0;
     margin: 0;
     line-height: 1;
 }
 
-/* Estilos para el botón de tema (día/noche) */
 #theme-toggle {
     background: none;
     border: none;
@@ -131,20 +139,16 @@ body.dark-mode {
     color: #0F499A;
 }
 
-/* Ajustes para móviles */
 @media (max-width: 600px) {
-    /* Ajustar la barra para móvil: padding vertical mínimo para tacto */
     .header-fijo {
         padding: 4px 20px;
     }
 
-    /* Mostrar botones de control en móvil */
     .menu-toggle,
     #theme-toggle {
         display: block;
     }
 
-    /* Ocultar el menú de enlaces por defecto en móvil */
     .menu-principal ul {
         display: none;
         flex-direction: column;
@@ -158,15 +162,13 @@ body.dark-mode {
         z-index: 1000;
     }
 
-    /* Mostrar el menú cuando está activo */
     .menu-principal ul.active {
         display: flex;
     }
 
-    /* Estilos para enlaces en móvil (padding vertical para tacto) */
     .menu-principal a {
         padding: 0.75rem 10px;
-        font-size: 1em; /* Volver a tamaño normal en móvil */
+        font-size: 1em;
         line-height: 1.5;
         border-top: 1px solid #444;
         width: 100%;
@@ -174,25 +176,21 @@ body.dark-mode {
         display: block;
     }
 
-    /* Estilos para botones de control en móvil */
     .menu-principal > button {
         margin-left: 10px;
     }
 }
 
-/* Contenido principal */
 main {
     padding: 20px;
     max-width: 800px;
     margin: 0 auto;
 }
 
-/* Estilos para encabezados */
 h1, h2, h3 {
     color: #0F499A;
 }
 
-/* Estilos para enlaces */
 a {
     background-color: #E6F2FF;
     color: #0F499A;
@@ -208,9 +206,7 @@ a:hover {
     text-decoration: underline;
 }
 
-
-
-.callout-verde {
+.callout {
     border: 2px solid #f3dc0a;
     border-radius: 8px;
     padding: 15px;
@@ -223,28 +219,28 @@ a:hover {
     max-width: 700px;
 }
 
-.callout-verde a {
+.callout a {
     color: #3498db;
     text-decoration: none;
 }
 
-.callout-verde a:hover {
+.callout a:hover {
     text-decoration: underline;
 }
 
-/* para que el boton de dia-noche se vea bien*/
 #theme-toggle {
-background: none;
-border: none;
-color: white;
-font-size: 20px;
-cursor: pointer;
-margin-left: 10px;
-padding: 0 5px;
-border-radius: 50%;
-transition: transform 0.2s;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+    padding: 0 5px;
+    border-radius: 50%;
+    transition: transform 0.2s;
 }
 
 #theme-toggle:hover {
-transform: scale(1.1);
+    transform: scale(1.1);
 }
+EOF
