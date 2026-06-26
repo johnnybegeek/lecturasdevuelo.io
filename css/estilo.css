@@ -44,7 +44,10 @@ body.dark-mode {
 
 .logo-img {
     height: 6em;
-    width: auto;
+    width: 6em;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
 }
 
 /* Estilos para la barra de navegación fija superior */
@@ -206,6 +209,18 @@ a:hover {
     background-color: #F8E7A5;
     color: #0F499A;
     text-decoration: underline;
+}
+
+/* Clase para enlaces que contienen imágenes (sin fondo) */
+.img-link {
+    background-color: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+}
+
+.img-link:hover {
+    background-color: transparent !important;
+    text-decoration: none !important;
 }
 
 
