@@ -44,7 +44,10 @@ body.dark-mode {
 
 .logo-img {
     height: 6em;
-    width: auto;
+    width: 6em;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
 }
 
 /* Estilos para la barra de navegación fija superior */
