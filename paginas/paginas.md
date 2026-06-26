@@ -40,7 +40,7 @@ El directorio `paginas/` contiene los archivos HTML que representan las **seccio
     - **Blog**: Enlace a [`../departures/paytowin050626.html`](../departures/paytowin050626.html) (artículo: *"El Pay-to-Win en juegos de mesa"*).
     - **Juegos**: Enlace a [`../games/juegos.html`](../games/juegos.html) (*"Algunos juegos"*).
 - **Diseño**:
-  - La descripción se muestra en un `div` con clase `callout-verde` (destacado visual).
+  - La descripción se muestra en un `div` con clase `callout` (destacado visual).
 - **Relación con otras páginas**:
   - Es la primera sección en el menú de navegación.
   - Su descripción en la página principal es: *"Blog y enlaces a Juegos. Un espacio de ideas y reflexiones en marcha."*
@@ -57,7 +57,7 @@ El directorio `paginas/` contiene los archivos HTML que representan las **seccio
     - Matemáticas para juegos
     - Juegos
 - **Diseño**:
-  - La descripción se muestra en un `div` con clase `callout-verde`.
+  - La descripción se muestra en un `div` con clase `callout`.
   - El listado de hubs está en una lista `<ul>` con id `lista-hub`.
 - **Relación con otras páginas**:
   - Su descripción en la página principal es: *"Áreas temáticas que más me interesan."*
@@ -69,9 +69,9 @@ El directorio `paginas/` contiene los archivos HTML que representan las **seccio
 - **Propósito**: Sección de **recursos útiles**, como enlaces, herramientas o referencias online que el autor recomienda o utiliza frecuentemente.
 - **Contenido actual**:
   - Descripción dinámica cargada desde `constantes.js` (clave: `navdata`).
-  - Actualmente **no tiene contenido adicional** (solo el `callout-verde` con la descripción).
+  - Actualmente **no tiene contenido adicional** (solo el `callout` con la descripción).
 - **Diseño**:
-  - La descripción se muestra en un `div` con clase `callout-verde`.
+  - La descripción se muestra en un `div` con clase `callout`.
 - **Relación con otras páginas**:
   - Su descripción en la página principal es: *"Recursos online que me resultan útiles y que quizás también pueden servirte."*
 
@@ -86,7 +86,7 @@ El directorio `paginas/` contiene los archivos HTML que representan las **seccio
   - Texto estático: *"Esta es una página genérica para probar los enlaces."*
   - Enlace para volver a la página principal: [`../index.html`](../index.html).
 - **Diseño**:
-  - La descripción se muestra en un `div` con clase `callout-verde`.
+  - La descripción se muestra en un `div` con clase `callout`.
 - **Relación con otras páginas**:
   - En el menú de navegación aparece como **"Who"** (no como "Pruebas").
   - Su descripción en la página principal es: *"Quién está detrás de todo esto."*
@@ -115,7 +115,7 @@ El directorio `paginas/` contiene los archivos HTML que representan las **seccio
   - **Callout**:
     - Reconocimiento a Hendrik Erz como inspiración, con enlace a su web: [https://www.hendrik-erz.de](https://www.hendrik-erz.de).
 - **Diseño**:
-  - Incluye un `div` con clase `callout-verde` para destacar la referencia a Hendrik Erz.
+  - Incluye un `div` con clase `callout` para destacar la referencia a Hendrik Erz.
 - **Relación con otras páginas**:
   - Enlazada desde [`arrivals.html`](arrivals.html) bajo el título "Cosas de internet".
   - No aparece en el menú de navegación principal.
@@ -131,7 +131,7 @@ El directorio `paginas/` contiene los archivos HTML que representan las **seccio
     - **Memoria**: Enlace a [`/index.html`](../index.html) (lo realizado hasta el momento).
     - **Roadmap**: Enlace a [`/index.html`](../index.html) (futuras implementaciones).
 - **Diseño**:
-  - No utiliza `callout-verde` ni textos dinámicos.
+  - No utiliza `callout` ni textos dinámicos.
 - **Relación con otras páginas**:
   - No aparece en el menú de navegación principal.
   - Es una página de **apoyo** para seguir el desarrollo del sitio.

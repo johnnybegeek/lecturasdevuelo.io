@@ -1,2 +1,2 @@
 # lecturasdevuelo
-Artículos a baja altitud
+Artículos a baja altitud.
