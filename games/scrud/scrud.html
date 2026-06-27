@@ -162,7 +162,7 @@
     <header class="header-fijo">
         <nav class="menu-principal">
             <!-- Lista de enlaces de navegación (se oculta en móvil) -->
-            <ul>
+            <ul id="main-menu">
                 <li><a href="/paginas/departures.html">Departures</a></li>
                 <li><a href="/paginas/arrivals.html">Arrivals</a></li>
                 <li><a href="/paginas/navdata.html">NavData</a></li>
@@ -170,7 +170,7 @@
                 <li><a href="/paginas/who.html">Who</a></li>
             </ul>
             <!-- Botones de control: tema y menú hamburguesa (siempre visibles) -->
-            <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+            <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="main-menu">☰</button>
             <button id="theme-toggle" aria-label="Alternar entre modo día y noche" aria-pressed="false"><span aria-hidden="true">🌙</span></button>
         </nav>
     </header>

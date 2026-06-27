@@ -195,6 +195,39 @@ body.dark-mode {
     }
 }
 
+/* Breakpoint para tablets en posición vertical (768px) */
+@media (max-width: 768px) {
+    .header-fijo {
+        padding: 6px 20px;
+    }
+    
+    .menu-principal a {
+        font-size: 0.95em;
+        padding: 0 8px;
+    }
+    
+    .logo-img {
+        height: 5em;
+        width: 5em;
+    }
+}
+
+/* Breakpoint para tablets en posición horizontal (1024px) */
+@media (max-width: 1024px) {
+    .menu-principal {
+        gap: 15px;
+    }
+    
+    .menu-principal a {
+        font-size: 0.9em;
+        padding: 0 8px;
+    }
+    
+    main {
+        padding: 15px;
+    }
+}
+
 /* Contenido principal */
 main {
     padding: 20px;
@@ -274,4 +307,16 @@ transition: transform 0.2s;
 
 #theme-toggle:hover {
 transform: scale(1.1);
+}
+
+/* Estilos para prevenir desbordamiento de texto en contenido largo */
+article p,
+article li,
+article blockquote,
+.callout p,
+main p,
+main li {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
