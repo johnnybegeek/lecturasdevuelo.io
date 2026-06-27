@@ -7,6 +7,11 @@
     --warm-text: #2B261F;
 }
 
+/* Reset de box-sizing para todos los elementos */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 /* Estilo general y tipografía */
 body {
     margin: 0;
@@ -16,6 +21,7 @@ body {
     background-color: var(--dia-bg);
     color: var(--dia-text);
     transition: background-color 0.3s, color 0.3s; /* Transición suave */
+    overflow-x: hidden; /* Evitar scroll horizontal */
 }
 
 /* Clase para activar el modo noche */
@@ -72,7 +78,9 @@ body.dark-mode {
     display: flex;
     align-items: center;
     width: 100%;
+    max-width: 100%;
     justify-content: center;
+    flex-wrap: wrap; /* Permitir que los elementos se envuelvan si no caben */
 }
 
 .header-fijo:hover {
@@ -110,6 +118,9 @@ body.dark-mode {
     padding: 0;
     display: flex;
     gap: 20px;
+    flex-wrap: wrap; /* Permitir que los elementos se envuelvan si no caben */
+    justify-content: center;
+    max-width: 100%;
 }
 
 .menu-principal a,
@@ -126,6 +137,7 @@ body.dark-mode {
     transition: background-color 0.3s, color 0.3s;
     border: none;
     cursor: pointer;
+    white-space: nowrap; /* Evitar que el texto se divida en varias líneas */
 }
 
 .menu-principal a:hover,
