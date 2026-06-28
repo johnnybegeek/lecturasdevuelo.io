@@ -10,29 +10,7 @@
     <!-- Contenedor del Panorama con scroll horizontal -->
     <div class="panorama" role="region" aria-label="Secciones principales">
         
-        <!-- Sección 1: Contenido de /who/ con estilo Hub -->
-        <section class="panorama-section hub-style" id="who-section" role="article" aria-labelledby="who-title">
-            <div class="logo-header">
-                <a href="/index.html" class="img-link" aria-label="Volver a inicio"><img src="assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="logo-img"></a>
-                <h1 id="who-title">Who</h1>
-            </div>
-            <p>Lecturas de vuelo: Artículos a baja altitud</p>
-            
-            <div class="callout" role="note">
-                <p>Quién está detrás de todo esto.</p>
-            </div>
-            
-            <main>
-                <p>Este es un texto de prueba</p>
-            </main>
-            
-            <div class="callout" role="note">
-                <p>Este sitio web no utiliza cookies ni recopila datos personales. Todos los juegos y funcionalidades operan localmente en tu navegador sin enviar información a servidores externos.</p>
-                <p>Si detecta algún error, le ruego que contacte conmigo en BlueSky: @lecturasdevuelo.es</p>
-            </div>
-        </section>
-
-        <!-- Sección 2: 5 tiles con enlaces (central) -->
+        <!-- Sección 2: 5 tiles con enlaces (central, primera visible) -->
         <section class="panorama-section active" id="main-tiles" role="navigation" aria-label="Menú principal">
             <div class="tiles-container" role="list" aria-label="Enlaces principales">
                 <a href="/departures/" class="tile" role="listitem" aria-label="Ir a Blog">Blog</a>
@@ -43,19 +21,40 @@
             </div>
         </section>
 
-        <!-- Sección 3: 5 tiles sin enlaces (contenido de /navdata/) -->
+        <!-- Sección 1: Contenido de /who/ con estilo Hub (limpiado) -->
+        <section class="panorama-section hub-style" id="who-section" role="article" aria-labelledby="who-title">
+            <div class="hub-logo-header">
+                <a href="/index.html" class="img-link" aria-label="Volver a inicio">
+                    <img src="assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="logo-img">
+                </a>
+                <h1 id="who-title">Who</h1>
+            </div>
+            <p class="hub-subtitle">Lecturas de vuelo: Artículos a baja altitud</p>
+            
+            <main class="hub-content">
+                <p>Quién está detrás de todo esto.</p>
+                <p>Este es un texto de prueba</p>
+                
+                <div class="hub-note">
+                    <p>Este sitio web no utiliza cookies ni recopila datos personales. Todos los juegos y funcionalidades operan localmente en tu navegador sin enviar información a servidores externos.</p>
+                    <p>Si detecta algún error, le ruego que contacte conmigo en BlueSky: @lecturasdevuelo.es</p>
+                </div>
+            </main>
+        </section>
+
+        <!-- Sección 3: 5 tiles sin enlaces -->
         <section class="panorama-section hub-style" id="navdata-section" role="article" aria-labelledby="navdata-title">
-            <div class="logo-header">
-                <a href="/index.html" class="img-link" aria-label="Volver a inicio"><img src="assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="logo-img"></a>
+            <div class="hub-logo-header">
+                <a href="/index.html" class="img-link" aria-label="Volver a inicio">
+                    <img src="assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="logo-img">
+                </a>
                 <h1 id="navdata-title">NavData</h1>
             </div>
-            <p>Lecturas de vuelo: Artículos a baja altitud</p>
+            <p class="hub-subtitle">Lecturas de vuelo: Artículos a baja altitud</p>
             
-            <div class="callout" role="note">
+            <main class="hub-content">
                 <p>Recursos online que me resultan útiles y que quizá también pueden servirte.</p>
-            </div>
-            
-            <main>
+                
                 <div class="tiles-container" role="list" aria-label="Tiles de ejemplo">
                     <div class="tile" role="listitem" aria-label="Tile 1">Tile_1</div>
                     <div class="tile" role="listitem" aria-label="Tile 2">Tile_2</div>
