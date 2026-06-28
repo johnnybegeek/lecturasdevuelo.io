@@ -10,7 +10,7 @@
     --tile-size: 120px;        /* Tamaño base de los tiles (múltiplo de 20px) */
     --hub-title-size: 4rem;    /* Tamaño de título en estilo Hub */
     --hub-subtitle-size: 1.5rem; /* Tamaño de subtítulo */
-    --section-padding: 120px;  /* Padding de secciones (múltiplo de 120px) */
+    --section-padding: 60px;   /* Padding de secciones (ajustado para que quepa en 100vh) */
 }
 
 /* Reset general */
@@ -50,9 +50,9 @@ body {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding: var(--section-padding) var(--gutter); /* 120px arriba/abajo, 20px izquierda/derecha */
+    padding: var(--section-padding) var(--gutter); /* 60px arriba/abajo, 20px izquierda/derecha */
     position: relative;
-    overflow-y: auto; /* Permitir scroll vertical en secciones con mucho contenido */
+    overflow-y: auto; /* Permitir scroll vertical si el contenido desborda */
 }
 
 /* Fondo de las secciones laterales con opacidad */
@@ -112,6 +112,8 @@ body {
     width: 100%;
     margin: 0 auto;
     text-align: left;
+    max-height: calc(100vh - 400px); /* Ajustar para que quepa en la pantalla */
+    overflow-y: auto; /* Permitir scroll vertical si el contenido es muy largo */
 }
 
 .hub-content p {
@@ -225,13 +227,43 @@ body {
     font-size: 1rem;
 }
 
+/* Estilo para listas en el estilo Hub */
+.hub-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.hub-list li {
+    margin-bottom: calc(var(--gutter) * 1.5); /* 30px */
+    font-size: 1.2rem;
+}
+
+.hub-list a {
+    color: var(--tile-color-1);
+    text-decoration: none;
+    padding: calc(var(--gutter) / 2) 0; /* 10px */
+    display: block;
+    transition: color 0.2s ease;
+}
+
+.hub-list a:hover {
+    color: var(--tile-color-2);
+    text-decoration: underline;
+}
+
+.hub-list a:focus {
+    outline: 2px solid var(--tile-color-2);
+    outline-offset: 2px;
+}
+
 /* --- Responsive para móviles --- */
 @media (max-width: 600px) {
     :root {
         --tile-size: 100px; /* Ajustar a 100px (múltiplo de 20px) */
         --hub-title-size: 2.5rem;
         --hub-subtitle-size: 1.2rem;
-        --section-padding: 60px; /* 60px (múltiplo de 20px) */
+        --section-padding: 40px; /* 40px (múltiplo de 20px) */
     }
     
     .panorama-section {
@@ -248,6 +280,10 @@ body {
     
     .hub-subtitle {
         font-size: var(--hub-subtitle-size);
+    }
+    
+    .hub-content {
+        max-height: calc(100vh - 300px); /* Ajustar para móviles */
     }
 }
 
