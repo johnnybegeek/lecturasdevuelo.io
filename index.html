@@ -7,108 +7,17 @@
     <link rel="stylesheet" href="assets/css/estilo.css">
 </head>
 <body>
-    <!-- Contenedor del Panorama con scroll horizontal -->
-    <div class="panorama" role="region" aria-label="Secciones principales">
-        
-        <!-- Sección 2: 6 tiles (primera visible) -->
-        <section class="panorama-section active" id="main-tiles" role="navigation" aria-label="Menú principal">
-            <div class="tiles-container" role="list" aria-label="Enlaces principales">
-                <!-- Orden para móvil: Logo, Blog, Juegos, Hub, Arrivals, NavData -->
-                <!-- Orden para escritorio: Logo, Juegos, Hub, Blog, Arrivals, NavData -->
-                <a href="/index.html" class="tile logo-tile" role="listitem" aria-label="Volver a inicio">
-                    <img src="assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="tile-logo">
-                </a>
-                <a href="/departures/" class="tile featured-tile" role="listitem" aria-label="Ir a Blog">Blog</a>
-                <a href="/games/" class="tile" role="listitem" aria-label="Ir a Juegos">Juegos</a>
-                <a href="/hub/" class="tile" role="listitem" aria-label="Ir a Hub">Hub</a>
-                <a href="/arrivals/" class="tile" role="listitem" aria-label="Ir a Arrivals">Arrivals</a>
-                <a href="/navdata/" class="tile" role="listitem" aria-label="Ir a NavData">NavData</a>
-            </div>
-        </section>
-
-        <!-- Sección 1: Contenido de /who/ con estilo Hub -->
-        <section class="panorama-section hub-style" id="who-section" role="article" aria-labelledby="who-title">
-            <div class="hub-logo-header">
-                <a href="/index.html" class="img-link" aria-label="Volver a inicio">
-                    <img src="assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="logo-img">
-                </a>
-                <h1 id="who-title">Who</h1>
-            </div>
-            <p class="hub-subtitle">Lecturas de vuelo: Artículos a baja altitud</p>
-            
-            <main class="hub-content">
-                <p>Quién está detrás de todo esto.</p>
-                
-                <div class="hub-note">
-                    <p>Este sitio web no utiliza cookies ni recopila datos personales. Todos los juegos y funcionalidades operan localmente en tu navegador sin enviar información a servidores externos.</p>
-                    <p>Si detecta algún error, le ruego que contacte conmigo en BlueSky: @lecturasdevuelo.es</p>
-                </div>
-            </main>
-        </section>
-
-        <!-- Sección 3: 5 tiles sin enlaces -->
-        <section class="panorama-section hub-style" id="navdata-section" role="article" aria-labelledby="navdata-title">
-            <div class="hub-logo-header">
-                <a href="/index.html" class="img-link" aria-label="Volver a inicio">
-                    <img src="assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="logo-img">
-                </a>
-                <h1 id="navdata-title">NavData</h1>
-            </div>
-            <p class="hub-subtitle">Lecturas de vuelo: Artículos a baja altitud</p>
-            
-            <main class="hub-content">
-                <p>Recursos online que me resultan útiles y que quizá también pueden servirte.</p>
-                
-                <div class="tiles-container" role="list" aria-label="Tiles de ejemplo">
-                    <div class="tile" role="listitem" aria-label="Tile 1">Tile_1</div>
-                    <div class="tile" role="listitem" aria-label="Tile 2">Tile_2</div>
-                    <div class="tile" role="listitem" aria-label="Tile 3">Tile_3</div>
-                    <div class="tile" role="listitem" aria-label="Tile 4">Tile_4</div>
-                    <div class="tile" role="listitem" aria-label="Tile 5">Tile_5</div>
-                </div>
-            </main>
-        </section>
+    <!-- Contenedor principal con los 6 tiles -->
+    <div class="tiles-container" role="navigation" aria-label="Menú principal">
+        <!-- Fila superior: Logo, Juegos, Hub (escritorio) / Logo, Blog (móvil) -->
+        <a href="/index.html" class="tile logo-tile" role="listitem" aria-label="Volver a inicio">
+            <img src="assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="tile-logo">
+        </a>
+        <a href="/departures/" class="tile featured-tile" role="listitem" aria-label="Ir a Blog">Blog</a>
+        <a href="/games/" class="tile" role="listitem" aria-label="Ir a Juegos">Juegos</a>
+        <a href="/hub/" class="tile" role="listitem" aria-label="Ir a Hub">Hub</a>
+        <a href="/arrivals/" class="tile" role="listitem" aria-label="Ir a Arrivals">Arrivals</a>
+        <a href="/navdata/" class="tile" role="listitem" aria-label="Ir a NavData">NavData</a>
     </div>
-
-    <!-- Script para manejar el scroll y la opacidad -->
-    <script>
-        // Aplicar opacidad según la sección visible
-        const panorama = document.querySelector('.panorama');
-        const sections = document.querySelectorAll('.panorama-section');
-
-        // Función para actualizar la opacidad según el scroll
-        function updateOpacity() {
-            const scrollPosition = panorama.scrollLeft;
-            const sectionWidth = window.innerWidth;
-            
-            sections.forEach((section, index) => {
-                const sectionStart = index * sectionWidth;
-                const sectionEnd = (index + 1) * sectionWidth;
-                
-                // Si el scroll está en esta sección, activarla
-                if (scrollPosition >= sectionStart && scrollPosition < sectionEnd) {
-                    section.classList.add('active');
-                } else {
-                    section.classList.remove('active');
-                }
-            });
-        }
-
-        // Escuchar el evento scroll
-        panorama.addEventListener('scroll', updateOpacity);
-
-        // Inicializar al cargar la página
-        window.addEventListener('load', updateOpacity);
-        window.addEventListener('resize', updateOpacity);
-
-        // Permitir navegación con teclado (flechas izquierda/derecha)
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') {
-                panorama.scrollBy({ left: -window.innerWidth, behavior: 'smooth' });
-            } else if (e.key === 'ArrowRight') {
-                panorama.scrollBy({ left: window.innerWidth, behavior: 'smooth' });
-            }
-        });
-    </script>
 </body>
 </html>

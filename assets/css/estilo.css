@@ -7,7 +7,6 @@
     --tile-color-2: #F8E7A5;   /* Amarillo claro (destacado) */
     --tile-color-3: #E6F2FF;   /* Azul claro (acento) */
     --gutter: 4vw;             /* Espaciado entre tiles (responsivo) */
-    --section-padding: 0;      /* Sin padding para que los tiles ocupen toda la pantalla */
 }
 
 /* Reset general */
@@ -23,127 +22,16 @@ body {
     background: var(--bg-color);
     color: var(--text-color);
     height: 100vh;
-    overflow: hidden; /* Evitar scroll vertical */
+    overflow: hidden; /* Evitar scroll */
     line-height: 1.6;
 }
 
-/* --- Estilo Panorama (scroll horizontal) --- */
-.panorama {
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch; /* Suavizar scroll en iOS */
-    touch-action: pan-x; /* Optimizar para tacto */
-}
-
-.panorama-section {
-    flex: 0 0 100vw;
-    height: 100vh;
-    scroll-snap-align: start;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch; /* Estirar para que los tiles ocupen todo el ancho */
-    padding: var(--section-padding); /* Sin padding */
-    position: relative;
-    overflow-y: hidden; /* Evitar scroll vertical */
-}
-
-/* Fondo de las secciones laterales con opacidad */
-.panorama-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--bg-color);
-    opacity: 0.6;
-    z-index: -1;
-    pointer-events: none; /* Permitir interacción con el contenido */
-}
-
-.panorama-section.active::before {
-    opacity: 1;
-}
-
-/* --- Estilo Hub (para secciones 1 y 3) --- */
-.hub-style {
-    text-align: center;
-    width: 100%;
-    max-width: 90vw;
-    padding: 2vh 0;
-}
-
-.hub-logo-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 2vw;
-    margin-bottom: 1vh;
-}
-
-.logo-img {
-    height: clamp(60px, 8vw, 100px);
-    width: clamp(60px, 8vw, 100px);
-    border-radius: 50%;
-    object-fit: cover;
-    object-position: center;
-}
-
-.hub-style h1 {
-    font-size: clamp(2rem, 6vw, 3rem);
-    margin-bottom: 1vh;
-    color: var(--text-color);
-}
-
-.hub-subtitle {
-    font-size: clamp(1rem, 3vw, 1.2rem);
-    opacity: 0.8;
-    margin-bottom: 2vh;
-}
-
-.hub-content {
-    width: 100%;
-    margin: 0 auto;
-    text-align: left;
-    max-height: calc(100vh - 10vh); /* Ajustar para que quepa */
-    overflow-y: auto;
-    padding: 0 2vw;
-}
-
-.hub-content p {
-    margin-bottom: 1vh;
-    font-size: clamp(0.9rem, 2vw, 1rem);
-}
-
-.hub-note {
-    border: 2px solid #f3dc0a;
-    border-radius: 8px;
-    padding: 2vw;
-    margin-top: 2vh;
-    background-color: rgba(31, 10, 224, 0.8);
-    color: #ecf0f1;
-    font-family: Arial, sans-serif;
-    font-size: clamp(0.8rem, 1.5vw, 0.9rem);
-    line-height: 1.5;
-    text-align: left;
-}
-
-.hub-note p {
-    margin: 1vh 0;
-}
-
-/* --- Estilo de los Tiles (adaptativo) --- */
+/* --- Estilo de los Tiles (6 tiles, orden adaptativo) --- */
 .tiles-container {
     display: grid;
     gap: var(--gutter); /* Espaciado entre tiles (4vw) */
-    width: 100%;
-    height: 100%; /* Ocupar toda la altura disponible */
+    width: 100vw;
+    height: 100vh;
     margin: 0;
     padding: 0;
 }
