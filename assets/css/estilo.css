@@ -213,7 +213,18 @@ body {
     .tiles-container {
         grid-template-columns: repeat(3, 1fr); /* 3 columnas en escritorio */
         grid-template-rows: repeat(2, 1fr); /* 2 filas de igual altura */
+        grid-template-areas: 
+            "logo juegos hub"
+            "blog arrivals navdata"; /* Orden en escritorio */
     }
+    
+    /* Asignar áreas a los tiles */
+    .logo-tile { grid-area: logo; }
+    .tiles-container > a:nth-child(2) { grid-area: juegos; } /* Juegos */
+    .tiles-container > a:nth-child(3) { grid-area: hub; }
+    .featured-tile { grid-area: blog; }
+    .tiles-container > a:nth-child(5) { grid-area: arrivals; }
+    .tiles-container > a:nth-child(6) { grid-area: navdata; }
 }
 
 /* --- Diseño para móvil/tablet (2 columnas, 3 filas) --- */
@@ -225,7 +236,19 @@ body {
     .tiles-container {
         grid-template-columns: repeat(2, 1fr); /* 2 columnas en móvil */
         grid-template-rows: repeat(3, 1fr); /* 3 filas en móvil */
+        grid-template-areas: 
+            "logo blog"
+            "juegos hub"
+            "arrivals navdata"; /* Orden en móvil */
     }
+    
+    /* Asignar áreas a los tiles */
+    .logo-tile { grid-area: logo; }
+    .featured-tile { grid-area: blog; }
+    .tiles-container > a:nth-child(3) { grid-area: juegos; } /* Juegos */
+    .tiles-container > a:nth-child(4) { grid-area: hub; }
+    .tiles-container > a:nth-child(5) { grid-area: arrivals; }
+    .tiles-container > a:nth-child(6) { grid-area: navdata; }
     
     .tile,
     .featured-tile,
@@ -247,7 +270,19 @@ body {
     .tiles-container {
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(3, 1fr);
+        grid-template-areas: 
+            "logo blog"
+            "juegos hub"
+            "arrivals navdata";
     }
+    
+    /* Asignar áreas a los tiles */
+    .logo-tile { grid-area: logo; }
+    .featured-tile { grid-area: blog; }
+    .tiles-container > a:nth-child(3) { grid-area: juegos; }
+    .tiles-container > a:nth-child(4) { grid-area: hub; }
+    .tiles-container > a:nth-child(5) { grid-area: arrivals; }
+    .tiles-container > a:nth-child(6) { grid-area: navdata; }
     
     .tile,
     .featured-tile {
