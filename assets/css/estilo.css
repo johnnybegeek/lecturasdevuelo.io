@@ -7,15 +7,7 @@
     --tile-color-2: #F8E7A5;   /* Amarillo claro (destacado) */
     --tile-color-3: #E6F2FF;   /* Azul claro (acento) */
     --gutter: 2vw;             /* Espaciado entre tiles (responsivo) */
-    --tile-width: 45vw;       /* Ancho de los tiles (2 columnas: ~45vw cada una) */
-    --tile-height: 25vh;      /* Alto de los tiles */
-    --logo-tile-width: 45vw;  /* Ancho del tile del logo */
-    --logo-tile-height: 25vh; /* Alto del tile del logo */
-    --featured-tile-width: 45vw; /* Ancho del tile destacado (Blog) */
-    --featured-tile-height: 25vh; /* Alto del tile destacado */
-    --hub-title-size: clamp(2.5rem, 8vw, 4rem); /* Tamaño de título en estilo Hub */
-    --hub-subtitle-size: clamp(1.2rem, 3vw, 1.5rem); /* Tamaño de subtítulo */
-    --section-padding: clamp(20px, 3vh, 40px); /* Padding reducido para dar espacio a los tiles */
+    --section-padding: 0;      /* Sin padding para que los tiles ocupen toda la pantalla */
 }
 
 /* Reset general */
@@ -55,10 +47,10 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
-    padding: var(--section-padding) var(--gutter); /* Padding reducido */
+    align-items: stretch; /* Estirar para que los tiles ocupen todo el ancho */
+    padding: var(--section-padding); /* Sin padding */
     position: relative;
-    overflow-y: auto; /* Permitir scroll vertical si el contenido desborda */
+    overflow-y: hidden; /* Evitar scroll vertical */
 }
 
 /* Fondo de las secciones laterales con opacidad */
@@ -84,80 +76,83 @@ body {
     text-align: center;
     width: 100%;
     max-width: 90vw;
+    padding: 2vh 0;
 }
 
 .hub-logo-header {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: var(--gutter);
-    margin-bottom: calc(var(--gutter) * 0.5);
+    gap: 2vw;
+    margin-bottom: 1vh;
 }
 
 .logo-img {
-    height: clamp(80px, 10vw, 120px);
-    width: clamp(80px, 10vw, 120px);
+    height: clamp(60px, 8vw, 100px);
+    width: clamp(60px, 8vw, 100px);
     border-radius: 50%;
     object-fit: cover;
     object-position: center;
 }
 
 .hub-style h1 {
-    font-size: var(--hub-title-size);
-    margin-bottom: calc(var(--gutter) * 0.5);
+    font-size: clamp(2rem, 6vw, 3rem);
+    margin-bottom: 1vh;
     color: var(--text-color);
 }
 
 .hub-subtitle {
-    font-size: var(--hub-subtitle-size);
+    font-size: clamp(1rem, 3vw, 1.2rem);
     opacity: 0.8;
-    margin-bottom: var(--gutter);
+    margin-bottom: 2vh;
 }
 
 .hub-content {
     width: 100%;
     margin: 0 auto;
     text-align: left;
-    max-height: calc(100vh - 100px); /* Ajustar para que quepa */
+    max-height: calc(100vh - 10vh); /* Ajustar para que quepa */
     overflow-y: auto;
+    padding: 0 2vw;
 }
 
 .hub-content p {
-    margin-bottom: calc(var(--gutter) * 0.5);
-    font-size: clamp(1rem, 2vw, 1.2rem);
+    margin-bottom: 1vh;
+    font-size: clamp(0.9rem, 2vw, 1rem);
 }
 
 .hub-note {
     border: 2px solid #f3dc0a;
     border-radius: 8px;
-    padding: var(--gutter);
-    margin-top: var(--gutter);
+    padding: 2vw;
+    margin-top: 2vh;
     background-color: rgba(31, 10, 224, 0.8);
     color: #ecf0f1;
     font-family: Arial, sans-serif;
-    font-size: clamp(0.9rem, 1.5vw, 1rem);
+    font-size: clamp(0.8rem, 1.5vw, 0.9rem);
     line-height: 1.5;
     text-align: left;
 }
 
 .hub-note p {
-    margin: calc(var(--gutter) * 0.25) 0;
+    margin: 1vh 0;
 }
 
-/* --- Estilo de los Tiles (2 columnas, 3 filas) --- */
+/* --- Estilo de los Tiles (2 columnas, 3 filas, ocupando toda la pantalla) --- */
 .tiles-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* 2 columnas */
-    grid-template-rows: repeat(3, auto); /* 3 filas */
+    grid-template-rows: repeat(3, 1fr); /* 3 filas */
     gap: var(--gutter); /* Espaciado entre tiles */
-    max-width: calc(100vw - var(--gutter) * 2); /* Ajustar al ancho de la pantalla */
-    margin: 0 auto;
+    width: 100%;
+    height: 100%; /* Ocupar toda la altura disponible */
+    margin: 0;
     padding: 0;
 }
 
 .tile {
     width: 100%; /* Ocupar todo el ancho de su celda */
-    height: var(--tile-height); /* 25vh */
+    height: 100%; /* Ocupar toda la altura de su celda */
     background: var(--tile-color-1);
     color: white;
     display: flex;
@@ -217,30 +212,30 @@ body {
 
 /* --- Estilo para páginas internas (Hub) --- */
 .hub-page {
-    padding: calc(var(--tile-height) * 0.5) var(--gutter);
+    padding: 5vh 2vw;
     max-width: 90vw;
     margin: 0 auto;
     text-align: left;
 }
 
 .hub-page h1 {
-    font-size: var(--hub-title-size);
-    margin-bottom: var(--gutter);
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    margin-bottom: 2vh;
     color: var(--text-color);
 }
 
 .hub-page h2 {
-    font-size: var(--hub-subtitle-size);
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
     opacity: 0.8;
-    margin-bottom: var(--gutter);
+    margin-bottom: 2vh;
 }
 
 .hub-page main {
-    margin-top: var(--gutter);
+    margin-top: 2vh;
 }
 
 .hub-page p {
-    margin-bottom: var(--gutter);
+    margin-bottom: 2vh;
     font-size: clamp(1rem, 2vw, 1.2rem);
 }
 
@@ -252,14 +247,14 @@ body {
 }
 
 .hub-list li {
-    margin-bottom: calc(var(--gutter) * 1.5);
+    margin-bottom: 3vh;
     font-size: clamp(1rem, 2.5vw, 1.2rem);
 }
 
 .hub-list a {
     color: var(--tile-color-1);
     text-decoration: none;
-    padding: calc(var(--gutter) * 0.5) 0;
+    padding: 1vh 0;
     display: block;
     transition: color 0.2s ease;
 }
@@ -277,41 +272,43 @@ body {
 /* --- Responsive para móviles --- */
 @media (max-width: 768px) {
     :root {
-        --tile-width: 45vw;
-        --tile-height: 20vh;
-        --logo-tile-width: 45vw;
-        --logo-tile-height: 20vh;
-        --featured-tile-width: 45vw;
-        --featured-tile-height: 20vh;
-        --gutter: 3vw;
-        --section-padding: clamp(10px, 2vh, 20px);
+        --gutter: 1vw; /* Menos espacio entre tiles en móvil */
     }
     
     .tiles-container {
         grid-template-columns: repeat(2, 1fr); /* 2 columnas en móvil */
-        max-width: calc(100vw - var(--gutter) * 2);
+        grid-template-rows: repeat(3, 1fr); /* 3 filas */
+        gap: var(--gutter);
     }
     
     .tile,
     .featured-tile,
     .logo-tile {
-        height: var(--tile-height);
+        font-size: clamp(1.2rem, 4vw, 1.8rem); /* Tipografía ajustada para móvil */
+    }
+    
+    .featured-tile {
+        font-size: clamp(1.5rem, 4.5vw, 2rem);
     }
 }
 
 @media (max-width: 480px) {
     :root {
-        --tile-width: 48vw;
-        --tile-height: 18vh;
-        --logo-tile-width: 48vw;
-        --logo-tile-height: 18vh;
-        --featured-tile-width: 48vw;
-        --featured-tile-height: 18vh;
-        --gutter: 2vw;
+        --gutter: 0.5vw; /* Aún menos espacio en móviles pequeños */
     }
     
     .tiles-container {
         grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+    }
+    
+    .tile,
+    .featured-tile {
+        font-size: clamp(1rem, 4vw, 1.5rem);
+    }
+    
+    .featured-tile {
+        font-size: clamp(1.2rem, 4.5vw, 1.8rem);
     }
 }
 
