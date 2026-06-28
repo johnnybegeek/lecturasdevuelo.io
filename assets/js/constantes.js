@@ -1,9 +1,9 @@
 // Constantes de texto para las páginas
 const TEXT_CONSTANTS = {
   departures: "Blog y enlaces a Juegos. Un espacio de ideas y reflexiones en marcha.",
-  arrivals: "Asuntos completados o archivados, por si buscas inspiración.",
-  navdata: "Recursos online que me resultan útiles y que quizás también pueden servirte.",
-  hub: "Áreas temáticas que más me interesan.",
+  archivo: "Asuntos completados o archivados, por si buscas inspiración.",
+  recursos: "Recursos online que me resultan útiles y que quizá también pueden servirte.",
+  temas: "Áreas temáticas que más me interesan.",
   who: "Quién está detrás de todo esto.",
   juegos: "Prototipos.",
 };
