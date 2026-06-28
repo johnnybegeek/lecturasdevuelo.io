@@ -4,16 +4,18 @@
     --bg-color: #E6E4E0;       /* Fondo */
     --text-color: #1A1A1A;     /* Texto principal */
     --tile-color-1: #0F499A;   /* Azul oscuro (para tiles) */
-    --tile-color-2: #F8E7A5;   /* Amarillo claro (hover) */
+    --tile-color-2: #F8E7A5;   /* Amarillo claro (destacado) */
     --tile-color-3: #E6F2FF;   /* Azul claro (acento) */
     --gutter: 2vw;             /* Espaciado entre tiles (responsivo) */
-    --tile-width: 40vw;       /* Ancho estándar de los tiles */
-    --tile-height: 20vh;      /* Alto estándar de los tiles */
-    --featured-tile-width: 60vw; /* Ancho del tile destacado */
+    --tile-width: 45vw;       /* Ancho de los tiles (2 columnas: ~45vw cada una) */
+    --tile-height: 25vh;      /* Alto de los tiles */
+    --logo-tile-width: 45vw;  /* Ancho del tile del logo */
+    --logo-tile-height: 25vh; /* Alto del tile del logo */
+    --featured-tile-width: 45vw; /* Ancho del tile destacado (Blog) */
     --featured-tile-height: 25vh; /* Alto del tile destacado */
-    --hub-title-size: clamp(2.5rem, 8vw, 4rem); /* Tamaño de título en estilo Hub (responsivo) */
-    --hub-subtitle-size: clamp(1.2rem, 3vw, 1.5rem); /* Tamaño de subtítulo (responsivo) */
-    --section-padding: clamp(40px, 5vh, 80px); /* Padding de secciones (responsivo) */
+    --hub-title-size: clamp(2.5rem, 8vw, 4rem); /* Tamaño de título en estilo Hub */
+    --hub-subtitle-size: clamp(1.2rem, 3vw, 1.5rem); /* Tamaño de subtítulo */
+    --section-padding: clamp(20px, 3vh, 40px); /* Padding reducido para dar espacio a los tiles */
 }
 
 /* Reset general */
@@ -54,7 +56,7 @@ body {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding: var(--section-padding) var(--gutter); /* Padding responsivo */
+    padding: var(--section-padding) var(--gutter); /* Padding reducido */
     position: relative;
     overflow-y: auto; /* Permitir scroll vertical si el contenido desborda */
 }
@@ -81,19 +83,19 @@ body {
 .hub-style {
     text-align: center;
     width: 100%;
-    max-width: 90vw; /* Máximo ancho responsivo */
+    max-width: 90vw;
 }
 
 .hub-logo-header {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: var(--gutter); /* 2vw */
-    margin-bottom: calc(var(--gutter) * 0.5); /* 1vw */
+    gap: var(--gutter);
+    margin-bottom: calc(var(--gutter) * 0.5);
 }
 
 .logo-img {
-    height: clamp(80px, 10vw, 120px); /* Tamaño responsivo */
+    height: clamp(80px, 10vw, 120px);
     width: clamp(80px, 10vw, 120px);
     border-radius: 50%;
     object-fit: cover;
@@ -102,34 +104,34 @@ body {
 
 .hub-style h1 {
     font-size: var(--hub-title-size);
-    margin-bottom: calc(var(--gutter) * 0.5); /* 1vw */
+    margin-bottom: calc(var(--gutter) * 0.5);
     color: var(--text-color);
 }
 
 .hub-subtitle {
     font-size: var(--hub-subtitle-size);
     opacity: 0.8;
-    margin-bottom: calc(var(--featured-tile-height) + var(--gutter)); /* Espacio antes de los tiles */
+    margin-bottom: var(--gutter);
 }
 
 .hub-content {
     width: 100%;
     margin: 0 auto;
     text-align: left;
-    max-height: calc(100vh - var(--featured-tile-height) - var(--section-padding) * 2 - 10vh); /* Ajustar para que quepa */
+    max-height: calc(100vh - 100px); /* Ajustar para que quepa */
     overflow-y: auto;
 }
 
 .hub-content p {
-    margin-bottom: calc(var(--gutter) * 0.5); /* 1vw */
-    font-size: clamp(1rem, 2vw, 1.2rem); /* Texto responsivo */
+    margin-bottom: calc(var(--gutter) * 0.5);
+    font-size: clamp(1rem, 2vw, 1.2rem);
 }
 
 .hub-note {
     border: 2px solid #f3dc0a;
     border-radius: 8px;
-    padding: var(--gutter); /* 2vw */
-    margin-top: calc(var(--gutter) * 2); /* 4vw */
+    padding: var(--gutter);
+    margin-top: var(--gutter);
     background-color: rgba(31, 10, 224, 0.8);
     color: #ecf0f1;
     font-family: Arial, sans-serif;
@@ -139,30 +141,30 @@ body {
 }
 
 .hub-note p {
-    margin: calc(var(--gutter) * 0.25) 0; /* 0.5vw */
+    margin: calc(var(--gutter) * 0.25) 0;
 }
 
-/* --- Estilo de los Tiles (grandes, basados en vw/vh) --- */
+/* --- Estilo de los Tiles (2 columnas, 3 filas) --- */
 .tiles-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--gutter); /* 2vw */
-    max-width: 100vw;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas */
+    grid-template-rows: repeat(3, auto); /* 3 filas */
+    gap: var(--gutter); /* Espaciado entre tiles */
+    max-width: calc(100vw - var(--gutter) * 2); /* Ajustar al ancho de la pantalla */
     margin: 0 auto;
-    padding: 0 var(--gutter);
+    padding: 0;
 }
 
 .tile {
-    width: var(--tile-width); /* 40vw */
-    height: var(--tile-height); /* 20vh */
+    width: 100%; /* Ocupar todo el ancho de su celda */
+    height: var(--tile-height); /* 25vh */
     background: var(--tile-color-1);
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    font-size: clamp(1.5rem, 4vw, 2.5rem); /* Tipografía responsiva */
+    font-size: clamp(1.5rem, 4vw, 2rem); /* Tipografía grande y legible */
     font-weight: bold;
     border-radius: 0; /* Sin bordes redondeados (estilo Metro) */
     transition: background 0.2s ease, transform 0.1s ease;
@@ -170,14 +172,25 @@ body {
     user-select: none;
 }
 
+/* Tile del logotipo */
+.logo-tile {
+    background: transparent; /* Fondo transparente para el logo */
+    padding: 0;
+}
+
+.tile-logo {
+    width: 70%; /* 70% del ancho del tile */
+    height: 70%; /* 70% del alto del tile */
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+}
+
 /* Tile destacado (Blog) */
 .featured-tile {
-    width: var(--featured-tile-width); /* 60vw */
-    height: var(--featured-tile-height); /* 25vh */
     background: var(--tile-color-2); /* Color destacado */
     color: var(--tile-color-1); /* Texto en azul oscuro */
-    font-size: clamp(2rem, 5vw, 3rem); /* Tipografía más grande */
-    font-weight: bold;
+    font-size: clamp(1.8rem, 4.5vw, 2.2rem); /* Tipografía más grande */
 }
 
 .tile:hover {
@@ -202,32 +215,9 @@ body {
     transform: scale(0.98);
 }
 
-.tile-text {
-    text-align: center;
-    padding: 10px;
-}
-
-/* Clase para enlaces que contienen imágenes (sin fondo) */
-.img-link {
-    background-color: transparent !important;
-    padding: 0 !important;
-    border-radius: 0 !important;
-    border: none;
-}
-
-.img-link:hover {
-    background-color: transparent !important;
-    text-decoration: none !important;
-}
-
-.img-link:focus {
-    outline: 2px solid var(--tile-color-2);
-    outline-offset: 2px;
-}
-
 /* --- Estilo para páginas internas (Hub) --- */
 .hub-page {
-    padding: calc(var(--tile-height) * 2) var(--gutter); /* Padding responsivo */
+    padding: calc(var(--tile-height) * 0.5) var(--gutter);
     max-width: 90vw;
     margin: 0 auto;
     text-align: left;
@@ -235,22 +225,22 @@ body {
 
 .hub-page h1 {
     font-size: var(--hub-title-size);
-    margin-bottom: var(--gutter); /* 2vw */
+    margin-bottom: var(--gutter);
     color: var(--text-color);
 }
 
 .hub-page h2 {
     font-size: var(--hub-subtitle-size);
     opacity: 0.8;
-    margin-bottom: calc(var(--tile-height) + var(--gutter));
+    margin-bottom: var(--gutter);
 }
 
 .hub-page main {
-    margin-top: var(--gutter); /* 2vw */
+    margin-top: var(--gutter);
 }
 
 .hub-page p {
-    margin-bottom: var(--gutter); /* 2vw */
+    margin-bottom: var(--gutter);
     font-size: clamp(1rem, 2vw, 1.2rem);
 }
 
@@ -262,14 +252,14 @@ body {
 }
 
 .hub-list li {
-    margin-bottom: calc(var(--gutter) * 1.5); /* 3vw */
+    margin-bottom: calc(var(--gutter) * 1.5);
     font-size: clamp(1rem, 2.5vw, 1.2rem);
 }
 
 .hub-list a {
     color: var(--tile-color-1);
     text-decoration: none;
-    padding: calc(var(--gutter) * 0.5) 0; /* 1vw */
+    padding: calc(var(--gutter) * 0.5) 0;
     display: block;
     transition: color 0.2s ease;
 }
@@ -287,37 +277,41 @@ body {
 /* --- Responsive para móviles --- */
 @media (max-width: 768px) {
     :root {
-        --tile-width: 80vw; /* Tiles más anchos en móvil */
-        --tile-height: 30vh; /* Tiles más altos en móvil */
-        --featured-tile-width: 90vw; /* Tile destacado más ancho */
-        --featured-tile-height: 35vh; /* Tile destacado más alto */
-        --gutter: 5vw; /* Más espacio entre tiles en móvil */
+        --tile-width: 45vw;
+        --tile-height: 20vh;
+        --logo-tile-width: 45vw;
+        --logo-tile-height: 20vh;
+        --featured-tile-width: 45vw;
+        --featured-tile-height: 20vh;
+        --gutter: 3vw;
+        --section-padding: clamp(10px, 2vh, 20px);
     }
     
     .tiles-container {
-        flex-direction: column;
-        align-items: center;
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas en móvil */
+        max-width: calc(100vw - var(--gutter) * 2);
     }
     
     .tile,
-    .featured-tile {
-        width: var(--tile-width);
+    .featured-tile,
+    .logo-tile {
         height: var(--tile-height);
-    }
-    
-    .featured-tile {
-        width: var(--featured-tile-width);
-        height: var(--featured-tile-height);
     }
 }
 
 @media (max-width: 480px) {
     :root {
-        --tile-width: 90vw; /* Tiles aún más anchos */
-        --tile-height: 35vh; /* Tiles más altos */
-        --featured-tile-width: 95vw;
-        --featured-tile-height: 40vh;
-        --gutter: 3vw; /* Menos espacio entre tiles en móviles pequeños */
+        --tile-width: 48vw;
+        --tile-height: 18vh;
+        --logo-tile-width: 48vw;
+        --logo-tile-height: 18vh;
+        --featured-tile-width: 48vw;
+        --featured-tile-height: 18vh;
+        --gutter: 2vw;
+    }
+    
+    .tiles-container {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 

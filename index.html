@@ -10,22 +10,20 @@
     <!-- Contenedor del Panorama con scroll horizontal -->
     <div class="panorama" role="region" aria-label="Secciones principales">
         
-        <!-- Sección 2: Inicio con tile destacado para Blog (primera visible) -->
+        <!-- Sección 2: 6 tiles en 2 columnas y 3 filas (primera visible) -->
         <section class="panorama-section active" id="main-tiles" role="navigation" aria-label="Menú principal">
-            <div class="hub-style">
-                <h1 id="inicio-title">Inicio</h1>
-                <p class="hub-subtitle">Artículos a baja altitud</p>
-            </div>
-            
             <div class="tiles-container" role="list" aria-label="Enlaces principales">
-                <!-- Tile destacado para Blog (rectangular) -->
-                <a href="/departures/" class="tile featured-tile" role="listitem" aria-label="Ir a Blog">
-                    <span class="tile-text">Blog</span>
+                <!-- Primera fila -->
+                <a href="/index.html" class="tile logo-tile" role="listitem" aria-label="Volver a inicio">
+                    <img src="assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="tile-logo">
                 </a>
+                <a href="/departures/" class="tile featured-tile" role="listitem" aria-label="Ir a Blog">Blog</a>
                 
-                <!-- Tiles adicionales (rectangulares) -->
+                <!-- Segunda fila -->
                 <a href="/games/" class="tile" role="listitem" aria-label="Ir a Juegos">Juegos</a>
                 <a href="/arrivals/" class="tile" role="listitem" aria-label="Ir a Arrivals">Arrivals</a>
+                
+                <!-- Tercera fila -->
                 <a href="/hub/" class="tile" role="listitem" aria-label="Ir a Hub">Hub</a>
                 <a href="/navdata/" class="tile" role="listitem" aria-label="Ir a NavData">NavData</a>
             </div>
