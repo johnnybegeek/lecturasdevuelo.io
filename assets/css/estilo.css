@@ -212,7 +212,7 @@ body {
 @media (min-width: 769px) {
     .tiles-container {
         grid-template-columns: repeat(3, 1fr); /* 3 columnas en escritorio */
-        grid-template-rows: repeat(2, 1fr); /* 2 filas en escritorio */
+        grid-template-rows: repeat(2, 1fr); /* 2 filas de igual altura */
     }
 }
 
