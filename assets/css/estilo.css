@@ -40,6 +40,7 @@ body {
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch; /* Suavizar scroll en iOS */
+    touch-action: pan-x; /* Optimizar para tacto */
 }
 
 .panorama-section {
@@ -260,18 +261,26 @@ body {
 /* --- Responsive para móviles --- */
 @media (max-width: 600px) {
     :root {
-        --tile-size: 100px; /* Ajustar a 100px (múltiplo de 20px) */
-        --hub-title-size: 2.5rem;
-        --hub-subtitle-size: 1.2rem;
-        --section-padding: 40px; /* 40px (múltiplo de 20px) */
+        --tile-size: 80px; /* Tiles más pequeños en móvil */
+        --hub-title-size: 2rem;
+        --hub-subtitle-size: 1rem;
+        --section-padding: 40px; /* Padding reducido para móvil */
     }
     
     .panorama-section {
         padding: var(--section-padding) var(--gutter);
     }
     
+    /* 2 tiles por fila en móvil */
     .tiles-container {
-        max-width: calc(var(--tile-size) * 5 + var(--gutter) * 4); /* 5 * 100px + 4 * 20px = 580px */
+        max-width: calc(var(--tile-size) * 2 + var(--gutter)); /* 2 * 80px + 20px = 180px */
+        justify-content: center;
+    }
+    
+    .tile {
+        width: var(--tile-size); /* 80px */
+        height: var(--tile-size); /* 80px */
+        font-size: 1rem; /* Texto más pequeño en tiles */
     }
     
     .hub-style h1 {
@@ -280,10 +289,69 @@ body {
     
     .hub-subtitle {
         font-size: var(--hub-subtitle-size);
+        margin-bottom: calc(var(--tile-size) + var(--gutter)); /* 80px + 20px = 100px */
     }
     
     .hub-content {
         max-height: calc(100vh - 300px); /* Ajustar para móviles */
+    }
+    
+    .hub-note {
+        margin-top: calc(var(--tile-size) + var(--gutter)); /* 80px + 20px = 100px */
+    }
+    
+    /* Ajustar el logo en móvil */
+    .logo-img {
+        height: 80px; /* 80px (múltiplo de 20px) */
+        width: 80px; /* 80px (múltiplo de 20px) */
+    }
+    
+    /* Ajustar el estilo Hub para páginas internas en móvil */
+    .hub-page {
+        padding: calc(var(--tile-size) * 1.5) var(--gutter); /* 120px arriba/abajo, 20px izquierda/derecha */
+        max-width: 100%; /* Ocupar todo el ancho en móvil */
+    }
+    
+    .hub-page h1 {
+        font-size: var(--hub-title-size);
+    }
+    
+    .hub-page h2 {
+        font-size: var(--hub-subtitle-size);
+        margin-bottom: calc(var(--tile-size) + var(--gutter)); /* 100px */
+    }
+    
+    .hub-list li {
+        font-size: 1rem; /* Texto más pequeño en listas */
+    }
+}
+
+/* Ajustes para móviles muy pequeños (ej: iPhone SE) */
+@media (max-width: 400px) {
+    :root {
+        --tile-size: 60px; /* Tiles aún más pequeños */
+        --hub-title-size: 1.8rem;
+        --hub-subtitle-size: 0.9rem;
+        --section-padding: 20px;
+    }
+    
+    .tiles-container {
+        max-width: calc(var(--tile-size) * 2 + var(--gutter)); /* 2 * 60px + 20px = 140px */
+    }
+    
+    .tile {
+        width: var(--tile-size); /* 60px */
+        height: var(--tile-size); /* 60px */
+        font-size: 0.9rem;
+    }
+    
+    .logo-img {
+        height: 60px;
+        width: 60px;
+    }
+    
+    .hub-content {
+        max-height: calc(100vh - 250px);
     }
 }
 
