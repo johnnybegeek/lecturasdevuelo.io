@@ -6,7 +6,7 @@
     --tile-color-1: #0F499A;   /* Azul oscuro (para tiles) */
     --tile-color-2: #F8E7A5;   /* Amarillo claro (destacado) */
     --tile-color-3: #E6F2FF;   /* Azul claro (acento) */
-    --gutter: 2vw;             /* Espaciado entre tiles (responsivo) */
+    --gutter: 4vw;             /* Espaciado entre tiles (responsivo, duplicado) */
     --section-padding: 0;      /* Sin padding para que los tiles ocupen toda la pantalla */
 }
 
@@ -143,7 +143,7 @@ body {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* 2 columnas */
     grid-template-rows: repeat(3, 1fr); /* 3 filas */
-    gap: var(--gutter); /* Espaciado entre tiles */
+    gap: var(--gutter); /* Espaciado entre tiles (4vw) */
     width: 100%;
     height: 100%; /* Ocupar toda la altura disponible */
     margin: 0;
@@ -272,7 +272,7 @@ body {
 /* --- Responsive para móviles --- */
 @media (max-width: 768px) {
     :root {
-        --gutter: 1vw; /* Menos espacio entre tiles en móvil */
+        --gutter: 2vw; /* Espaciado duplicado para móvil (antes 1vw) */
     }
     
     .tiles-container {
@@ -294,7 +294,7 @@ body {
 
 @media (max-width: 480px) {
     :root {
-        --gutter: 0.5vw; /* Aún menos espacio en móviles pequeños */
+        --gutter: 1vw; /* Espaciado duplicado para móvil pequeño (antes 0.5vw) */
     }
     
     .tiles-container {
