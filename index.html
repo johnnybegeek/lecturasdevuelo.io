@@ -10,10 +10,20 @@
     <!-- Contenedor del Panorama con scroll horizontal -->
     <div class="panorama" role="region" aria-label="Secciones principales">
         
-        <!-- Sección 2: 5 tiles con enlaces (central, primera visible) -->
+        <!-- Sección 2: Inicio con tile destacado para Blog (primera visible) -->
         <section class="panorama-section active" id="main-tiles" role="navigation" aria-label="Menú principal">
+            <div class="hub-style">
+                <h1 id="inicio-title">Inicio</h1>
+                <p class="hub-subtitle">Artículos a baja altitud</p>
+            </div>
+            
             <div class="tiles-container" role="list" aria-label="Enlaces principales">
-                <a href="/departures/" class="tile" role="listitem" aria-label="Ir a Blog">Blog</a>
+                <!-- Tile destacado para Blog (rectangular) -->
+                <a href="/departures/" class="tile featured-tile" role="listitem" aria-label="Ir a Blog">
+                    <span class="tile-text">Blog</span>
+                </a>
+                
+                <!-- Tiles adicionales (rectangulares) -->
                 <a href="/games/" class="tile" role="listitem" aria-label="Ir a Juegos">Juegos</a>
                 <a href="/arrivals/" class="tile" role="listitem" aria-label="Ir a Arrivals">Arrivals</a>
                 <a href="/hub/" class="tile" role="listitem" aria-label="Ir a Hub">Hub</a>
@@ -21,7 +31,7 @@
             </div>
         </section>
 
-        <!-- Sección 1: Contenido de /who/ con estilo Hub (limpiado) -->
+        <!-- Sección 1: Contenido de /who/ con estilo Hub -->
         <section class="panorama-section hub-style" id="who-section" role="article" aria-labelledby="who-title">
             <div class="hub-logo-header">
                 <a href="/index.html" class="img-link" aria-label="Volver a inicio">
