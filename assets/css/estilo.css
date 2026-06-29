@@ -32,8 +32,8 @@ body, html {
 
 /* Cada Sección (S1, S2, S3) */
 .section {
-    /* Cada sección ocupa exactamente el 90% de la pantalla */
-    flex: 0 0 90vw;
+    /* Cada sección ocupa exactamente el 75% de la pantalla */
+    flex: 0 0 75vw;
     scroll-snap-align: center; /* Centra la sección en el área visible */
     
     height: 100vh;
