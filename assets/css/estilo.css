@@ -1,12 +1,13 @@
-/* --- Reset y variables de diseño Metro (basado en vw/vh) --- */
+/* --- Reset y variables de diseño Metro (LV1 - Diseño horizontal con swipe) --- */
 :root {
-    /* Paleta de colores (modo día actual) */
+    /* Paleta de colores */
     --bg-color: #E6E4E0;       /* Fondo */
     --text-color: #1A1A1A;     /* Texto principal */
-    --tile-color-1: #0F499A;   /* Azul oscuro (para tiles) */
+    --tile-color-1: #0F499A;   /* Azul oscuro (tiles) */
     --tile-color-2: #F8E7A5;   /* Amarillo claro (destacado) */
     --tile-color-3: #E6F2FF;   /* Azul claro (acento) */
-    --gutter: 4vw;             /* Espaciado entre tiles (responsivo) */
+    --section-margin: 5%;      /* Margen del 5% para tiles */
+    --transition-duration: 0.5s; /* Duración de la transición */
 }
 
 /* Reset general */
@@ -18,50 +19,77 @@
 
 /* Estilo base del cuerpo */
 body {
-    font-family: Arial, sans-serif; /* Sin recursos externos */
+    font-family: Arial, sans-serif;
     background: var(--bg-color);
     color: var(--text-color);
     height: 100vh;
-    overflow: hidden; /* Evitar scroll */
+    overflow: hidden; /* Evitar scroll vertical */
     line-height: 1.6;
+    touch-action: pan-y; /* Permitir scroll vertical si es necesario, pero bloquear horizontal */
 }
 
-/* --- Estilo de los Tiles (6 tiles, orden adaptativo) --- */
-.tiles-container {
-    display: grid;
-    gap: var(--gutter); /* Espaciado entre tiles (4vw) */
-    width: 100vw;
+/* --- Contenedor de secciones (S1, S2, S3) --- */
+.sections-container {
+    display: flex;
+    flex-direction: row;
+    width: 300vw; /* 3 secciones = 300% del ancho de la pantalla */
     height: 100vh;
-    margin: 0;
-    padding: 0;
+    position: relative;
+    left: 0;
+    transition: left var(--transition-duration) ease-in-out;
 }
 
+.section {
+    width: 100vw; /* Cada sección ocupa el 100% del ancho de la pantalla */
+    height: 100vh;
+    flex-shrink: 0; /* Evitar que las secciones se compriman */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.section.active {
+    /* La sección activa no necesita estilos adicionales, ya que el contenedor se mueve */
+}
+
+/* --- Wrapper de tiles (para centrar y aplicar márgenes) --- */
+.tiles-wrapper {
+    width: 90%; /* 100% - 5% margen izquierdo - 5% margen derecho */
+    height: 90%; /* 100% - 5% margen superior - 5% margen inferior */
+    margin: 5%; /* Margen del 5% en todos los lados */
+    display: flex;
+    flex-direction: column;
+    gap: 5%; /* Espacio entre tiles (5% del alto del wrapper) */
+}
+
+/* --- Estilo de los tiles --- */
 .tile {
-    width: 100%; /* Ocupar todo el ancho de su celda */
-    height: 100%; /* Ocupar toda la altura de su celda */
+    width: 100%;
+    height: 50%; /* Cada tile ocupa la mitad del alto del wrapper (2 tiles = 100%) */
     background: var(--tile-color-1);
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    font-size: clamp(1.5rem, 4vw, 2rem); /* Tipografía grande y legible */
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
     font-weight: bold;
-    border-radius: 0; /* Sin bordes redondeados (estilo Metro) */
+    border-radius: 0;
     transition: background 0.2s ease, transform 0.1s ease;
     cursor: pointer;
     user-select: none;
 }
 
-/* Tile del logotipo */
+/* Tile del logotipo (transparente) */
 .logo-tile {
-    background: transparent; /* Fondo transparente para el logo */
+    background: transparent;
     padding: 0;
 }
 
 .tile-logo {
-    width: 70%; /* 70% del ancho del tile */
-    height: 70%; /* 70% del alto del tile */
+    width: 70%;
+    height: 70%;
     border-radius: 50%;
     object-fit: cover;
     object-position: center;
@@ -69,11 +97,12 @@ body {
 
 /* Tile destacado (Blog) */
 .featured-tile {
-    background: var(--tile-color-2); /* Color destacado */
-    color: var(--tile-color-1); /* Texto en azul oscuro */
-    font-size: clamp(1.8rem, 4.5vw, 2.2rem); /* Tipografía más grande */
+    background: var(--tile-color-2);
+    color: var(--tile-color-1);
+    font-size: clamp(1.8rem, 7vw, 3rem);
 }
 
+/* Efectos hover/focus/active */
 .tile:hover {
     background: var(--tile-color-2);
     color: var(--tile-color-1);
@@ -96,89 +125,55 @@ body {
     transform: scale(0.98);
 }
 
-/* --- Diseño para escritorio (3 columnas, 2 filas) --- */
+/* --- Efecto de "intuir" secciones adyacentes --- */
+/* Esto se logra con el desbordamiento del contenedor y opacidad en los bordes */
+.sections-container {
+    /* El contenedor ya se desborda, pero necesitamos que las secciones adyacentes se vean con opacidad */
+}
+
+/* Aplicar opacidad a las secciones no activas cuando están en los bordes */
+.section:not(.active) {
+    opacity: 0.5;
+}
+
+/* --- Diseño solo para móvil (LV1) --- */
+/* Este diseño es específico para la versión móvil, como se solicitó */
 @media (min-width: 769px) {
-    .tiles-container {
-        grid-template-columns: repeat(3, 1fr); /* 3 columnas en escritorio */
-        grid-template-rows: repeat(2, 1fr); /* 2 filas de igual altura */
-        grid-template-areas: 
-            "logo juegos hub"
-            "blog arrivals navdata"; /* Orden en escritorio */
+    /* En escritorio, mantener el diseño actual (grid) para compatibilidad */
+    .sections-container {
+        display: none; /* Ocultar el diseño horizontal en escritorio */
     }
     
-    /* Asignar áreas a los tiles */
+    /* Mostrar el diseño antiguo de grid en escritorio (opcional, si se quiere mantener) */
+    .tiles-container {
+        display: grid;
+        gap: 4vw;
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        grid-template-areas: 
+            "logo juegos hub"
+            "blog arrivals navdata";
+    }
+    
     .logo-tile { grid-area: logo; }
-    .tiles-container > a:nth-child(2) { grid-area: juegos; } /* Juegos */
+    .tiles-container > a:nth-child(2) { grid-area: juegos; }
     .tiles-container > a:nth-child(3) { grid-area: hub; }
     .featured-tile { grid-area: blog; }
     .tiles-container > a:nth-child(5) { grid-area: arrivals; }
     .tiles-container > a:nth-child(6) { grid-area: navdata; }
-}
-
-/* --- Diseño para móvil/tablet (2 columnas, 3 filas) --- */
-@media (max-width: 768px) {
-    :root {
-        --gutter: 2vw; /* Espaciado para móvil */
-    }
     
-    .tiles-container {
-        grid-template-columns: repeat(2, 1fr); /* 2 columnas en móvil */
-        grid-template-rows: repeat(3, 1fr); /* 3 filas en móvil */
-        grid-template-areas: 
-            "logo blog"
-            "juegos hub"
-            "arrivals navdata"; /* Orden en móvil */
-    }
-    
-    /* Asignar áreas a los tiles */
-    .logo-tile { grid-area: logo; }
-    .featured-tile { grid-area: blog; }
-    .tiles-container > a:nth-child(3) { grid-area: juegos; } /* Juegos */
-    .tiles-container > a:nth-child(4) { grid-area: hub; }
-    .tiles-container > a:nth-child(5) { grid-area: arrivals; }
-    .tiles-container > a:nth-child(6) { grid-area: navdata; }
-    
-    .tile,
-    .featured-tile,
-    .logo-tile {
-        font-size: clamp(1.2rem, 4vw, 1.8rem); /* Tipografía ajustada para móvil */
+    .tile, .featured-tile, .logo-tile {
+        width: 100%;
+        height: 100%;
+        font-size: clamp(1.5rem, 4vw, 2rem);
     }
     
     .featured-tile {
-        font-size: clamp(1.5rem, 4.5vw, 2rem);
-    }
-}
-
-/* Ajustes para móviles pequeños */
-@media (max-width: 480px) {
-    :root {
-        --gutter: 1vw; /* Espaciado para móvil pequeño */
-    }
-    
-    .tiles-container {
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(3, 1fr);
-        grid-template-areas: 
-            "logo blog"
-            "juegos hub"
-            "arrivals navdata";
-    }
-    
-    /* Asignar áreas a los tiles */
-    .logo-tile { grid-area: logo; }
-    .featured-tile { grid-area: blog; }
-    .tiles-container > a:nth-child(3) { grid-area: juegos; }
-    .tiles-container > a:nth-child(4) { grid-area: hub; }
-    .tiles-container > a:nth-child(5) { grid-area: arrivals; }
-    .tiles-container > a:nth-child(6) { grid-area: navdata; }
-    
-    .tile,
-    .featured-tile {
-        font-size: clamp(1rem, 4vw, 1.5rem);
-    }
-    
-    .featured-tile {
-        font-size: clamp(1.2rem, 4.5vw, 1.8rem);
+        font-size: clamp(1.8rem, 4.5vw, 2.2rem);
     }
 }
 
