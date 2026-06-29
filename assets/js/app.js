@@ -2,22 +2,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const carousel = document.getElementById('carousel');
     const sections = document.querySelectorAll('.section');
 
-    // 1. Desactivar temporalmente scroll-snap-type para posicionar manualmente
-    carousel.style.scrollSnapType = 'none';
+    // 1. Aterrizaje en S2 al cargar la página usando scrollIntoView
+    // Esto centra S2 de manera nativa y permite que S1 y S3 sean visibles
+    if (sections.length >= 2) {
+        sections[1].scrollIntoView({
+            behavior: 'auto',
+            inline: 'center',
+            block: 'nearest'
+        });
+    }
 
-    // 2. Aterrizaje en S2 al cargar la página
-    // Para alinear el centro de S2 (135vw) con el centro de la pantalla (50vw),
-    // el scroll inicial debe ser 85vw.
-    const scrollAmount = window.innerWidth * 0.85; 
-    carousel.scrollLeft = scrollAmount;
-
-    // 3. Reactivar scroll-snap-type después de posicionar
-    // Usamos setTimeout para asegurarnos de que el scroll se ha aplicado
-    setTimeout(() => {
-        carousel.style.scrollSnapType = 'x mandatory';
-    }, 100);
-
-    // 4. Controlar la opacidad (Efecto "Intuir")
+    // 2. Controlar la opacidad (Efecto "Intuir")
     // Usamos un threshold bajo (0.1) para detectar secciones que solo muestran un 5%
     const observerOptions = {
         root: carousel,
