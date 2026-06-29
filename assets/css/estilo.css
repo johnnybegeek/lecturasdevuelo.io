@@ -37,9 +37,9 @@ body, html {
 
 /* Cada Sección (S1, S2, S3) */
 .section {
-    /* Ancho del 90% de la pantalla y alineación al centro */
+    /* Ancho del 90% de la pantalla y alineación al inicio */
     flex: 0 0 90vw;
-    scroll-snap-align: center;
+    scroll-snap-align: start; /* Cambiado a start para evitar centrado automático */
     
     height: 100vh;
     display: flex;

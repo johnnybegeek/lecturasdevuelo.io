@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 1. Aterrizaje en S2 al cargar la página
     // Con el padding del 5% en el carrusel y secciones de 90vw,
-    // el scroll inicial debe ser exactamente 90vw para posicionar S2 en el centro.
-    const scrollAmount = window.innerWidth * 0.9; // 90vw exactos
+    // el scroll inicial debe ser 85vw para mostrar 5% de S1 y 5% de S3.
+    const scrollAmount = window.innerWidth * 0.85; // 85vw
     carousel.scrollLeft = scrollAmount;
 
     // 2. Controlar la opacidad (Efecto "Intuir")
