@@ -3,9 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const sections = document.querySelectorAll('.section');
 
     // 1. Aterrizaje en S2 al cargar la página
-    // Como S1 ocupa 90vw, el centro de S2 está a 135vw. 
-    // Restando la mitad de la pantalla (50vw), necesitamos hacer scroll de 85vw.
-    const scrollAmount = window.innerWidth * 0.85;
+    // Con el nuevo CSS, cada sección ocupa el 100% del contenedor (90% de la pantalla).
+    // Para posicionar S2 en el centro, desplazamos el scroll al ancho del contenedor (100vw).
+    const scrollAmount = carousel.clientWidth; 
     carousel.scrollLeft = scrollAmount;
 
     // 2. Controlar la opacidad (Efecto "Intuir")
