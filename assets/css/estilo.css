@@ -26,7 +26,7 @@ body, html {
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE/Edge */
     
-    /* CAMBIO 1: Añadir padding lateral del 5% para dejar espacio libre */
+    /* Padding lateral del 5% para dejar espacio libre */
     padding-left: 5vw;
     padding-right: 5vw;
     box-sizing: border-box;
@@ -37,13 +37,14 @@ body, html {
 
 /* Cada Sección (S1, S2, S3) */
 .section {
-    /* CAMBIO 2: Ancho al 100% del contenedor (90% de la pantalla) */
-    flex: 0 0 100%;
+    /* Ancho del 90% de la pantalla y alineación al centro */
+    flex: 0 0 90vw;
+    scroll-snap-align: center;
+    
     height: 100vh;
-    scroll-snap-align: start; /* Cambiar de center a start */
     display: flex;
     flex-direction: column;
-    padding: 5vh 0; /* Quitar padding lateral (ya lo hace el contenedor) */
+    padding: 5vh 0; /* Margen vertical del 5%, sin margen lateral (lo gestiona el contenedor) */
     gap: 5vh; /* Separación del 5% entre las dos tiles */
     
     /* Efecto de intuir (50% opacidad por defecto) */
@@ -70,7 +71,7 @@ body, html {
     position: relative;
     transition: transform 0.1s ease;
     
-    /* Añadir margen lateral del 5% a las tiles */
+    /* Margen lateral del 5% para las tiles */
     margin: 0 5vw;
 }
 
