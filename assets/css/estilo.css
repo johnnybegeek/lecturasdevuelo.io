@@ -23,7 +23,7 @@ body, html {
     overflow: hidden; /* Evita scroll vertical nativo en la raíz */
 }
 
-/* Contenedor del Carrusel */
+/* Contenedor del Carrusel - Versión móvil/tablet */
 .carousel {
     display: flex;
     width: 100vw;
@@ -40,7 +40,7 @@ body, html {
     display: none; /* Chrome/Safari */
 }
 
-/* Cada Sección (S1, S2, S3) */
+/* Cada Sección (S1, S2, S3) - Versión móvil/tablet */
 .section {
     /* Cada sección ocupa exactamente el 75% de la pantalla */
     flex: 0 0 75vw;
@@ -62,7 +62,7 @@ body, html {
     opacity: 1;
 }
 
-/* Las Tiles */
+/* Las Tiles - Versión móvil/tablet */
 .tile {
     flex: 1; /* Ambas tiles se reparten el alto al 50% */
     display: flex;
@@ -115,6 +115,75 @@ body, html {
     border-radius: 50%;
     object-fit: cover;
     object-position: center;
+}
+
+/* --- Versión sobremesa (pantallas anchas) --- */
+@media (min-width: 1024px) {
+    /* Desactivar el carrusel horizontal en sobremesa */
+    .carousel {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        scroll-snap-type: none;
+        gap: 2vh;
+        padding: 2vh;
+    }
+
+    /* Las secciones en sobremesa se comportan como contenedores de tiles */
+    .section {
+        flex: none;
+        height: auto;
+        width: auto;
+        padding: 0;
+        gap: 0;
+        opacity: 1;
+        display: flex;
+        flex-direction: column;
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+
+    /* Reorganizar las secciones en el grid */
+    #s1 {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    #s2 {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #s3 {
+        grid-column: 3;
+        grid-row: 1;
+    }
+
+    /* Las tiles en sobremesa */
+    .tile {
+        flex: 1;
+        margin: 1vh;
+        font-size: clamp(1.5rem, 2vw, 2.5rem);
+        min-height: 20vh;
+    }
+
+    /* Ajustar el logo en sobremesa */
+    #s2 .tile {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #s2 .logo-placeholder {
+        width: 60%;
+        height: 60%;
+    }
 }
 
 /* --- Estilo para páginas internas (Hub) --- */
