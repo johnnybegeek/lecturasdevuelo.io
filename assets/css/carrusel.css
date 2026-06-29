@@ -1,0 +1,59 @@
+/* Estilos para el carrusel horizontal */
+.carousel-container {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    width: 100vw;
+    height: 100vh;
+    gap: 0;
+    -webkit-overflow-scrolling: touch; /* Para iOS */
+}
+
+.section {
+    flex: 0 0 85vw; /* Cada sección ocupa el 85% del viewport width */
+    height: 100vh;
+    scroll-snap-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 2rem;
+    text-align: center;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.section:nth-child(odd) {
+    background: #e0e0e0;
+}
+
+.section.is-active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.section:not(.is-active) {
+    opacity: 0.7;
+    transform: scale(0.95);
+}
+
+#s1 {
+    background: #ffdddd;
+}
+
+#s2 {
+    background: #ddffdd;
+}
+
+#s3 {
+    background: #ddddff;
+}
+
+/* Estilos para móviles */
+@media (max-width: 768px) {
+    .section {
+        flex: 0 0 90vw; /* En móviles, un poco más ancho */
+    }
+}
