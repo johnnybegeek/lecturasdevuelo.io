@@ -9,9 +9,10 @@ document.addEventListener("DOMContentLoaded", () => {
     carousel.scrollLeft = scrollAmount;
 
     // Controlar la opacidad (Efecto "Intuir")
+    // Usamos un threshold bajo (0.1) para detectar secciones que solo muestran un 5%
     const observerOptions = {
         root: carousel,
-        threshold: 0.6 
+        threshold: 0.1 
     };
 
     const observer = new IntersectionObserver((entries) => {
