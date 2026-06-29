@@ -1,41 +1,37 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lecturas de Vuelo</title>
     <link rel="stylesheet" href="assets/css/estilo.css">
 </head>
 <body>
-    <!-- Contenedor principal para las 3 secciones -->
-    <div class="sections-container" id="sections-container">
-        <!-- S1: Sección izquierda (Temas, Archivo) -->
+
+    <div class="carousel" id="carousel">
+        
         <section class="section" id="s1">
-            <div class="tiles-wrapper">
-                <a href="/temas/" class="tile" role="listitem" aria-label="Ir a Temas">Temas</a>
-                <a href="/archivo/" class="tile" role="listitem" aria-label="Ir a Archivo">Archivo</a>
-            </div>
+            <a href="/temas/" class="tile bg-blue">Temas</a>
+            <a href="/archivo/" class="tile bg-green">Archivo</a>
         </section>
-        
-        <!-- S2: Sección central (Logo, Blog) -->
-        <section class="section active" id="s2">
-            <div class="tiles-wrapper">
-                <a href="/who/" class="tile logo-tile" role="listitem" aria-label="Ir a Quién soy">
-                    <img src="assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="tile-logo">
-                </a>
-                <a href="/departures/" class="tile featured-tile" role="listitem" aria-label="Ir a Blog">Blog</a>
-            </div>
+
+        <section class="section" id="s2">
+            <a href="/who/" class="tile bg-transparent">
+                <img src="assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="logo-placeholder">
+            </a>
+            <a href="/departures/" class="tile bg-orange">
+                <span class="badge">Destacada</span>
+                blog
+            </a>
         </section>
-        
-        <!-- S3: Sección derecha (Juegos, Recursos) -->
+
         <section class="section" id="s3">
-            <div class="tiles-wrapper">
-                <a href="/juegos/" class="tile" role="listitem" aria-label="Ir a Juegos">Juegos</a>
-                <a href="/recursos/" class="tile" role="listitem" aria-label="Ir a Recursos">Recursos</a>
-            </div>
+            <a href="/juegos/" class="tile bg-purple">Juegos</a>
+            <a href="/recursos/" class="tile bg-teal">Recursos</a>
         </section>
+
     </div>
-    
-    <script src="assets/js/swipe.js"></script>
+
+    <script src="assets/js/app.js"></script>
 </body>
 </html>

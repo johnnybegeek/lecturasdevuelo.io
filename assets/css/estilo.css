@@ -1,180 +1,105 @@
-/* --- Reset y variables de diseño Metro (LV1 - Diseño horizontal con swipe) --- */
-:root {
-    /* Paleta de colores */
-    --bg-color: #E6E4E0;       /* Fondo */
-    --text-color: #1A1A1A;     /* Texto principal */
-    --tile-color-1: #0F499A;   /* Azul oscuro (tiles) */
-    --tile-color-2: #F8E7A5;   /* Amarillo claro (destacado) */
-    --tile-color-3: #E6F2FF;   /* Azul claro (acento) */
-    --section-margin: 5%;      /* Margen del 5% para tiles */
-    --transition-duration: 0.5s; /* Duración de la transición */
-}
-
-/* Reset general */
-*, *::before, *::after {
+/* Reseteo básico y tipografía estilo Swiss/Metro */
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-/* Estilo base del cuerpo */
-body {
-    font-family: Arial, sans-serif;
-    background: var(--bg-color);
-    color: var(--text-color);
-    height: 100vh;
-    overflow: hidden; /* Evitar scroll vertical */
-    line-height: 1.6;
-    touch-action: pan-y; /* Permitir scroll vertical si es necesario, pero bloquear horizontal */
+body, html {
+    width: 100%;
+    height: 100%;
+    background-color: #111; /* Fondo oscuro típico de Metro UI */
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    overflow: hidden; /* Evita scroll vertical nativo en la raíz */
 }
 
-/* --- Contenedor de secciones (S1, S2, S3) --- */
-.sections-container {
+/* Contenedor del Carrusel */
+.carousel {
     display: flex;
-    flex-direction: row;
-    width: 300vw; /* 3 secciones = 300% del ancho de la pantalla */
+    width: 100vw;
     height: 100vh;
-    position: relative;
-    left: 0;
-    transition: left var(--transition-duration) ease-in-out;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory; /* Magia del swipe nativo */
+    
+    /* Ocultar barra de scroll para un look limpio */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+.carousel::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
 }
 
+/* Cada Sección (S1, S2, S3) */
 .section {
-    width: 100vw; /* Cada sección ocupa el 100% del ancho de la pantalla */
+    flex: 0 0 90vw; /* Ocupa exactamente el 90% del ancho de la pantalla */
     height: 100vh;
-    flex-shrink: 0; /* Evitar que las secciones se compriman */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
-
-.section.active {
-    /* La sección activa no necesita estilos adicionales, ya que el contenedor se mueve */
-}
-
-/* --- Wrapper de tiles (para centrar y aplicar márgenes) --- */
-.tiles-wrapper {
-    width: 90%; /* 100% - 5% margen izquierdo - 5% margen derecho */
-    height: 90%; /* 100% - 5% margen superior - 5% margen inferior */
-    margin: 5%; /* Margen del 5% en todos los lados */
+    scroll-snap-align: center; /* Centra la sección, dejando 5% libre a cada lado */
     display: flex;
     flex-direction: column;
-    gap: 5%; /* Espacio entre tiles (5% del alto del wrapper) */
+    padding: 5vh 5vw; /* Margen del 5% general */
+    gap: 5vh; /* Separación del 5% entre las dos tiles */
+    
+    /* Efecto de intuir (50% opacidad por defecto) */
+    opacity: 0.5;
+    transition: opacity 0.4s ease;
 }
 
-/* --- Estilo de los tiles --- */
+/* La clase que añadiremos con JS para la sección activa */
+.section.is-active {
+    opacity: 1;
+}
+
+/* Las Tiles */
 .tile {
-    width: 100%;
-    height: 50%; /* Cada tile ocupa la mitad del alto del wrapper (2 tiles = 100%) */
-    background: var(--tile-color-1);
-    color: white;
+    flex: 1; /* Ambas tiles se reparten el alto al 50% */
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    font-size: clamp(1.5rem, 6vw, 2.5rem);
-    font-weight: bold;
-    border-radius: 0;
-    transition: background 0.2s ease, transform 0.1s ease;
-    cursor: pointer;
-    user-select: none;
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 300;
+    position: relative;
+    transition: transform 0.1s ease;
 }
 
-/* Tile del logotipo (transparente) */
-.logo-tile {
-    background: transparent;
-    padding: 0;
+.tile:active {
+    transform: scale(0.97); /* Pequeño efecto de hundimiento al pulsar (típico de WP) */
 }
 
-.tile-logo {
+/* Colores de Tiles (Paleta Metro) */
+.bg-transparent { 
+    background-color: transparent; 
+    border: 2px solid rgba(255, 255, 255, 0.3); 
+}
+.bg-blue { background-color: #1ba1e2; }
+.bg-green { background-color: #60a917; }
+.bg-orange { background-color: #fa6800; }
+.bg-purple { background-color: #aa00ff; }
+.bg-teal { background-color: #00aba9; }
+
+/* Etiqueta de "Destacada" */
+.badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: white;
+    color: #fa6800;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    text-transform: uppercase;
+}
+
+/* Logo placeholder */
+.logo-placeholder {
     width: 70%;
     height: 70%;
     border-radius: 50%;
     object-fit: cover;
     object-position: center;
-}
-
-/* Tile destacado (Blog) */
-.featured-tile {
-    background: var(--tile-color-2);
-    color: var(--tile-color-1);
-    font-size: clamp(1.8rem, 7vw, 3rem);
-}
-
-/* Efectos hover/focus/active */
-.tile:hover {
-    background: var(--tile-color-2);
-    color: var(--tile-color-1);
-}
-
-.featured-tile:hover {
-    background: var(--tile-color-1);
-    color: white;
-}
-
-.tile:focus,
-.featured-tile:focus {
-    outline: 2px solid var(--tile-color-2);
-    outline-offset: 2px;
-    transform: scale(1.02);
-}
-
-.tile:active,
-.featured-tile:active {
-    transform: scale(0.98);
-}
-
-/* --- Efecto de "intuir" secciones adyacentes --- */
-/* Esto se logra con el desbordamiento del contenedor y opacidad en los bordes */
-.sections-container {
-    /* El contenedor ya se desborda, pero necesitamos que las secciones adyacentes se vean con opacidad */
-}
-
-/* Aplicar opacidad a las secciones no activas cuando están en los bordes */
-.section:not(.active) {
-    opacity: 0.5;
-}
-
-/* --- Diseño solo para móvil (LV1) --- */
-/* Este diseño es específico para la versión móvil, como se solicitó */
-@media (min-width: 769px) {
-    /* En escritorio, mantener el diseño actual (grid) para compatibilidad */
-    .sections-container {
-        display: none; /* Ocultar el diseño horizontal en escritorio */
-    }
-    
-    /* Mostrar el diseño antiguo de grid en escritorio (opcional, si se quiere mantener) */
-    .tiles-container {
-        display: grid;
-        gap: 4vw;
-        width: 100vw;
-        height: 100vh;
-        margin: 0;
-        padding: 0;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(2, 1fr);
-        grid-template-areas: 
-            "logo juegos hub"
-            "blog arrivals navdata";
-    }
-    
-    .logo-tile { grid-area: logo; }
-    .tiles-container > a:nth-child(2) { grid-area: juegos; }
-    .tiles-container > a:nth-child(3) { grid-area: hub; }
-    .featured-tile { grid-area: blog; }
-    .tiles-container > a:nth-child(5) { grid-area: arrivals; }
-    .tiles-container > a:nth-child(6) { grid-area: navdata; }
-    
-    .tile, .featured-tile, .logo-tile {
-        width: 100%;
-        height: 100%;
-        font-size: clamp(1.5rem, 4vw, 2rem);
-    }
-    
-    .featured-tile {
-        font-size: clamp(1.8rem, 4.5vw, 2.2rem);
-    }
 }
 
 /* --- Estilo para páginas internas (Hub) --- */
@@ -183,12 +108,14 @@ body {
     max-width: 90vw;
     margin: 0 auto;
     text-align: left;
+    background-color: #111;
+    color: #fff;
 }
 
 .hub-page h1 {
     font-size: clamp(2.5rem, 8vw, 4rem);
     margin-bottom: 2vh;
-    color: var(--text-color);
+    color: #fff;
 }
 
 .hub-page h2 {
@@ -219,7 +146,7 @@ body {
 }
 
 .hub-list a {
-    color: var(--tile-color-1);
+    color: #1ba1e2;
     text-decoration: none;
     padding: 1vh 0;
     display: block;
@@ -227,12 +154,12 @@ body {
 }
 
 .hub-list a:hover {
-    color: var(--tile-color-2);
+    color: #fa6800;
     text-decoration: underline;
 }
 
 .hub-list a:focus {
-    outline: 2px solid var(--tile-color-2);
+    outline: 2px solid #fa6800;
     outline-offset: 2px;
 }
 
@@ -240,7 +167,7 @@ body {
 a:focus,
 button:focus,
 [tabindex]:focus {
-    outline: 2px solid var(--tile-color-2);
+    outline: 2px solid #fa6800;
     outline-offset: 2px;
 }
 
