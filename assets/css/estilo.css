@@ -25,11 +25,6 @@ body, html {
     /* Ocultar barra de scroll para un look limpio */
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE/Edge */
-    
-    /* Padding lateral del 5% para dejar espacio libre */
-    padding-left: 5vw;
-    padding-right: 5vw;
-    box-sizing: border-box;
 }
 .carousel::-webkit-scrollbar {
     display: none; /* Chrome/Safari */
@@ -37,14 +32,14 @@ body, html {
 
 /* Cada Sección (S1, S2, S3) */
 .section {
-    /* Ancho del 90% de la pantalla y alineación al inicio */
+    /* Cada sección ocupa exactamente el 90% de la pantalla */
     flex: 0 0 90vw;
-    scroll-snap-align: start; /* Cambiado a start para evitar centrado automático */
+    scroll-snap-align: center; /* Centra la sección en el área visible */
     
     height: 100vh;
     display: flex;
     flex-direction: column;
-    padding: 5vh 0; /* Margen vertical del 5%, sin margen lateral (lo gestiona el contenedor) */
+    padding: 5vh 0; /* Margen vertical del 5%, sin margen lateral */
     gap: 5vh; /* Separación del 5% entre las dos tiles */
     
     /* Efecto de intuir (50% opacidad por defecto) */
