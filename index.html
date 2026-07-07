@@ -4,33 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lecturas de Vuelo</title>
+    <meta name="description" content="Blog de tecnología, desarrollo y experiencia de usuario">
     <link rel="stylesheet" href="assets/css/estilo.css">
 </head>
 <body>
-
-    <div class="carousel" id="carousel">
+    <main class="carousel" id="carousel" role="main" aria-label="Menú principal">
         
-        <section class="section" id="s1">
-            <a href="/temas/" class="tile bg-blue">Temas</a>
-            <a href="/archivo/" class="tile bg-green">Archivo</a>
+        <section class="section" id="s1" aria-label="Sección 1">
+            <a href="/temas/" class="tile bg-blue" aria-label="Ir a Temas">Temas</a>
+            <a href="/archivo/" class="tile bg-green" aria-label="Ir a Archivo">Archivo</a>
         </section>
 
-        <section class="section" id="s2">
-            <a href="/who/" class="tile bg-transparent">
+        <section class="section" id="s2" aria-label="Sección 2">
+            <a href="/who/" class="tile bg-transparent" aria-label="Ir a Sobre mí">
                 <img src="assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="logo-placeholder">
             </a>
-            <a href="/departures/" class="tile bg-orange">
+            <a href="/departures/" class="tile bg-orange" aria-label="Ir a blog destacado">
                 <span class="badge">Destacada</span>
                 blog
             </a>
         </section>
 
-        <section class="section" id="s3">
-            <a href="/juegos/" class="tile bg-purple">Juegos</a>
-            <a href="/recursos/" class="tile bg-teal">Recursos</a>
+        <section class="section" id="s3" aria-label="Sección 3">
+            <a href="/juegos/" class="tile bg-purple" aria-label="Ir a Juegos">Juegos</a>
+            <a href="/recursos/" class="tile bg-teal" aria-label="Ir a Recursos">Recursos</a>
         </section>
 
-    </div>
+    </main>
 
     <script src="assets/js/app.js"></script>
 </body>
