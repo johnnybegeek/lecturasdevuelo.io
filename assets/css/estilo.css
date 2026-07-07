@@ -6,6 +6,8 @@
     --tile-color-1: #0F499A;   /* Azul oscuro (para tiles) */
     --tile-color-2: #F8E7A5;   /* Amarillo claro (destacado) */
     --tile-color-3: #E6F2FF;   /* Azul claro (acento) */
+    --shadow-color: rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    --hover-scale: 1.02; /* Escala al hacer hover */
 }
 
 * {
@@ -20,10 +22,9 @@ body, html {
     background-color: var(--bg-color); /* Fondo claro (armonizado con main) */
     color: var(--text-color); /* Texto oscuro (armonizado con main) */
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    overflow: hidden; /* Evita scroll vertical nativo en la raíz */
 }
 
-/* Contenedor del Carrusel */
+/* --- Versión Móvil (por defecto) --- */
 .carousel {
     display: flex;
     width: 100vw;
@@ -74,14 +75,67 @@ body, html {
     font-size: 2.5rem;
     font-weight: 300;
     position: relative;
-    transition: transform 0.1s ease;
+    transition: transform 0.1s ease, box-shadow 0.3s ease;
     
     /* Margen lateral del 5% para las tiles */
     margin: 0 5vw;
+    border-radius: 12px;
 }
 
 .tile:active {
     transform: scale(0.97); /* Pequeño efecto de hundimiento al pulsar (típico de WP) */
+}
+
+/* --- Versión Escritorio --- */
+@media (min-width: 768px) {
+    body, html {
+        overflow: hidden; /* Evita scroll vertical nativo en la raíz */
+    }
+    
+    .carousel {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+        grid-template-rows: repeat(2, 1fr); /* 2 filas */
+        gap: 2vw; /* Espacio entre tiles */
+        width: 90vw;
+        height: 80vh;
+        margin: 5vh auto; /* Centrado vertical y horizontal */
+        overflow: visible;
+        scroll-snap-type: none;
+        padding: 2vh 2vw;
+    }
+    
+    .section {
+        display: contents; /* Rompe el contenedor section y libera los tiles */
+        opacity: 1; /* Todas las secciones visibles */
+        height: auto;
+        padding: 0;
+        gap: 0;
+    }
+    
+    .section.is-active {
+        opacity: 1;
+    }
+    
+    .tile {
+        flex: none;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        font-size: 1.8rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+        box-shadow: 0 4px 12px var(--shadow-color);
+    }
+    
+    .tile:hover {
+        transform: scale(var(--hover-scale));
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        z-index: 10;
+    }
+    
+    .tile:active {
+        transform: scale(0.98);
+    }
 }
 
 /* Colores de Tiles (Paleta armonizada con main) */
@@ -106,6 +160,7 @@ body, html {
     font-weight: 600;
     padding: 4px 10px;
     text-transform: uppercase;
+    border-radius: 20px;
 }
 
 /* Logo placeholder */
@@ -115,6 +170,14 @@ body, html {
     border-radius: 50%;
     object-fit: cover;
     object-position: center;
+}
+
+/* Ajuste para el logo en escritorio */
+@media (min-width: 768px) {
+    .logo-placeholder {
+        width: 60%;
+        height: 60%;
+    }
 }
 
 /* --- Estilo para páginas internas (Hub) --- */
