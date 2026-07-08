@@ -172,6 +172,14 @@ body, html {
     object-position: center;
 }
 
+/* Ajuste para landscape en móvil: limitar alto de la imagen del logo */
+@media (max-width: 767px) and (orientation: landscape) {
+    .logo-placeholder {
+        max-height: 30vh;
+        width: auto;
+    }
+}
+
 /* Ajuste para el logo en escritorio */
 @media (min-width: 768px) {
     .logo-placeholder {
