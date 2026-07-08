@@ -120,10 +120,9 @@
                 display: none;
             }
 
-            /* Panel izquierdo (1/5 de la pantalla) */
+            /* Panel izquierdo (ancho fijo para evitar desbordes) */
             .desktop-sidebar {
-                width: 20vw;
-                min-width: 200px;
+                width: 200px;
                 background-color: var(--tile-color-1);
                 height: 100vh;
                 position: fixed;
@@ -137,7 +136,7 @@
             }
 
             .sidebar-logo {
-                width: 60%;
+                width: 80%;
                 height: auto;
                 max-width: 120px;
                 margin-bottom: 4vh;
@@ -159,11 +158,12 @@
             .sidebar-nav a {
                 color: white;
                 text-decoration: none;
-                font-size: clamp(1rem, 1.5vw, 1.2rem);
+                font-size: clamp(0.8rem, 1.2vw, 1rem);
                 font-weight: 300;
                 display: block;
                 padding: 1vh 0;
                 transition: color 0.2s ease;
+                white-space: nowrap;
             }
 
             .sidebar-nav a:hover {
@@ -176,10 +176,10 @@
                 outline-offset: 2px;
             }
 
-            /* Contenido principal (4/5 de la pantalla) */
+            /* Contenido principal (ajustado al ancho fijo del sidebar) */
             .desktop-content {
-                margin-left: 20vw;
-                width: 80vw;
+                margin-left: 200px;
+                width: calc(100vw - 200px);
                 height: 100vh;
                 display: flex;
                 flex-direction: column;
