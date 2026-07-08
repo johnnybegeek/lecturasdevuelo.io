@@ -168,7 +168,9 @@ body, html {
 /* Texto de las tiles alineado a la derecha y abajo */
 .tile-text {
     margin-top: auto;
+    margin-bottom: 15px; /* Espacio inferior */
     margin-left: auto;
+    margin-right: 15px; /* Espacio derecho */
     text-align: right;
 }
 .logo-placeholder {
