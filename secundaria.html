@@ -17,6 +17,12 @@
             flex-direction: column;
         }
 
+        /* Ocultar elementos de escritorio en móviles por defecto */
+        .desktop-sidebar,
+        .desktop-content {
+            display: none;
+        }
+
         /* --- Versión Móvil (por defecto) --- */
         
         /* Header superior (1/5 de la pantalla) */
@@ -110,14 +116,21 @@
 
         /* --- Versión Escritorio --- */
         @media (min-width: 768px) {
-            .secundaria-container {
-                flex-direction: row;
-            }
-
+            /* Ocultar elementos de móvil en escritorio */
             .mobile-header,
             .mobile-footer,
             .floating-logo {
                 display: none;
+            }
+
+            /* Mostrar elementos de escritorio */
+            .desktop-sidebar,
+            .desktop-content {
+                display: flex;
+            }
+
+            .secundaria-container {
+                flex-direction: row;
             }
 
             /* Panel izquierdo (ancho fijo para evitar desbordes) */
@@ -128,7 +141,6 @@
                 position: fixed;
                 left: 0;
                 top: 0;
-                display: flex;
                 flex-direction: column;
                 align-items: center;
                 padding: 3vh 0;
@@ -181,7 +193,6 @@
                 margin-left: 200px;
                 width: calc(100vw - 200px);
                 height: 100vh;
-                display: flex;
                 flex-direction: column;
                 background-color: var(--bg-color);
             }
