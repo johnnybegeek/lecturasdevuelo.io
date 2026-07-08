@@ -1,0 +1,226 @@
+/* Estilos específicos para secundaria.html */
+
+/* Contenedor principal */
+.secundaria-container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ocultar elementos de escritorio en móviles por defecto */
+.desktop-sidebar,
+.desktop-top-bar,
+.desktop-bottom-bar {
+    display: none;
+}
+
+/* --- Versión Móvil (por defecto) --- */
+
+/* Header superior */
+.mobile-header {
+    height: 20vh;
+    background-color: var(--tile-color-1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5vw;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    transition: transform 0.3s ease;
+}
+
+.mobile-header.hide {
+    transform: translateY(-100%);
+}
+
+.header-logo {
+    height: 60%;
+    width: auto;
+    object-fit: contain;
+}
+
+.header-title {
+    color: white;
+    font-size: clamp(1.2rem, 4vw, 1.8rem);
+    font-weight: 300;
+}
+
+/* Contenido principal (móvil) */
+.content {
+    flex: 1;
+    background-color: var(--bg-color);
+    padding: 5vw;
+    overflow-y: auto;
+}
+
+.content-wrapper {
+    width: 100%;
+}
+
+.content-text {
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    line-height: 1.6;
+    color: var(--text-color);
+    margin-bottom: 2vh;
+}
+
+/* Footer inferior */
+.mobile-footer {
+    background-color: var(--tile-color-3);
+    padding: 3vh 5vw;
+    text-align: center;
+}
+
+.footer-link {
+    color: var(--tile-color-1);
+    text-decoration: none;
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    font-weight: 500;
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+}
+
+/* Logo flotante */
+.floating-logo {
+    position: fixed;
+    top: 2vh;
+    left: 2vw;
+    width: 44px;
+    height: 44px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    cursor: pointer;
+}
+
+.floating-logo.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.floating-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* --- Versión Escritorio --- */
+@media (min-width: 768px) {
+    /* Ocultar elementos de móvil en escritorio */
+    .mobile-header,
+    .mobile-footer,
+    .floating-logo {
+        display: none;
+    }
+
+    /* Mostrar elementos de escritorio */
+    .desktop-sidebar,
+    .desktop-top-bar,
+    .desktop-bottom-bar {
+        display: flex;
+    }
+
+    .secundaria-container {
+        flex-direction: row;
+    }
+
+    /* Sidebar izquierdo */
+    .desktop-sidebar {
+        width: 200px;
+        background-color: var(--tile-color-1);
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        flex-direction: column;
+        align-items: center;
+        padding: 3vh 0;
+        z-index: 100;
+    }
+
+    .sidebar-logo {
+        width: 80%;
+        height: auto;
+        max-width: 120px;
+        margin-bottom: 4vh;
+        object-fit: contain;
+    }
+
+    .sidebar-nav {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    .sidebar-nav li {
+        margin-bottom: 2vh;
+    }
+
+    .sidebar-nav a {
+        color: white;
+        text-decoration: none;
+        font-size: clamp(0.8rem, 1.2vw, 1rem);
+        font-weight: 300;
+        display: block;
+        padding: 1vh 0;
+        transition: color 0.2s ease;
+        white-space: nowrap;
+    }
+
+    .sidebar-nav a:hover {
+        color: var(--tile-color-3);
+        text-decoration: underline;
+    }
+
+    .sidebar-nav a:focus {
+        outline: 2px solid var(--tile-color-3);
+        outline-offset: 2px;
+    }
+
+    /* Contenido principal (ajustado al sidebar) */
+    .content {
+        margin-left: 200px;
+        width: calc(100% - 200px);
+        min-height: 100vh;
+        background-color: var(--bg-color);
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+    }
+
+    .content-wrapper {
+        flex: 1;
+        padding: 3vh 5vw;
+        overflow-y: auto;
+    }
+
+    /* Barras superior e inferior */
+    .desktop-top-bar,
+    .desktop-bottom-bar {
+        height: 0.5em;
+        background-color: var(--tile-color-3);
+        width: 70%;
+        align-self: center;
+    }
+
+    .desktop-top-bar {
+        order: -1; /* Arriba del contenido */
+    }
+
+    .desktop-bottom-bar {
+        order: 1; /* Abajo del contenido */
+    }
+
+    /* Ajuste de texto en escritorio */
+    .content-text {
+        font-size: clamp(1rem, 1.5vw, 1.2rem);
+    }
+}
