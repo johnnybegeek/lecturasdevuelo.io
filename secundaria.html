@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Secundaria - Prueba</title>
+    <meta name="description" content="Página secundaria de prueba para el diseño móvil y escritorio">
+    <link rel="stylesheet" href="assets/css/estilo.css">
+    <style>
+        /* Estilos específicos para secundaria.html */
+        
+        /* Contenedor principal */
+        .secundaria-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Ocultar elementos de escritorio en móviles por defecto */
+        .desktop-sidebar,
+        .desktop-content {
+            display: none;
+        }
+
+        /* --- Versión Móvil (por defecto) --- */
+        
+        /* Header superior (1/5 de la pantalla) */
+        .mobile-header {
+            height: 20vh;
+            background-color: var(--tile-color-1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5vw;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-header.hide {
+            transform: translateY(-100%);
+        }
+
+        .header-logo {
+            height: 60%;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .header-title {
+            color: white;
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            font-weight: 300;
+        }
+
+        /* Contenido central */
+        .mobile-content {
+            flex: 1;
+            background-color: var(--bg-color);
+            padding: 5vw;
+            overflow-y: auto;
+        }
+
+        .content-text {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            line-height: 1.6;
+            color: var(--text-color);
+            margin-bottom: 2vh;
+        }
+
+        /* Footer inferior */
+        .mobile-footer {
+            background-color: var(--tile-color-3);
+            padding: 3vh 5vw;
+            text-align: center;
+        }
+
+        .footer-link {
+            color: var(--tile-color-1);
+            text-decoration: none;
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            font-weight: 500;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Logo flotante (aparece al hacer scroll) */
+        .floating-logo {
+            position: fixed;
+            top: 2vh;
+            left: 2vw;
+            width: 44px;
+            height: 44px;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            cursor: pointer;
+        }
+
+        .floating-logo.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .floating-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        /* --- Versión Escritorio --- */
+        @media (min-width: 768px) {
+            /* Ocultar elementos de móvil en escritorio */
+            .mobile-header,
+            .mobile-footer,
+            .floating-logo {
+                display: none;
+            }
+
+            /* Mostrar elementos de escritorio */
+            .desktop-sidebar,
+            .desktop-content {
+                display: flex;
+            }
+
+            .secundaria-container {
+                flex-direction: row;
+            }
+
+            /* Panel izquierdo (ancho fijo para evitar desbordes) */
+            .desktop-sidebar {
+                width: 200px;
+                background-color: var(--tile-color-1);
+                height: 100vh;
+                position: fixed;
+                left: 0;
+                top: 0;
+                flex-direction: column;
+                align-items: center;
+                padding: 3vh 0;
+                z-index: 100;
+            }
+
+            .sidebar-logo {
+                width: 80%;
+                height: auto;
+                max-width: 120px;
+                margin-bottom: 4vh;
+                object-fit: contain;
+            }
+
+            .sidebar-nav {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            .sidebar-nav li {
+                margin-bottom: 2vh;
+            }
+
+            .sidebar-nav a {
+                color: white;
+                text-decoration: none;
+                font-size: clamp(0.8rem, 1.2vw, 1rem);
+                font-weight: 300;
+                display: block;
+                padding: 1vh 0;
+                transition: color 0.2s ease;
+                white-space: nowrap;
+            }
+
+            .sidebar-nav a:hover {
+                color: var(--tile-color-3);
+                text-decoration: underline;
+            }
+
+            .sidebar-nav a:focus {
+                outline: 2px solid var(--tile-color-3);
+                outline-offset: 2px;
+            }
+
+            /* Contenido principal (ajustado al ancho fijo del sidebar) */
+            .desktop-content {
+                margin-left: 200px;
+                width: calc(100vw - 200px);
+                height: 100vh;
+                flex-direction: column;
+                background-color: var(--bg-color);
+            }
+
+            /* Barra superior */
+            .desktop-top-bar {
+                height: 0.5em;
+                background-color: var(--tile-color-3);
+                width: 70%;
+            }
+
+            /* Área de contenido */
+            .desktop-main-content {
+                flex: 1;
+                padding: 3vh 5vw;
+                overflow-y: auto;
+            }
+
+            .desktop-main-content p {
+                font-size: clamp(1rem, 1.5vw, 1.2rem);
+                line-height: 1.6;
+                color: var(--text-color);
+                margin-bottom: 2vh;
+            }
+
+            /* Barra inferior */
+            .desktop-bottom-bar {
+                height: 0.5em;
+                background-color: var(--tile-color-3);
+                width: 70%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="secundaria-container">
+        <!-- Versión Móvil -->
+        <header class="mobile-header" id="mobileHeader">
+            <img src="assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="header-logo">
+            <h1 class="header-title">Página Secundaria</h1>
+        </header>
+
+        <main class="mobile-content">
+            <p class="content-text">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            </p>
+            <p class="content-text">
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+            <p class="content-text">
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, 
+                totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+            </p>
+            <p class="content-text">
+                Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione 
+                voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, 
+                sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat, voluptatem.
+            </p>
+            <p class="content-text">
+                Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi 
+                consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, 
+                vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+            </p>
+        </main>
+
+        <footer class="mobile-footer">
+            <a href="who.html" class="footer-link">Ir a Who</a>
+        </footer>
+
+        <!-- Logo flotante para móvil -->
+        <a href="#" class="floating-logo" id="floatingLogo" aria-label="Volver al inicio">
+            <img src="assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo">
+        </a>
+
+        <!-- Versión Escritorio -->
+        <aside class="desktop-sidebar">
+            <img src="assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="sidebar-logo">
+            <nav aria-label="Navegación principal">
+                <ul class="sidebar-nav">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="who.html">Who</a></li>
+                    <li><a href="archivo/">Archivo</a></li>
+                    <li><a href="juegos/">Juegos</a></li>
+                    <li><a href="recursos/">Recursos</a></li>
+                    <li><a href="temas/">Temas</a></li>
+                    <li><a href="departures/">Departures</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <div class="desktop-content">
+            <div class="desktop-top-bar"></div>
+            <main class="desktop-main-content">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+                <p>
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+                <p>
+                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, 
+                    totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+                </p>
+                <p>
+                    Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione 
+                    voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, 
+                    sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat, voluptatem.
+                </p>
+                <p>
+                    Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi 
+                    consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, 
+                    vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+                </p>
+            </main>
+            <div class="desktop-bottom-bar"></div>
+        </div>
+    </div>
+
+    <script>
+        // Efecto de scroll para móvil
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileHeader = document.getElementById('mobileHeader');
+            const floatingLogo = document.getElementById('floatingLogo');
+            const scrollThreshold = 50; // píxeles de scroll antes de ocultar el header
+
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > scrollThreshold) {
+                    mobileHeader.classList.add('hide');
+                    floatingLogo.classList.add('visible');
+                } else {
+                    mobileHeader.classList.remove('hide');
+                    floatingLogo.classList.remove('visible');
+                }
+            });
+
+            // Hacer clic en el logo flotante para volver arriba
+            floatingLogo.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
