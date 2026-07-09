@@ -20,7 +20,7 @@
 /* Header superior */
 .mobile-header {
     height: 20vh;
-    background-color: var(--tile-color-1);
+    background-color: var(--tile-color-3);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -133,7 +133,7 @@
     /* Sidebar izquierdo */
     .desktop-sidebar {
         width: 200px;
-        background-color: var(--tile-color-1);
+        background-color: var(--tile-color-3);
         height: 100vh;
         position: fixed;
         left: 0;
