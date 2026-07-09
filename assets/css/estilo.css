@@ -1,6 +1,6 @@
-/* Archivo estilo.css: Estilos específicos para la página principal (home) */
-/* Importar estilos globales */
 @import url("base.css");
+
+/* Archivo estilo.css: Estilos específicos para la página principal (home) */
 
 /* --- Versión Móvil (por defecto) --- */
 .carousel {
