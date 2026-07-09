@@ -120,7 +120,7 @@ button:focus,
 .bg-purple { background-color: var(--tile-color-1); } /* Azul oscuro (alternativa) */
 .bg-teal { background-color: var(--tile-color-3); } /* Azul claro (alternativa) */
 
-/* Clase para texto blanco */
-.white-text {
+/* Clase para texto blanco (mayor especificidad para sobrescribir .tile) */
+.tile.white-text {
     color: white;
 }
