@@ -1,4 +1,6 @@
-/* Estilos específicos para secundaria.html */
+/* Archivo secundaria.css: Estilos específicos para secundaria.html */
+/* Importar estilos globales */
+@import url("base.css");
 
 /* Contenedor principal */
 .secundaria-container {
