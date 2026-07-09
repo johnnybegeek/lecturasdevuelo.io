@@ -68,7 +68,7 @@
 
 /* Footer inferior */
 .mobile-footer {
-    background-color: var(--tile-color-3);
+    background-color: var(--tile-color-1);
     padding: 3vh 5vw;
     text-align: center;
 }
@@ -206,7 +206,7 @@
     .desktop-top-bar,
     .desktop-bottom-bar {
         height: 0.5em;
-        background-color: var(--tile-color-3);
+        background-color: var(--tile-color-1);
         width: 70%;
         align-self: center;
     }
