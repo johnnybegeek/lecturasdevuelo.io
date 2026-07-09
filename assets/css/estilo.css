@@ -173,6 +173,10 @@ body, html {
     margin-right: 15px; /* Espacio derecho */
     text-align: right;
 }
+
+.white-text {
+    color: white;
+}
 .logo-placeholder {
     width: 70%;
     height: 70%;
