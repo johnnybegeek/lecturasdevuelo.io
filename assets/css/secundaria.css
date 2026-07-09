@@ -72,6 +72,14 @@
     margin-bottom: 2vh;
 }
 
+/* Barra al final del contenido (móvil y escritorio) */
+.end-bar {
+    height: 0.3em;
+    background-color: var(--tile-color-1);
+    width: 70%;
+    margin: 2vh auto 0;
+}
+
 /* Barra inferior para móvil (idéntica a la de escritorio) */
 .mobile-bottom-bar {
     height: 0.3em;
