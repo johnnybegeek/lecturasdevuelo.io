@@ -1,28 +1,6 @@
-/* Reseteo básico y tipografía estilo Swiss/Metro */
-:root {
-    /* Paleta de colores (armonizada con main) */
-    --bg-color: #E6E4E0;       /* Fondo */
-    --text-color: #1A1A1A;     /* Texto principal */
-    --tile-color-1: #0F499A;   /* Azul oscuro (para tiles) */
-    --tile-color-2: #F8E7A5;   /* Amarillo claro (destacado) */
-    --tile-color-3: #E6F2FF;   /* Azul claro (acento) */
-    --shadow-color: rgba(0, 0, 0, 0.1); /* Sombra sutil */
-    --hover-scale: 1.02; /* Escala al hacer hover */
-}
+@import url("base.css");
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body, html {
-    width: 100%;
-    height: 100%;
-    background-color: var(--bg-color); /* Fondo claro (armonizado con main) */
-    color: var(--text-color); /* Texto oscuro (armonizado con main) */
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-}
+/* Archivo estilo.css: Estilos específicos para la página principal (home) */
 
 /* --- Versión Móvil (por defecto) --- */
 .carousel {
@@ -138,17 +116,6 @@ body, html {
     }
 }
 
-/* Colores de Tiles (Paleta armonizada con main) */
-.bg-transparent { 
-    background-color: transparent; 
-    border: 2px solid rgba(248, 231, 165, 0.5); /* Borde basado en --tile-color-2 */
-}
-.bg-blue { background-color: var(--tile-color-1); } /* Azul oscuro */
-.bg-green { background-color: var(--tile-color-3); } /* Azul claro */
-.bg-orange { background-color: var(--tile-color-2); } /* Amarillo claro */
-.bg-purple { background-color: var(--tile-color-1); } /* Azul oscuro (alternativa) */
-.bg-teal { background-color: var(--tile-color-3); } /* Azul claro (alternativa) */
-
 /* Etiqueta de "Destacada" */
 .badge {
     position: absolute;
@@ -163,8 +130,6 @@ body, html {
     border-radius: 20px;
 }
 
-/* Logo placeholder */
-
 /* Texto de las tiles alineado a la derecha y abajo */
 .tile-text {
     margin-top: auto;
@@ -174,9 +139,7 @@ body, html {
     text-align: right;
 }
 
-.white-text {
-    color: white;
-}
+/* Logo placeholder */
 .logo-placeholder {
     width: 70%;
     height: 70%;
@@ -201,90 +164,9 @@ body, html {
     }
 }
 
-/* --- Estilo para páginas internas (Hub) --- */
-.hub-page {
-    padding: 5vh 2vw;
-    max-width: 90vw;
-    margin: 0 auto;
-    text-align: left;
-    background-color: var(--bg-color); /* Fondo claro (armonizado con main) */
-    color: var(--text-color); /* Texto oscuro (armonizado con main) */
-}
-
-.hub-page h1 {
-    font-size: clamp(2.5rem, 8vw, 4rem);
-    margin-bottom: 2vh;
-    color: var(--text-color);
-}
-
-.hub-page h2 {
-    font-size: clamp(1.2rem, 3vw, 1.5rem);
-    opacity: 0.8;
-    margin-bottom: 2vh;
-}
-
-.hub-page main {
-    margin-top: 2vh;
-}
-
-.hub-page p {
-    margin-bottom: 2vh;
-    font-size: clamp(1rem, 2vw, 1.2rem);
-}
-
-/* Estilo para listas en el estilo Hub */
-.hub-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.hub-list li {
-    margin-bottom: 3vh;
-    font-size: clamp(1rem, 2.5vw, 1.2rem);
-}
-
-.hub-list a {
-    color: var(--tile-color-1); /* Azul oscuro */
-    text-decoration: none;
-    padding: 1vh 0;
-    display: block;
-    transition: color 0.2s ease;
-}
-
-.hub-list a:hover {
-    color: var(--tile-color-2); /* Amarillo claro */
-    text-decoration: underline;
-}
-
-.hub-list a:focus {
-    outline: 2px solid var(--tile-color-2); /* Amarillo claro */
-    outline-offset: 2px;
-}
-
-/* --- Accesibilidad: Enfoque visible para todos los elementos interactivos --- */
-a:focus,
-button:focus,
-[tabindex]:focus {
-    outline: 2px solid var(--tile-color-2); /* Amarillo claro */
-    outline-offset: 2px;
-}
-
 /* --- Eliminar estilos del modo día/noche (ya no se usa) --- */
 #theme-toggle,
 .menu-toggle,
 .header-fijo {
     display: none !important;
-}
-/* -- <h1> en el código HTML por SEO y accesibilidad, pero oculto mediante CSS para que no afecte el diseño carrusel -- */
-.visually-hidden {
-    position: absolute !important;
-    width: 1px !important;
-    height: 1px !important;
-    padding: 0 !important;
-    margin: -1px !important;
-    overflow: hidden !important;
-    clip: rect(0, 0, 0, 0) !important;
-    white-space: nowrap !important;
-    border: 0 !important;
 }
