@@ -42,7 +42,7 @@
 }
 
 .header-title {
-    color: white;
+    color: var(--text-color);
     font-size: clamp(1.2rem, 4vw, 1.8rem);
     font-weight: 300;
 }
@@ -165,7 +165,7 @@
     }
 
     .sidebar-nav a {
-        color: white;
+        color: var(--text-color);
         text-decoration: none;
         font-size: clamp(0.8rem, 1.2vw, 1rem);
         font-weight: 300;
