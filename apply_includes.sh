@@ -13,7 +13,7 @@ apply_includes_to_file() {
     local relative_includes=""
     
     # Determinar la ruta relativa a includes/ según la ubicación del archivo
-    if [[ "$file" == *"paginas/"* ]] || [[ "$file" == *"departures/"* ]] || [[ "$file" == *"roguelike/"* ]] || [[ "$file" == *"hub/"* ]]; then
+    if [[ "$file" == *"paginas/"* ]] || [[ "$file" == *"blog/"* ]] || [[ "$file" == *"roguelike/"* ]] || [[ "$file" == *"hub/"* ]]; then
         relative_includes="../includes"
     else
         relative_includes="includes"

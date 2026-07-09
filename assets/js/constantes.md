@@ -11,7 +11,7 @@ Define los textos descriptivos para cada sección del sitio. Cada clave correspo
 
 ```javascript
 const TEXT_CONSTANTS = {
-  departures: "Blog y enlaces a Juegos. Un espacio de ideas y reflexiones en marcha.",
+  blog: "Blog y enlaces a Juegos. Un espacio de ideas y reflexiones en marcha.",
   archivo: "Asuntos completados o archivados, por si buscas inspiración.",
   recursos: "Recursos online que me resultan útiles y que quizá también pueden servirte.",
   temas: "Áreas temáticas que más me interesan.",
@@ -22,7 +22,7 @@ const TEXT_CONSTANTS = {
 
 | Clave       | Descripción                                                                                     | Sección Asociada |
 |-------------|-------------------------------------------------------------------------------------------------|------------------|
-| `departures`| Texto para la sección de blog y enlaces a juegos, con ideas y reflexiones en desarrollo.       | Departures       |
+| `blog`| Texto para la sección de blog y enlaces a juegos, con ideas y reflexiones en desarrollo.       | Blog       |
 | `archivo`  | Texto para la sección de asuntos completados o archivados.                                       | Archivo         |
 | `recursos`   | Texto para la sección de recursos online útiles.                                                 | Recursos          |
 | `temas`       | Texto para la sección de áreas temáticas de interés.                                            | Temas              |
