@@ -75,7 +75,7 @@
 /* Barra al final del contenido (móvil y escritorio) */
 .end-bar {
     height: 0.3em;
-    background-color: var(--tile-color-1);
+    background-color: var(--tile-color-3);
     width: 70%;
     margin: 2vh auto 0;
 }
