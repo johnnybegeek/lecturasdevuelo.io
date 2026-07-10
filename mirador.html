@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mirador - Lecturas de Vuelo</title>
+    <meta name="description" content="Visor de imágenes de Lecturas de Vuelo">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/secundaria.css">
+    <link rel="stylesheet" href="assets/css/mirador.css">
+</head>
+<body>
+    <div class="mirador-container">
+        <!-- Header móvil -->
+        <header class="mobile-header" id="mobileHeader">
+            <a href="index.html" class="header-logo-link" aria-label="Ir a la página principal">
+                <img src="assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="header-logo" loading="lazy">
+            </a>
+            <h1 class="header-title">Mirador</h1>
+        </header>
+
+        <!-- Sidebar escritorio -->
+        <aside class="desktop-sidebar" aria-label="Navegación principal">
+            <a href="index.html"><img src="assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="sidebar-logo" loading="lazy"></a>
+            <nav>
+                <ul class="sidebar-nav">
+                    <li><a href="blog/">blog</a></li>
+                    <li><a href="juegos/">juegos</a></li>
+                    <li><a href="mirador/">mirador</a></li>
+                    <li><a href="temas/">temas</a></li>
+                    <li><a href="recursos/">recursos</a></li>
+                    <hr>
+                    <li><a href="who/">who</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Carrusel principal -->
+        <main class="mirador-carousel" id="miradorCarousel">
+            <!-- Las imágenes se cargarán dinámicamente con JS -->
+        </main>
+
+        <!-- Barra lateral derecha (escritorio) -->
+        <aside class="desktop-thumbnail-bar" id="thumbnailBar" aria-label="Miniaturas de imágenes">
+            <!-- Miniaturas se cargarán con JS -->
+        </aside>
+
+        <!-- Modal para imágenes ampliadas -->
+        <div class="modal" id="imageModal" aria-hidden="true" role="dialog" aria-modal="false">
+            <button class="modal-close" id="modalClose" aria-label="Cerrar modal">&times;</button>
+            <button class="modal-prev" id="modalPrev" aria-label="Imagen anterior">&#10094;</button>
+            <button class="modal-next" id="modalNext" aria-label="Imagen siguiente">&#10095;</button>
+            <img class="modal-image" id="modalImage" src="" alt="">
+        </div>
+
+        <!-- Logo flotante para móvil -->
+        <a href="#" class="floating-logo" id="floatingLogo" aria-label="Volver al inicio">
+            <img src="assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" loading="lazy">
+        </a>
+    </div>
+
+    <script src="assets/js/secundaria.js"></script>
+    <script src="assets/js/mirador.js"></script>
+</body>
+</html>
