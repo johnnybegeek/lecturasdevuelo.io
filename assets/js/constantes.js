@@ -1,7 +1,7 @@
 // Constantes de texto para las páginas
 const TEXT_CONSTANTS = {
   blog: "Blog y enlaces a Juegos. Un espacio de ideas y reflexiones en marcha.",
-  archivo: "Asuntos completados o archivados, por si buscas inspiración.",
+  mirador: "Asuntos completados o archivados, por si buscas inspiración.",
   recursos: "Recursos online que me resultan útiles y que quizá también pueden servirte.",
   temas: "Áreas temáticas que más me interesan.",
   who: "Quién está detrás de todo esto.",
