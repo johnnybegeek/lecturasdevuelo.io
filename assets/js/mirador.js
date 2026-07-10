@@ -1,7 +1,7 @@
 /**
  * Lógica del visor de imágenes (Mirador)
  * - Carga imágenes de la carpeta blog/paytowin050626/
- * - Carrusel vertical con efecto "intuición"
+ * - Carrusel vertical con efecto "intuición" (usando scroll-snap y CSS)
  * - Modal para ver imágenes ampliadas
  * - Barra de miniaturas para escritorio
  */
@@ -20,7 +20,6 @@ let currentImageIndex = 0;
 let isModalOpen = false;
 let touchStartX = 0;
 let touchEndX = 0;
-let observer = null;
 
 // Elementos DOM
 document.addEventListener('DOMContentLoaded', () => {
@@ -38,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicializar el modal
     initModal(modal, modalImage, modalClose, modalPrev, modalNext);
 
-    // Configurar IntersectionObserver para el efecto de intuición
+    // Configurar IntersectionObserver para detectar la imagen central
     setupIntersectionObserver(carousel);
 
     // Configurar navegación por teclado
@@ -95,19 +94,19 @@ function initCarousel(carousel, thumbnailBar) {
 }
 
 /**
- * Configura IntersectionObserver para el efecto de intuición
+ * Configura IntersectionObserver para detectar la imagen central
+ * Usamos un threshold bajo y rootMargin para detectar cuando una imagen está cerca del centro
  */
 function setupIntersectionObserver(carousel) {
     const imageContainers = document.querySelectorAll('.mirador-image-container');
     
-    // Usamos un threshold bajo para detectar cuando una imagen está cerca del centro
     const observerOptions = {
         root: carousel,
-        rootMargin: '-40% 0px -40% 0px', // Área de detección más amplia
+        rootMargin: '-50% 0px -50% 0px', // Detecta cuando la imagen está en el centro
         threshold: 0.1
     };
 
-    observer = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const index = parseInt(entry.target.dataset.index);
@@ -127,7 +126,6 @@ function updateActiveStates() {
     const imageContainers = document.querySelectorAll('.mirador-image-container');
     
     imageContainers.forEach((container, index) => {
-        // Remover todas las clases de estado
         container.classList.remove('prev', 'active', 'next');
 
         if (index === currentImageIndex) {
@@ -223,7 +221,7 @@ function initModal(modal, modalImage, modalClose, modalPrev, modalNext) {
  * Maneja el gesto de deslizamiento en el modal
  */
 function handleSwipe(modalImage) {
-    const swipeThreshold = 50; // Umbral mínimo para considerar un swipe
+    const swipeThreshold = 50;
     const diff = touchStartX - touchEndX;
 
     if (Math.abs(diff) > swipeThreshold) {
@@ -323,7 +321,7 @@ function setupKeyboardNavigation() {
     });
 }
 
-// Exportar funciones para testing (si es necesario)
+// Exportar funciones para testing
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
         initCarousel,

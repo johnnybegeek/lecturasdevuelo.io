@@ -37,10 +37,9 @@
     justify-content: center;
     align-items: center;
     scroll-snap-align: center;
-    overflow: hidden;
 }
 
-/* Estilos de las imágenes en el carrusel */
+/* Estilos base de las imágenes */
 .mirador-image {
     max-width: 90vw;
     max-height: 60vh;
@@ -50,27 +49,35 @@
     cursor: pointer;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    z-index: 2;
     position: relative;
+    z-index: 1;
 }
 
-/* Efecto "intuición": todas las imágenes tienen opacidad y escala reducida por defecto */
+/* Efecto de intuición: todas las imágenes tienen opacidad y escala reducida por defecto */
 .mirador-image {
     opacity: 0.5;
     transform: scale(0.85);
 }
 
-/* La imagen activa (centrada) tiene opacidad y escala completa */
+/* La imagen que está en el centro del viewport (usando :nth-child y scroll-snap) */
+/* No podemos usar :nth-child directamente, así que usamos una clase aplicada por JS */
 .mirador-image-container.active .mirador-image {
     opacity: 1;
     transform: scale(1);
+    z-index: 3;
 }
 
-/* Las imágenes adyacentes (anterior y siguiente) tienen un efecto intermedio */
-.mirador-image-container.prev .mirador-image,
+/* Las imágenes adyacentes (anterior y siguiente) */
+.mirador-image-container.prev .mirador-image {
+    opacity: 0.7;
+    transform: scale(0.92);
+    z-index: 2;
+}
+
 .mirador-image-container.next .mirador-image {
     opacity: 0.7;
     transform: scale(0.92);
+    z-index: 2;
 }
 
 /* Barra de miniaturas (escritorio) */
