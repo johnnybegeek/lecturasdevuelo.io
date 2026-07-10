@@ -37,8 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicializar el modal
     initModal(modal, modalImage, modalClose, modalPrev, modalNext);
 
-    // Configurar IntersectionObserver para el efecto de intuición
-    setupIntersectionObserver();
+    // Configurar scroll listener para el efecto de intuición
+    setupScrollListener(carousel);
 
     // Configurar navegación por teclado
     setupKeyboardNavigation();
@@ -94,41 +94,53 @@ function initCarousel(carousel, thumbnailBar) {
 }
 
 /**
- * Configura IntersectionObserver para el efecto de intuición
+ * Configura el listener de scroll para el efecto de intuición
  */
-function setupIntersectionObserver() {
+function setupScrollListener(carousel) {
     const imageContainers = document.querySelectorAll('.mirador-image-container');
-    
-    const observerOptions = {
-        root: document.getElementById('miradorCarousel'),
-        rootMargin: '-50% 0px -50% 0px',
-        threshold: 0
-    };
+    const carouselHeight = carousel.offsetHeight;
+    const imageHeight = imageContainers[0] ? imageContainers[0].offsetHeight : carouselHeight;
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const index = parseInt(entry.target.dataset.index);
-                currentImageIndex = index;
-                updateActiveStates();
+    carousel.addEventListener('scroll', () => {
+        const scrollTop = carousel.scrollTop;
+        const centerPosition = scrollTop + (carouselHeight / 2);
+
+        // Calcular qué imagen está más cerca del centro
+        let closestIndex = 0;
+        let minDistance = Infinity;
+
+        imageContainers.forEach((container, index) => {
+            const containerTop = container.offsetTop;
+            const containerCenter = containerTop + (imageHeight / 2);
+            const distance = Math.abs(centerPosition - containerCenter);
+
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestIndex = index;
             }
         });
-    }, observerOptions);
 
-    imageContainers.forEach(container => observer.observe(container));
+        currentImageIndex = closestIndex;
+        updateActiveStates();
+    });
 }
 
 /**
- * Actualiza los estados activos (imagen central y miniatura)
+ * Actualiza los estados activos (imagen central, anterior y siguiente)
  */
 function updateActiveStates() {
-    // Actualizar clases activas en el carrusel
     const imageContainers = document.querySelectorAll('.mirador-image-container');
+    
     imageContainers.forEach((container, index) => {
+        // Remover todas las clases de estado
+        container.classList.remove('prev', 'active', 'next');
+
         if (index === currentImageIndex) {
             container.classList.add('active');
-        } else {
-            container.classList.remove('active');
+        } else if (index === currentImageIndex - 1) {
+            container.classList.add('prev');
+        } else if (index === currentImageIndex + 1) {
+            container.classList.add('next');
         }
     });
 
@@ -158,9 +170,8 @@ function scrollToImage(index) {
     if (imageContainers[index]) {
         const container = imageContainers[index];
         const containerTop = container.offsetTop;
-        const carouselTop = carousel.scrollTop;
-        const containerHeight = container.offsetHeight;
         const carouselHeight = carousel.offsetHeight;
+        const containerHeight = container.offsetHeight;
 
         // Centrar la imagen en el carrusel
         const scrollPosition = containerTop - (carouselHeight / 2) + (containerHeight / 2);
