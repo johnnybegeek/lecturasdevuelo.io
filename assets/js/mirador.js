@@ -1,7 +1,7 @@
 /**
  * Lógica del visor de imágenes (Mirador)
  * - Carga imágenes de la carpeta blog/paytowin050626/
- * - Carrusel vertical con efecto "intuición"
+ * - Carrusel vertical con efecto "intuición" (usando scroll-snap y CSS)
  * - Modal para ver imágenes ampliadas
  * - Barra de miniaturas para escritorio
  */
@@ -37,8 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicializar el modal
     initModal(modal, modalImage, modalClose, modalPrev, modalNext);
 
-    // Configurar scroll listener para el efecto de intuición
-    setupScrollListener(carousel);
+    // Configurar IntersectionObserver para detectar la imagen central
+    setupIntersectionObserver(carousel);
 
     // Configurar navegación por teclado
     setupKeyboardNavigation();
@@ -53,7 +53,6 @@ function initCarousel(carousel, thumbnailBar) {
         const imageContainer = document.createElement('div');
         imageContainer.className = 'mirador-image-container';
         imageContainer.dataset.index = index;
-        if (index === 0) imageContainer.classList.add('active');
 
         const img = document.createElement('img');
         img.className = 'mirador-image';
@@ -72,7 +71,6 @@ function initCarousel(carousel, thumbnailBar) {
         if (thumbnailBar) {
             const thumbnailItem = document.createElement('div');
             thumbnailItem.className = 'thumbnail-item';
-            if (index === 0) thumbnailItem.classList.add('active');
             thumbnailItem.dataset.index = index;
 
             const thumbnailImg = document.createElement('img');
@@ -87,42 +85,38 @@ function initCarousel(carousel, thumbnailBar) {
             thumbnailItem.addEventListener('click', () => {
                 currentImageIndex = index;
                 scrollToImage(index);
-                updateActiveStates();
             });
         }
     });
+
+    // Inicialmente, la primera imagen es la activa
+    updateActiveStates();
 }
 
 /**
- * Configura el listener de scroll para el efecto de intuición
+ * Configura IntersectionObserver para detectar la imagen central
+ * Usamos un threshold bajo y rootMargin para detectar cuando una imagen está cerca del centro
  */
-function setupScrollListener(carousel) {
+function setupIntersectionObserver(carousel) {
     const imageContainers = document.querySelectorAll('.mirador-image-container');
-    const carouselHeight = carousel.offsetHeight;
-    const imageHeight = imageContainers[0] ? imageContainers[0].offsetHeight : carouselHeight;
+    
+    const observerOptions = {
+        root: carousel,
+        rootMargin: '-50% 0px -50% 0px', // Detecta cuando la imagen está en el centro
+        threshold: 0.1
+    };
 
-    carousel.addEventListener('scroll', () => {
-        const scrollTop = carousel.scrollTop;
-        const centerPosition = scrollTop + (carouselHeight / 2);
-
-        // Calcular qué imagen está más cerca del centro
-        let closestIndex = 0;
-        let minDistance = Infinity;
-
-        imageContainers.forEach((container, index) => {
-            const containerTop = container.offsetTop;
-            const containerCenter = containerTop + (imageHeight / 2);
-            const distance = Math.abs(centerPosition - containerCenter);
-
-            if (distance < minDistance) {
-                minDistance = distance;
-                closestIndex = index;
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const index = parseInt(entry.target.dataset.index);
+                currentImageIndex = index;
+                updateActiveStates();
             }
         });
+    }, observerOptions);
 
-        currentImageIndex = closestIndex;
-        updateActiveStates();
-    });
+    imageContainers.forEach(container => observer.observe(container));
 }
 
 /**
@@ -132,7 +126,6 @@ function updateActiveStates() {
     const imageContainers = document.querySelectorAll('.mirador-image-container');
     
     imageContainers.forEach((container, index) => {
-        // Remover todas las clases de estado
         container.classList.remove('prev', 'active', 'next');
 
         if (index === currentImageIndex) {
@@ -228,7 +221,7 @@ function initModal(modal, modalImage, modalClose, modalPrev, modalNext) {
  * Maneja el gesto de deslizamiento en el modal
  */
 function handleSwipe(modalImage) {
-    const swipeThreshold = 50; // Umbral mínimo para considerar un swipe
+    const swipeThreshold = 50;
     const diff = touchStartX - touchEndX;
 
     if (Math.abs(diff) > swipeThreshold) {
@@ -328,7 +321,7 @@ function setupKeyboardNavigation() {
     });
 }
 
-// Exportar funciones para testing (si es necesario)
+// Exportar funciones para testing
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
         initCarousel,
