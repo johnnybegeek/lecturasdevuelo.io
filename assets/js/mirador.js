@@ -7,11 +7,12 @@
  */
 
 // Lista de imágenes en la carpeta blog/paytowin050626/
+// Las rutas son relativas a la raíz del sitio (usando ../ para subir desde /mirador/)
 const images = [
-    { src: 'blog/paytowin050626/blacklotus.webp', alt: 'Black Lotus' },
-    { src: 'blog/paytowin050626/ghostintheshell.webp', alt: 'Ghost in the Shell' },
-    { src: 'blog/paytowin050626/kickstarter.webp', alt: 'Kickstarter' },
-    { src: 'blog/paytowin050626/travian.webp', alt: 'Travian' }
+    { src: '../blog/paytowin050626/blacklotus.webp', alt: 'Black Lotus' },
+    { src: '../blog/paytowin050626/ghostintheshell.webp', alt: 'Ghost in the Shell' },
+    { src: '../blog/paytowin050626/kickstarter.webp', alt: 'Kickstarter' },
+    { src: '../blog/paytowin050626/travian.webp', alt: 'Travian' }
 ];
 
 // Variables globales
