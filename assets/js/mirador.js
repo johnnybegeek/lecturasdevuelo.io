@@ -87,6 +87,7 @@ function initCarousel(carousel, thumbnailBar, mobileThumbnailBar) {
             // Añadir evento click para navegar al hacer clic en la miniatura
             thumbnailItem.addEventListener('click', (e) => {
                 e.preventDefault();
+                e.stopPropagation();
                 currentImageIndex = index;
                 scrollToImage(index);
             });
@@ -109,6 +110,7 @@ function initCarousel(carousel, thumbnailBar, mobileThumbnailBar) {
             // Añadir evento click para navegar al hacer clic en la miniatura
             mobileThumbnailItem.addEventListener('click', (e) => {
                 e.preventDefault();
+                e.stopPropagation();
                 currentImageIndex = index;
                 scrollToImage(index);
             });
@@ -186,16 +188,17 @@ function scrollToImage(index) {
     
     if (imageContainers[index]) {
         const container = imageContainers[index];
-        const containerTop = container.offsetTop;
-        const carouselHeight = carousel.offsetHeight;
-        const containerHeight = container.offsetHeight;
-
-        // Centrar la imagen en el carrusel
-        const scrollPosition = containerTop - (carouselHeight / 2) + (containerHeight / 2);
-        carousel.scrollTo({
-            top: scrollPosition,
-            behavior: 'smooth'
+        
+        // Usar scrollIntoView con comportamiento smooth y alineación al centro
+        container.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'nearest'
         });
+        
+        // También actualizar el índice actual
+        currentImageIndex = index;
+        updateActiveStates();
     }
 }
 
