@@ -1,32 +1,58 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lecturas de Vuelo: Blog</title>
-    <link rel="stylesheet" href="../assets/css/estilo.css">
-    <script src="../assets/js/constantes.js"></script>
+    <title>Blog - Lecturas de Vuelo</title>
+    <meta name="description" content="Blog de Lecturas de Vuelo">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/secundaria.css">
 </head>
+<body>
+    <div class="secundaria-container">
+        <!-- Header móvil -->
+        <header class="mobile-header" id="mobileHeader">
+            <a href="../index.html" class="header-logo-link" aria-label="Ir a la página principal">
+                <img src="../assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="header-logo" loading="lazy">
+            </a>
+            <h1 class="header-title">Blog</h1>
+        </header>
 
-<body class="hub-page">
-    <div class="hub-logo-header">
-        <a href="/index.html" class="img-link" aria-label="Volver a inicio">
-            <img src="../assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="logo-img">
+        <!-- Sidebar escritorio -->
+        <aside class="desktop-sidebar" aria-label="Navegación principal">
+            <a href="../index.html"><img src="../assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="sidebar-logo" loading="lazy"></a>
+            <nav>
+                <ul class="sidebar-nav">
+                    <li><a href="../blog/">blog</a></li>
+                    <li><a href="../juegos/">juegos</a></li>
+                    <li><a href="../mirador/">mirador</a></li>
+                    <li><a href="../temas/">temas</a></li>
+                    <li><a href="../recursos/">recursos</a></li>
+                    <hr>
+                    <li><a href="../who/">who</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Contenido principal -->
+        <main class="content">
+            <div class="desktop-top-bar" aria-hidden="true"></div>
+            <div class="content-wrapper">
+                <h2>Blog</h2>
+                <p><a href="paytowin050626/">El Pay-to-Win en juegos de mesa.</a></p>
+                
+                <h2>Juegos</h2>
+                <p><a href="../juegos/">Algunos juegos.</a></p>
+            </div>
+            <div class="desktop-bottom-bar" aria-hidden="true"></div>
+        </main>
+
+        <!-- Logo flotante para móvil -->
+        <a href="#" class="floating-logo" id="floatingLogo" aria-label="Volver al inicio">
+            <img src="../assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" loading="lazy">
         </a>
-        <h1>Blog</h1>
-    </div>
-    <p class="hub-subtitle">Lecturas de vuelo: Artículos a baja altitud</p>
-    
-    <div class="hub-note" role="note">
-        <p data-text-key="blog"></p>
     </div>
 
-    <main>
-        <h2>Blog</h2>
-        <p><a href="paytowin050626/">El Pay-to-Win en juegos de mesa.</a></p>
-        
-        <h2>Juegos</h2>
-        <p><a href="../juegos/">Algunos juegos.</a></p>
-    </main>
+    <script src="../assets/js/secundaria.js"></script>
 </body>
 </html>
