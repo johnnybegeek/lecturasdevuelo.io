@@ -3,7 +3,7 @@
  * - Carga imágenes de la carpeta blog/paytowin050626/
  * - Carrusel vertical con efecto "intuición" (usando scroll-snap y CSS puro)
  * - Modal para ver imágenes ampliadas
- * - Barra de miniaturas para escritorio
+ * - Barra de miniaturas para escritorio y móvil
  * NOTA: El comportamiento del header y logo flotante se maneja en secundaria.js
  */
 
@@ -26,6 +26,7 @@ let touchEndX = 0;
 document.addEventListener('DOMContentLoaded', () => {
     const carousel = document.getElementById('miradorCarousel');
     const thumbnailBar = document.getElementById('thumbnailBar');
+    const mobileThumbnailBar = document.getElementById('mobileThumbnailBar');
     const modal = document.getElementById('imageModal');
     const modalImage = document.getElementById('modalImage');
     const modalClose = document.getElementById('modalClose');
@@ -33,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalNext = document.getElementById('modalNext');
 
     // Inicializar el carrusel
-    initCarousel(carousel, thumbnailBar);
+    initCarousel(carousel, thumbnailBar, mobileThumbnailBar);
 
     // Inicializar el modal
     initModal(modal, modalImage, modalClose, modalPrev, modalNext);
@@ -49,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
 /**
  * Inicializa el carrusel con las imágenes
  */
-function initCarousel(carousel, thumbnailBar) {
+function initCarousel(carousel, thumbnailBar, mobileThumbnailBar) {
     images.forEach((image, index) => {
         // Crear contenedor de imagen para el carrusel
         const imageContainer = document.createElement('div');
@@ -85,6 +86,27 @@ function initCarousel(carousel, thumbnailBar) {
 
             // Añadir evento click para navegar al hacer clic en la miniatura
             thumbnailItem.addEventListener('click', () => {
+                currentImageIndex = index;
+                scrollToImage(index);
+            });
+        }
+
+        // Crear miniatura para la barra inferior (móvil)
+        if (mobileThumbnailBar) {
+            const mobileThumbnailItem = document.createElement('div');
+            mobileThumbnailItem.className = 'thumbnail-item';
+            mobileThumbnailItem.dataset.index = index;
+
+            const mobileThumbnailImg = document.createElement('img');
+            mobileThumbnailImg.src = image.src;
+            mobileThumbnailImg.alt = image.alt;
+            mobileThumbnailImg.loading = 'lazy';
+
+            mobileThumbnailItem.appendChild(mobileThumbnailImg);
+            mobileThumbnailBar.appendChild(mobileThumbnailItem);
+
+            // Añadir evento click para navegar al hacer clic en la miniatura
+            mobileThumbnailItem.addEventListener('click', () => {
                 currentImageIndex = index;
                 scrollToImage(index);
             });
@@ -137,7 +159,7 @@ function updateActiveStates() {
         imageContainers[currentImageIndex].classList.add('active');
     }
 
-    // Actualizar clases activas en las miniaturas
+    // Actualizar clases activas en las miniaturas (escritorio y móvil)
     const thumbnailItems = document.querySelectorAll('.thumbnail-item');
     thumbnailItems.forEach((item, index) => {
         if (index === currentImageIndex) {
