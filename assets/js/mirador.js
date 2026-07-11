@@ -85,7 +85,8 @@ function initCarousel(carousel, thumbnailBar, mobileThumbnailBar) {
             thumbnailBar.appendChild(thumbnailItem);
 
             // Añadir evento click para navegar al hacer clic en la miniatura
-            thumbnailItem.addEventListener('click', () => {
+            thumbnailItem.addEventListener('click', (e) => {
+                e.preventDefault();
                 currentImageIndex = index;
                 scrollToImage(index);
             });
@@ -106,7 +107,8 @@ function initCarousel(carousel, thumbnailBar, mobileThumbnailBar) {
             mobileThumbnailBar.appendChild(mobileThumbnailItem);
 
             // Añadir evento click para navegar al hacer clic en la miniatura
-            mobileThumbnailItem.addEventListener('click', () => {
+            mobileThumbnailItem.addEventListener('click', (e) => {
+                e.preventDefault();
                 currentImageIndex = index;
                 scrollToImage(index);
             });

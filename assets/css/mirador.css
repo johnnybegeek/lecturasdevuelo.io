@@ -79,7 +79,7 @@
     transform: translateX(-50%);
     width: 90vw;
     max-width: 500px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.15);
     border-radius: 30px;
     padding: 10px;
     z-index: 100;
@@ -88,12 +88,14 @@
     overflow-y: hidden;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE/Edge */
+    -webkit-overflow-scrolling: touch; /* Suaviza el scroll en iOS */
 }
 
 .mobile-thumbnail-bar::-webkit-scrollbar {
     display: none; /* Chrome/Safari */
 }
 
+/* Estilos comunes para todas las miniaturas */
 .thumbnail-item {
     width: 40px;
     height: 40px;
@@ -104,6 +106,9 @@
     border: 2px solid transparent;
     transition: border-color 0.2s ease, transform 0.2s ease;
     flex-shrink: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
 }
 
 .thumbnail-item:hover {
@@ -120,6 +125,7 @@
     height: 100%;
     object-fit: cover;
     object-position: center;
+    pointer-events: none; /* Evita que el clic en la imagen interfiera */
 }
 
 /* Estilos específicos para miniaturas móviles */
