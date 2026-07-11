@@ -1,4 +1,5 @@
 /* Archivo mirador.css: Estilos específicos para el visor de imágenes */
+/* Solución: Padding Peek (CSS Puro) - Sin transform: scale en imágenes */
 
 /* Contenedor principal del mirador */
 .mirador-container {
@@ -19,6 +20,9 @@
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch; /* Suaviza el scroll en iOS */
     
+    /* Padding para el efecto "intuición": deja espacio arriba y abajo */
+    padding: 10vh 0;
+    
     /* Ocultar barra de scroll para un look limpio */
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE/Edge */
@@ -32,52 +36,34 @@
 .mirador-image-container {
     position: relative;
     width: 100%;
-    height: 100vh;
+    height: 80vh; /* Las imágenes ocupan el 80% del viewport */
     display: flex;
     justify-content: center;
     align-items: center;
     scroll-snap-align: center;
+    overflow: hidden;
 }
 
-/* Estilos base de las imágenes */
+/* Estilos de las imágenes en el carrusel */
 .mirador-image {
     max-width: 90vw;
-    max-height: 60vh;
+    max-height: 70vh; /* Ajustado para que no toque los bordes */
     object-fit: contain;
     object-position: center;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    transition: opacity 0.3s ease;
     cursor: pointer;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    position: relative;
-    z-index: 1;
 }
 
-/* Efecto de intuición: todas las imágenes tienen opacidad y escala reducida por defecto */
+/* Efecto de intuición: todas las imágenes tienen opacidad reducida por defecto */
 .mirador-image {
     opacity: 0.5;
-    transform: scale(0.85);
 }
 
-/* La imagen que está en el centro del viewport (usando :nth-child y scroll-snap) */
-/* No podemos usar :nth-child directamente, así que usamos una clase aplicada por JS */
+/* La imagen activa (centrada) tiene opacidad completa */
 .mirador-image-container.active .mirador-image {
     opacity: 1;
-    transform: scale(1);
-    z-index: 3;
-}
-
-/* Las imágenes adyacentes (anterior y siguiente) */
-.mirador-image-container.prev .mirador-image {
-    opacity: 0.7;
-    transform: scale(0.92);
-    z-index: 2;
-}
-
-.mirador-image-container.next .mirador-image {
-    opacity: 0.7;
-    transform: scale(0.92);
-    z-index: 2;
 }
 
 /* Barra de miniaturas (escritorio) */
@@ -224,6 +210,7 @@
         width: calc(100% - 200px - 80px); /* 200px sidebar + 80px thumbnail bar */
         margin-left: 200px;
         height: 100vh;
+        padding: 10vh 0; /* Mantener padding para el efecto */
     }
 
     /* Mostrar la barra de miniaturas */
@@ -235,27 +222,25 @@
     /* Ajustar tamaño de imágenes en escritorio */
     .mirador-image {
         max-width: 70vw;
-        max-height: 70vh;
+        max-height: 60vh; /* Ajustado para escritorio */
     }
 
-    /* Ajustar el logo flotante (no se usa en escritorio, pero por si acaso) */
+    /* Ajustar el logo flotante (no se usa en escritorio) */
     .floating-logo {
         display: none;
     }
 }
 
-/* Animación para el efecto de intuición */
-@keyframes fadeInUp {
+/* Animación para la imagen central */
+@keyframes fadeIn {
     from {
-        opacity: 0;
-        transform: translateY(20px) scale(0.8);
+        opacity: 0.5;
     }
     to {
         opacity: 1;
-        transform: translateY(0) scale(1);
     }
 }
 
 .mirador-image-container.active .mirador-image {
-    animation: fadeInUp 0.4s ease;
+    animation: fadeIn 0.3s ease;
 }

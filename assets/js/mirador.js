@@ -1,9 +1,10 @@
 /**
  * Lógica del visor de imágenes (Mirador)
  * - Carga imágenes de la carpeta blog/paytowin050626/
- * - Carrusel vertical con efecto "intuición"
+ * - Carrusel vertical con efecto "intuición" (usando scroll-snap y CSS puro)
  * - Modal para ver imágenes ampliadas
  * - Barra de miniaturas para escritorio
+ * NOTA: El comportamiento del header y logo flotante se maneja en secundaria.js
  */
 
 // Lista de imágenes en la carpeta blog/paytowin050626/
@@ -37,7 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicializar el modal
     initModal(modal, modalImage, modalClose, modalPrev, modalNext);
 
-    // Configurar IntersectionObserver para detectar imágenes visibles
+    // Configurar IntersectionObserver para detectar la imagen central
+    // Usamos un threshold bajo para detectar cuando una imagen está cerca del centro
     setupIntersectionObserver(carousel);
 
     // Configurar navegación por teclado
@@ -94,84 +96,48 @@ function initCarousel(carousel, thumbnailBar) {
 }
 
 /**
- * Configura IntersectionObserver para detectar imágenes visibles
- * Usamos un rootMargin amplio para captar las imágenes anterior, central y siguiente
+ * Configura IntersectionObserver para detectar la imagen central
+ * Usamos un rootMargin que cubra el área central del carrusel
  */
 function setupIntersectionObserver(carousel) {
     const imageContainers = document.querySelectorAll('.mirador-image-container');
     
-    // Usamos un rootMargin que cubra más del viewport para detectar las 3 imágenes
     const observerOptions = {
         root: carousel,
-        rootMargin: '-20% 0px -60% 0px', // Área de detección más amplia para captar 3 imágenes
+        rootMargin: '-50% 0px -50% 0px', // Detecta cuando la imagen está en el centro
         threshold: 0.1
     };
 
     const observer = new IntersectionObserver((entries) => {
-        // Resetear todas las clases primero
-        imageContainers.forEach(container => {
-            container.classList.remove('prev', 'active', 'next');
-        });
-
-        // Obtener todas las imágenes actualmente visibles
-        const visibleEntries = entries.filter(entry => entry.isIntersecting);
-        
-        // Si hay al menos una imagen visible
-        if (visibleEntries.length > 0) {
-            // Ordenar las entradas por su posición en el carrusel (de arriba a abajo)
-            visibleEntries.sort((a, b) => {
-                return a.target.offsetTop - b.target.offsetTop;
-            });
-
-            // Asignar clases según la posición
-            visibleEntries.forEach((entry, i) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
                 const index = parseInt(entry.target.dataset.index);
-                const totalVisible = visibleEntries.length;
-
-                // Si hay 3 imágenes visibles
-                if (totalVisible >= 3) {
-                    if (i === 0) {
-                        entry.target.classList.add('prev');
-                    } else if (i === 1) {
-                        entry.target.classList.add('active');
-                        currentImageIndex = index;
-                    } else if (i === 2) {
-                        entry.target.classList.add('next');
-                    }
-                }
-                // Si hay 2 imágenes visibles
-                else if (totalVisible === 2) {
-                    if (i === 0) {
-                        entry.target.classList.add('prev');
-                    } else {
-                        entry.target.classList.add('active');
-                        currentImageIndex = index;
-                    }
-                }
-                // Si hay solo 1 imagen visible
-                else {
-                    entry.target.classList.add('active');
-                    currentImageIndex = index;
-                }
-            });
-        }
-
-        // Actualizar miniaturas
-        updateThumbnailStates();
-        
-        // Actualizar botones del modal si está abierto
-        if (isModalOpen) {
-            updateModalButtons();
-        }
+                currentImageIndex = index;
+                updateActiveStates();
+            }
+        });
     }, observerOptions);
 
     imageContainers.forEach(container => observer.observe(container));
 }
 
 /**
- * Actualiza los estados de las miniaturas
+ * Actualiza los estados activos (imagen central y miniaturas)
  */
-function updateThumbnailStates() {
+function updateActiveStates() {
+    const imageContainers = document.querySelectorAll('.mirador-image-container');
+    
+    // Remover todas las clases activas
+    imageContainers.forEach(container => {
+        container.classList.remove('active');
+    });
+
+    // Marcar la imagen central como activa
+    if (imageContainers[currentImageIndex]) {
+        imageContainers[currentImageIndex].classList.add('active');
+    }
+
+    // Actualizar clases activas en las miniaturas
     const thumbnailItems = document.querySelectorAll('.thumbnail-item');
     thumbnailItems.forEach((item, index) => {
         if (index === currentImageIndex) {
@@ -180,27 +146,6 @@ function updateThumbnailStates() {
             item.classList.remove('active');
         }
     });
-}
-
-/**
- * Actualiza los estados activos (imagen central, anterior y siguiente)
- */
-function updateActiveStates() {
-    const imageContainers = document.querySelectorAll('.mirador-image-container');
-    
-    imageContainers.forEach((container, index) => {
-        container.classList.remove('prev', 'active', 'next');
-
-        if (index === currentImageIndex) {
-            container.classList.add('active');
-        } else if (index === currentImageIndex - 1) {
-            container.classList.add('prev');
-        } else if (index === currentImageIndex + 1) {
-            container.classList.add('next');
-        }
-    });
-
-    updateThumbnailStates();
 
     // Actualizar botones del modal si está abierto
     if (isModalOpen) {

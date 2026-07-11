@@ -9,11 +9,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const carousel = document.getElementById('miradorCarousel');
     const isMirador = carousel !== null;
 
+    // Verificar que los elementos existen
+    if (!mobileHeader) {
+        console.error('secundaria.js: No se encontró mobileHeader');
+        return;
+    }
+    if (!floatingLogo) {
+        console.error('secundaria.js: No se encontró floatingLogo');
+        return;
+    }
+
     // Función para manejar el scroll
     function handleScroll() {
         let scrollPosition = 0;
         
-        if (isMirador) {
+        if (isMirador && carousel) {
             // En mirador, el scroll es dentro del carrusel
             scrollPosition = carousel.scrollTop;
         } else {
@@ -21,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
             scrollPosition = window.scrollY || window.pageYOffset;
         }
 
+        // Mostrar u ocultar el header y el logo flotante
         if (scrollPosition > scrollThreshold) {
             mobileHeader.classList.add('hide');
             floatingLogo.classList.add('visible');
@@ -30,17 +41,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Añadir listener según el contexto
-    if (isMirador) {
-        carousel.addEventListener('scroll', handleScroll);
-    } else {
-        window.addEventListener('scroll', handleScroll);
+    // Añadir listener al carrusel (si existe)
+    if (isMirador && carousel) {
+        carousel.addEventListener('scroll', handleScroll, { passive: true });
     }
+
+    // Siempre añadir listener al window (por si el scroll del carrusel no se propaga)
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    // Llamar a handleScroll al cargar para inicializar el estado
+    handleScroll();
 
     // Hacer clic en el logo flotante para volver arriba
     floatingLogo.addEventListener('click', function(e) {
         e.preventDefault();
-        if (isMirador) {
+        if (isMirador && carousel) {
             // En mirador, volver al inicio del carrusel
             carousel.scrollTo({
                 top: 0,
@@ -53,8 +68,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 behavior: 'smooth'
             });
         }
+        // Después de volver arriba, mostrar el header y ocultar el logo
+        setTimeout(() => {
+            mobileHeader.classList.remove('hide');
+            floatingLogo.classList.remove('visible');
+        }, 300);
     });
-
-    // Inicializar el estado al cargar
-    handleScroll();
 });
