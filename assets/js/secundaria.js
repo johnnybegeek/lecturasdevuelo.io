@@ -12,12 +12,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Verificar que los elementos existen
     if (!mobileHeader) {
         console.error('secundaria.js: No se encontró mobileHeader');
+        return;
     }
     if (!floatingLogo) {
         console.error('secundaria.js: No se encontró floatingLogo');
-    }
-    if (!mobileHeader || !floatingLogo) {
-        return; // Salir si no hay elementos para manejar
+        return;
     }
 
     // Función para manejar el scroll
@@ -32,8 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
             scrollPosition = window.scrollY || window.pageYOffset;
         }
 
-        console.log('Scroll position:', scrollPosition, 'Threshold:', scrollThreshold); // Depuración
-
         // Mostrar u ocultar el header y el logo flotante
         if (scrollPosition > scrollThreshold) {
             mobileHeader.classList.add('hide');
@@ -44,16 +41,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Añadir listener según el contexto
+    // Añadir listener al carrusel (si existe)
     if (isMirador && carousel) {
-        // En mirador, escuchar el scroll del carrusel
         carousel.addEventListener('scroll', handleScroll, { passive: true });
-        console.log('Listener de scroll adjunto al carrusel'); // Depuración
-    } else {
-        // En otras páginas, escuchar el scroll de la ventana
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        console.log('Listener de scroll adjunto al window'); // Depuración
     }
+
+    // Siempre añadir listener al window (por si el scroll del carrusel no se propaga)
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     // Llamar a handleScroll al cargar para inicializar el estado
     handleScroll();
@@ -78,6 +72,6 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             mobileHeader.classList.remove('hide');
             floatingLogo.classList.remove('visible');
-        }, 300); // Esperar a que termine el scroll
+        }, 300);
     });
 });
