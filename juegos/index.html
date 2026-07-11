@@ -1,58 +1,70 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lecturas de Vuelo: Juegos</title>
-    <link rel="stylesheet" href="../assets/css/estilo.css">
-    <script src="../assets/js/constantes.js"></script>
+    <title>Juegos - Lecturas de Vuelo</title>
+    <meta name="description" content="Juegos de Lecturas de Vuelo">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/secundaria.css">
 </head>
-
 <body>
-    <div class="logo-header">
-        <a href="/index.html" class="img-link"><img src="../assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="logo-img"></a>
-        <h1>Juegos</h1>
+    <div class="secundaria-container">
+        <!-- Header móvil -->
+        <header class="mobile-header" id="mobileHeader">
+            <a href="../index.html" class="header-logo-link" aria-label="Ir a la página principal">
+                <img src="../assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="header-logo" loading="lazy">
+            </a>
+            <h1 class="header-title">Juegos</h1>
+        </header>
+
+        <!-- Sidebar escritorio -->
+        <aside class="desktop-sidebar" aria-label="Navegación principal">
+            <a href="../index.html"><img src="../assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="sidebar-logo" loading="lazy"></a>
+            <nav>
+                <ul class="sidebar-nav">
+                    <li><a href="../blog/">blog</a></li>
+                    <li><a href="../juegos/">juegos</a></li>
+                    <li><a href="../mirador/">mirador</a></li>
+                    <li><a href="../temas/">temas</a></li>
+                    <li><a href="../recursos/">recursos</a></li>
+                    <hr>
+                    <li><a href="../who/">who</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Contenido principal -->
+        <main class="content">
+            <div class="desktop-top-bar" aria-hidden="true"></div>
+            <div class="content-wrapper">
+                <ul id="lista-juegos" class="content-list">
+                    <h2>Roguelike</h2>
+                    <li><a href="roguelike/roglik1.html">Roguelike ASCII</a></li>
+                    <li><a href="roguelike/MoriaMovil.html">MoriaMovil</a></li>
+                    
+                    <h2>Carreras</h2>
+                    <li><a href="carrera/carrera.html">Carrera</a></li>
+                    
+                    <h2>Generador</h2>
+                    <li><a href="Maravia/maravia.html">Generador de palabras aleatorias</a></li>
+                    
+                    <h2>Wargames</h2>
+                    <li><a href="scrud/scrud.html">S.C.R.U.D.: Simulador de combate con dados</a></li>
+                    
+                    <h2>Ficha de cosmogonía</h2>
+                    <li><a href="wb_op/wb.html">Cosmos optimizado</a></li>
+                </ul>
+            </div>
+            <div class="desktop-bottom-bar" aria-hidden="true"></div>
+        </main>
+
+        <!-- Logo flotante para móvil -->
+        <a href="#" class="floating-logo" id="floatingLogo" aria-label="Volver al inicio">
+            <img src="../assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" loading="lazy">
+        </a>
     </div>
-    <p>Lecturas de vuelo: Artículos a baja altitud</p>
 
-    <div class="callout">
-        <p data-text-key="juegos"></p>
-    </div>
-
-    <main>
-        <ul id="lista-juegos">
-            <h2>Roguelike</h2>
-            <li><a href="/juegos/roguelike/roglik1.html">Roguelike ASCII</a></li>
-            <li><a href="/juegos/roguelike/MoriaMovil.html">MoriaMovil</a></li>
-            
-            <h2>Carreras</h2>
-            <li><a href="/juegos/carrera/carrera.html">Carrera</a></li>
-            
-            <h2>Generador</h2>
-            <li><a href="/juegos/Maravia/maravia.html">Generador de palabras aleatorias</a></li>
-            
-            <h2>Wargames</h2>
-            <li><a href="/juegos/scrud/scrud.html">S.C.R.U.D.: Simulador de combate con dados</a></li>
-        
-            <h2>Ficha de cosmogonía</h2>
-            <li><a href="/juegos/wb_op/wb.html">Cosmos optimizado</a></li>
-        </ul>
-    </main>
-
-    <script>
-        document.querySelector('.menu-toggle')?.addEventListener('click', function() {
-            document.querySelector('.menu-principal ul')?.classList.toggle('active');
-        });
-
-        const themeToggle = document.getElementById('theme-toggle');
-        if (themeToggle) {
-            themeToggle.addEventListener('click', function() {
-                document.body.classList.toggle('dark-mode');
-                const isDark = document.body.classList.contains('dark-mode');
-                this.querySelector('span').textContent = isDark ? '\u2600\ufe0f' : '\ud83c\udf19';
-                this.setAttribute('aria-pressed', isDark);
-            });
-        }
-    </script>
+    <script src="../assets/js/secundaria.js"></script>
 </body>
 </html>
