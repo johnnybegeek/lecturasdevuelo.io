@@ -21,39 +21,47 @@ document.addEventListener('DOMContentLoaded', function() {
             scrollPosition = window.scrollY || window.pageYOffset;
         }
 
+        // Mostrar u ocultar el header y el logo flotante
         if (scrollPosition > scrollThreshold) {
-            mobileHeader.classList.add('hide');
-            floatingLogo.classList.add('visible');
+            if (mobileHeader) mobileHeader.classList.add('hide');
+            if (floatingLogo) floatingLogo.classList.add('visible');
         } else {
-            mobileHeader.classList.remove('hide');
-            floatingLogo.classList.remove('visible');
+            if (mobileHeader) mobileHeader.classList.remove('hide');
+            if (floatingLogo) floatingLogo.classList.remove('visible');
         }
     }
 
     // Añadir listener según el contexto
     if (isMirador) {
-        carousel.addEventListener('scroll', handleScroll);
+        // En mirador, escuchar el scroll del carrusel
+        carousel.addEventListener('scroll', handleScroll, { passive: true });
+        
+        // También escuchar el scroll del carrusel para el IntersectionObserver del mirador
+        // (el listener de mirador.js ya lo maneja, pero nos aseguramos de que el header funcione)
     } else {
-        window.addEventListener('scroll', handleScroll);
+        // En otras páginas, escuchar el scroll de la ventana
+        window.addEventListener('scroll', handleScroll, { passive: true });
     }
 
     // Hacer clic en el logo flotante para volver arriba
-    floatingLogo.addEventListener('click', function(e) {
-        e.preventDefault();
-        if (isMirador) {
-            // En mirador, volver al inicio del carrusel
-            carousel.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        } else {
-            // En otras páginas, volver al inicio de la ventana
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-    });
+    if (floatingLogo) {
+        floatingLogo.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (isMirador) {
+                // En mirador, volver al inicio del carrusel
+                carousel.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            } else {
+                // En otras páginas, volver al inicio de la ventana
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    }
 
     // Inicializar el estado al cargar
     handleScroll();

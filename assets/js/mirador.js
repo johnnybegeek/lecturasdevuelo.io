@@ -4,6 +4,7 @@
  * - Carrusel vertical con efecto "intuición" (usando scroll-snap y CSS puro)
  * - Modal para ver imágenes ampliadas
  * - Barra de miniaturas para escritorio
+ * NOTA: El comportamiento del header y logo flotante se maneja en secundaria.js
  */
 
 // Lista de imágenes en la carpeta blog/paytowin050626/
@@ -20,7 +21,6 @@ let currentImageIndex = 0;
 let isModalOpen = false;
 let touchStartX = 0;
 let touchEndX = 0;
-let scrollTimeout = null;
 
 // Elementos DOM
 document.addEventListener('DOMContentLoaded', () => {
@@ -38,8 +38,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicializar el modal
     initModal(modal, modalImage, modalClose, modalPrev, modalNext);
 
-    // Configurar listener de scroll (solo para actualizar la imagen central)
-    setupScrollListener(carousel);
+    // Configurar IntersectionObserver para detectar la imagen central
+    // Usamos un threshold bajo para detectar cuando una imagen está cerca del centro
+    setupIntersectionObserver(carousel);
 
     // Configurar navegación por teclado
     setupKeyboardNavigation();
@@ -95,40 +96,29 @@ function initCarousel(carousel, thumbnailBar) {
 }
 
 /**
- * Configura listener de scroll para detectar la imagen central
- * Usa un debounce para no saturar el navegador
+ * Configura IntersectionObserver para detectar la imagen central
+ * Usamos un rootMargin que cubra el área central del carrusel
  */
-function setupScrollListener(carousel) {
+function setupIntersectionObserver(carousel) {
     const imageContainers = document.querySelectorAll('.mirador-image-container');
-    const carouselHeight = carousel.offsetHeight;
-    const imageHeight = imageContainers[0] ? imageContainers[0].offsetHeight : 0;
+    
+    const observerOptions = {
+        root: carousel,
+        rootMargin: '-50% 0px -50% 0px', // Detecta cuando la imagen está en el centro
+        threshold: 0.1
+    };
 
-    carousel.addEventListener('scroll', () => {
-        // Debounce: espera a que el scroll termine para calcular
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-            const scrollTop = carousel.scrollTop;
-            const centerPosition = scrollTop + (carouselHeight / 2);
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const index = parseInt(entry.target.dataset.index);
+                currentImageIndex = index;
+                updateActiveStates();
+            }
+        });
+    }, observerOptions);
 
-            // Encontrar la imagen más cercana al centro
-            let closestIndex = 0;
-            let minDistance = Infinity;
-
-            imageContainers.forEach((container, index) => {
-                const containerTop = container.offsetTop;
-                const containerCenter = containerTop + (imageHeight / 2);
-                const distance = Math.abs(centerPosition - containerCenter);
-
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    closestIndex = index;
-                }
-            });
-
-            currentImageIndex = closestIndex;
-            updateActiveStates();
-        }, 50); // Espera 50ms después del último scroll
-    });
+    imageContainers.forEach(container => observer.observe(container));
 }
 
 /**
