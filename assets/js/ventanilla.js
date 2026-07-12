@@ -1,5 +1,5 @@
 /**
- * Lógica del visor de imágenes (Mirador)
+ * Lógica del visor de imágenes (Ventanilla)
  * - Carga imágenes de la carpeta blog/paytowin050626/
  * - Carrusel vertical con efecto "intuición" (usando scroll-snap y CSS puro)
  * - Modal para ver imágenes ampliadas
@@ -8,7 +8,7 @@
  */
 
 // Lista de imágenes en la carpeta blog/paytowin050626/
-// Las rutas son relativas a la raíz del sitio (usando ../ para subir desde /mirador/)
+// Las rutas son relativas a la raíz del sitio (usando ../ para subir desde /ventanilla/)
 const images = [
     { src: '../blog/paytowin050626/blacklotus.webp', alt: 'Black Lotus' },
     { src: '../blog/paytowin050626/ghostintheshell.webp', alt: 'Ghost in the Shell' },
@@ -24,7 +24,7 @@ let touchEndX = 0;
 
 // Elementos DOM
 document.addEventListener('DOMContentLoaded', () => {
-    const carousel = document.getElementById('miradorCarousel');
+    const carousel = document.getElementById('ventanillaCarousel');
     const thumbnailBar = document.getElementById('thumbnailBar');
     const mobileThumbnailBar = document.getElementById('mobileThumbnailBar');
     const modal = document.getElementById('imageModal');
@@ -54,11 +54,11 @@ function initCarousel(carousel, thumbnailBar, mobileThumbnailBar) {
     images.forEach((image, index) => {
         // Crear contenedor de imagen para el carrusel
         const imageContainer = document.createElement('div');
-        imageContainer.className = 'mirador-image-container';
+        imageContainer.className = 'ventanilla-image-container';
         imageContainer.dataset.index = index;
 
         const img = document.createElement('img');
-        img.className = 'mirador-image';
+        img.className = 'ventanilla-image';
         img.src = image.src;
         img.alt = image.alt;
         img.loading = 'lazy';
@@ -126,7 +126,7 @@ function initCarousel(carousel, thumbnailBar, mobileThumbnailBar) {
  * Usamos un rootMargin que cubra el área central del carrusel
  */
 function setupIntersectionObserver(carousel) {
-    const imageContainers = document.querySelectorAll('.mirador-image-container');
+    const imageContainers = document.querySelectorAll('.ventanilla-image-container');
     
     const observerOptions = {
         root: carousel,
@@ -151,7 +151,7 @@ function setupIntersectionObserver(carousel) {
  * Actualiza los estados activos (imagen central y miniaturas)
  */
 function updateActiveStates() {
-    const imageContainers = document.querySelectorAll('.mirador-image-container');
+    const imageContainers = document.querySelectorAll('.ventanilla-image-container');
     
     // Remover todas las clases activas
     imageContainers.forEach(container => {
@@ -183,8 +183,8 @@ function updateActiveStates() {
  * Desplaza el carrusel a la imagen especificada
  */
 function scrollToImage(index) {
-    const carousel = document.getElementById('miradorCarousel');
-    const imageContainers = document.querySelectorAll('.mirador-image-container');
+    const carousel = document.getElementById('ventanillaCarousel');
+    const imageContainers = document.querySelectorAll('.ventanilla-image-container');
     
     if (imageContainers[index]) {
         const container = imageContainers[index];
