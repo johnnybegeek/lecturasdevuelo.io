@@ -4,7 +4,7 @@ Este archivo define **constantes de texto** y funciones para aplicarlas dinámic
 
 ---
 
-## 📌 Estructura del Archivo
+## 📁 Estructura del Archivo
 
 ### 1. **Objeto `TEXT_CONSTANTS`**
 Define los textos descriptivos para cada sección del sitio. Cada clave corresponde a una página o sección, y su valor es el texto que se mostrará.
@@ -12,7 +12,7 @@ Define los textos descriptivos para cada sección del sitio. Cada clave correspo
 ```javascript
 const TEXT_CONSTANTS = {
   blog: "Blog y enlaces a Juegos. Un espacio de ideas y reflexiones en marcha.",
-  mirador: "Asuntos completados o archivados, por si buscas inspiración.",
+  ventanilla: "Asuntos completados o archivados, por si buscas inspiración.",
   recursos: "Recursos online que me resultan útiles y que quizá también pueden servirte.",
   temas: "Áreas temáticas que más me interesan.",
   who: "Quién está detrás de todo esto.",
@@ -23,7 +23,7 @@ const TEXT_CONSTANTS = {
 | Clave       | Descripción                                                                                     | Sección Asociada |
 |-------------|-------------------------------------------------------------------------------------------------|------------------|
 | `blog`| Texto para la sección de blog y enlaces a juegos, con ideas y reflexiones en desarrollo.       | Blog       |
-| `mirador`  | Texto para la sección de asuntos completados o archivados.                                       | Mirador         |
+| `ventanilla`  | Texto para la sección de asuntos completados o archivados.                                       | Ventanilla         |
 | `recursos`   | Texto para la sección de recursos online útiles.                                                 | Recursos          |
 | `temas`       | Texto para la sección de áreas temáticas de interés.                                            | Temas              |
 | `who`       | Texto para la sección sobre el autor del sitio.                                                 | Who              |
@@ -39,10 +39,10 @@ Aplica los textos definidos en `TEXT_CONSTANTS` a los elementos HTML con el atri
 2. Para cada elemento, obtiene el valor del atributo `data-text-key`.
 3. Si el valor coincide con una clave en `TEXT_CONSTANTS`, reemplaza el contenido del elemento con el texto correspondiente.
 
-#### 📌 **Ejemplo de Uso:**
+#### 📁 **Ejemplo de Uso:**
 Si hay un elemento como:
 ```html
-<p data-text-key="mirador">Texto predeterminado</p>
+<p data-text-key="ventanilla">Texto predeterminado</p>
 ```
 El texto del párrafo se reemplazará por:
 `"Asuntos completados o archivados, por si buscas inspiración."`
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', applyTextConstants);
 
 ---
 
-## 📊 **Relación con el Sitio Web**
+## 🌐 **Relación con el Sitio Web**
 Este archivo es parte de la lógica de **localización y mantenimiento de textos** del sitio. Permite:
 1. **Centralizar los textos**: Todos los mensajes descriptivos están en un solo lugar.
 2. **Facilitar actualizaciones**: Cambiar un texto solo requiere modificar `TEXT_CONSTANTS`.
