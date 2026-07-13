@@ -346,7 +346,7 @@
         }
 
         function moveEnemy() {
-            if (gameOver) return;
+            if (gameOver || enemyDefeated) return;
 
             // Encontrar el camino más corto hacia el jugador (usando distancia de Manhattan)
             const directions = [
@@ -380,6 +380,8 @@
                         if (hasWeapon) {
                             // El jugador tiene el arma, el enemigo muere
                             map[enemyY][enemyX] = '.';
+                            enemyX = -1;
+                            enemyY = -1;
                             hasWeapon = false; // El jugador pierde el arma al usarla
                             enemyDefeated = true;
                             drawMap();
@@ -460,6 +462,8 @@
                     if (hasWeapon) {
                         // El jugador tiene el arma, el enemigo muere
                         map[enemyY][enemyX] = '.';
+                        enemyX = -1;
+                        enemyY = -1;
                         hasWeapon = false; // El jugador pierde el arma al usarla
                         enemyDefeated = true;
                         moveCount++;
