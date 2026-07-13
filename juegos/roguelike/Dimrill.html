@@ -380,9 +380,6 @@
                         if (hasWeapon) {
                             // El jugador tiene el arma, el enemigo muere
                             map[enemyY][enemyX] = '.';
-                            enemyX = newX;
-                            enemyY = newY;
-                            map[enemyY][enemyX] = '.';
                             hasWeapon = false; // El jugador pierde el arma al usarla
                             enemyDefeated = true;
                             drawMap();
@@ -462,10 +459,6 @@
                     // Chocar con el enemigo
                     if (hasWeapon) {
                         // El jugador tiene el arma, el enemigo muere
-                        map[playerY][playerX] = '.';
-                        playerX = newX;
-                        playerY = newY;
-                        map[playerY][playerX] = '@';
                         map[enemyY][enemyX] = '.';
                         hasWeapon = false; // El jugador pierde el arma al usarla
                         enemyDefeated = true;
