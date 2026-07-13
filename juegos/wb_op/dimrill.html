@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmos Manager</title>
+    <link rel="stylesheet" href="../../../assets/css/base.css">
+    <link rel="stylesheet" href="dimrill.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Saltar al contenido</a>
+    
+    <!-- Header móvil -->
+    <header class="mobile-header" id="mobileHeader">
+        <h1 class="header-title">Cosmos Manager</h1>
+    </header>
+
+    <!-- Sidebar escritorio -->
+    <aside class="desktop-sidebar" aria-label="Navegación principal">
+        <h1 class="sidebar-title">Cosmos Manager</h1>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="content">
+        <div class="desktop-top-bar" aria-hidden="true"></div>
+        <div class="content-wrapper">
+            <div class="concept-input-container">
+                <label for="conceptInput">Concepto:</label>
+                <input type="text" id="conceptInput" placeholder="Nombre de tu mundo..." aria-label="Nombre del concepto">
+            </div>
+            
+            <div class="categories-container" id="categoriesGrid"></div>
+        </div>
+        <div class="desktop-bottom-bar" aria-hidden="true"></div>
+    </main>
+
+    <!-- Botones de acciones (móvil: flotante, escritorio: fijos) -->
+    <div class="actions-container" id="actionsContainer">
+        <div class="actions-buttons" id="actionsButtons">
+            <button id="exportBtn" class="btn btn-success" aria-label="Exportar datos">
+                <span>📥 Exportar</span>
+            </button>
+            <button id="importBtn" class="btn btn-warning" aria-label="Importar datos">
+                <span>📤 Importar</span>
+            </button>
+            <input type="file" id="fileInput" accept=".json" style="display:none;" aria-label="Seleccionar archivo">
+            <button id="resetBtn" class="btn btn-danger" aria-label="Restablecer datos">
+                <span>🔄 Reset</span>
+            </button>
+        </div>
+        <button class="floating-actions-btn" id="floatingActionsBtn" aria-label="Menú de acciones">
+            <span>🌍</span>
+        </button>
+    </div>
+
+    <!-- Toast container -->
+    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+    <script src="dimrill.js"></script>
+</body>
+</html>

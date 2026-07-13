@@ -1,0 +1,659 @@
+/* dimrill.css - Estilos específicos para Cosmos Manager */
+
+/* Variables CSS locales (extienden las de base.css) */
+:root {
+    --wb-bg: var(--bg-color);
+    --wb-text: var(--text-color);
+    --wb-text2: #555;
+    --wb-accent: var(--tile-color-1);
+    --wb-accent2: #0a3a7a;
+    --wb-border: #ddd;
+    --wb-success: #2ecc71;
+    --wb-error: #e74c3c;
+    --wb-warning: #f39c12;
+    --wb-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --wb-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --wb-radius-sm: 4px;
+    --wb-radius-md: 8px;
+    --wb-transition: all 0.2s ease;
+}
+
+/* Reset y estilos base */
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--wb-bg);
+    color: var(--wb-text);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* --- Versión Móvil (por defecto) --- */
+
+/* Header móvil */
+.mobile-header {
+    height: 18vh;
+    background-color: var(--tile-color-3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 5vw;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    transition: transform 0.3s ease;
+}
+
+.mobile-header.hide {
+    transform: translateY(-100%);
+}
+
+.header-title {
+    color: var(--text-color);
+    font-size: clamp(1.2rem, 4vw, 1.8rem);
+    font-weight: 300;
+    text-align: center;
+}
+
+/* Contenido principal (móvil) */
+.content {
+    flex: 1;
+    background-color: var(--bg-color);
+    padding: 5vw;
+    overflow-y: auto;
+}
+
+.content-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Contenedor de categorías (móvil: grid vertical) */
+.categories-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+/* Input de concepto */
+.concept-input-container {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.concept-input-container label {
+    font-weight: 500;
+    color: var(--wb-text2);
+    font-size: 0.9rem;
+}
+
+.concept-input-container input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--wb-border);
+    border-radius: var(--wb-radius-sm);
+    font-family: inherit;
+    font-size: 0.9rem;
+    transition: var(--wb-transition);
+    background: #fff;
+}
+
+.concept-input-container input:focus {
+    outline: none;
+    border-color: var(--wb-accent);
+    box-shadow: 0 0 0 2px rgba(15, 73, 154, 0.2);
+}
+
+/* Tarjetas de categoría */
+.category-card {
+    background: #fff;
+    border-radius: var(--wb-radius-md);
+    box-shadow: var(--wb-shadow-sm);
+    border: 1px solid var(--wb-border);
+    overflow: hidden;
+    transition: var(--wb-transition);
+}
+
+.category-card:hover {
+    box-shadow: var(--wb-shadow-md);
+}
+
+.category-header {
+    background: linear-gradient(135deg, var(--wb-accent), var(--wb-accent2));
+    color: #fff;
+    padding: 1rem 1.5rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.category-header .count {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--wb-radius-sm);
+    font-size: 0.85rem;
+}
+
+.category-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Lista de items */
+.item-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.item {
+    background: var(--wb-bg);
+    border-radius: var(--wb-radius-sm);
+    padding: 1rem;
+    border: 1px solid var(--wb-border);
+    transition: var(--wb-transition);
+}
+
+.item:hover {
+    border-color: var(--wb-accent);
+}
+
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+}
+
+.item-question {
+    font-weight: 500;
+    color: var(--wb-text);
+    font-size: 0.95rem;
+    flex: 1;
+}
+
+.item-status {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--wb-error);
+    margin-left: 0.5rem;
+    flex-shrink: 0;
+}
+
+.item.status-completed .item-status {
+    background: var(--wb-success);
+}
+
+.item-textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 0.75rem;
+    border: 1px solid var(--wb-border);
+    border-radius: var(--wb-radius-sm);
+    font-family: inherit;
+    font-size: 0.9rem;
+    resize: vertical;
+    background: #fff;
+    transition: var(--wb-transition);
+}
+
+.item-textarea:focus {
+    outline: none;
+    border-color: var(--wb-accent);
+    box-shadow: 0 0 0 2px rgba(15, 73, 154, 0.2);
+}
+
+.item-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+/* Formulario para añadir items */
+.add-item-form {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    flex-direction: column;
+}
+
+.add-item-form input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--wb-border);
+    border-radius: var(--wb-radius-sm);
+    font-family: inherit;
+    font-size: 0.9rem;
+    transition: var(--wb-transition);
+}
+
+.add-item-form input:focus {
+    outline: none;
+    border-color: var(--wb-accent);
+    box-shadow: 0 0 0 2px rgba(15, 73, 154, 0.2);
+}
+
+/* Botones */
+.btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: var(--wb-radius-sm);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--wb-transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-primary {
+    background: var(--wb-accent);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: var(--wb-accent2);
+}
+
+.btn-secondary {
+    background: var(--wb-bg);
+    color: var(--wb-text);
+    border: 1px solid var(--wb-border);
+}
+
+.btn-secondary:hover {
+    background: var(--wb-border);
+}
+
+.btn-success {
+    background: var(--wb-success);
+    color: #fff;
+}
+
+.btn-success:hover {
+    background: #27ae60;
+}
+
+.btn-danger {
+    background: var(--wb-error);
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background: #c0392b;
+}
+
+.btn-warning {
+    background: var(--wb-warning);
+    color: #fff;
+}
+
+.btn-warning:hover {
+    background: #e67e22;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+}
+
+/* Contenedor de acciones (botones exportar/importar/reset) */
+.actions-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+}
+
+.actions-buttons {
+    display: flex;
+    gap: 0.75rem;
+    flex-direction: column;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    position: absolute;
+    bottom: 70px;
+    right: 0;
+    background: #fff;
+    padding: 0.5rem;
+    border-radius: var(--wb-radius-md);
+    box-shadow: var(--wb-shadow-md);
+    border: 1px solid var(--wb-border);
+}
+
+.actions-buttons.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.floating-actions-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--wb-accent);
+    color: #fff;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: var(--wb-shadow-md);
+    transition: var(--wb-transition);
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+}
+
+.floating-actions-btn:hover {
+    background: var(--wb-accent2);
+    transform: scale(1.1);
+}
+
+/* Toast container */
+.toast-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    pointer-events: none;
+}
+
+.toast {
+    background: #fff;
+    padding: 1rem 1.5rem;
+    border-radius: var(--wb-radius-md);
+    box-shadow: var(--wb-shadow-md);
+    border-left: 4px solid var(--wb-accent);
+    animation: slideIn 0.3s ease-out;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    max-width: 350px;
+}
+
+.toast.success {
+    border-left-color: var(--wb-success);
+}
+
+.toast.error {
+    border-left-color: var(--wb-error);
+}
+
+.toast.warning {
+    border-left-color: var(--wb-warning);
+}
+
+.toast-icon {
+    font-size: 1.2rem;
+}
+
+.toast-message {
+    flex: 1;
+    font-size: 0.9rem;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 2rem;
+    color: var(--wb-text2);
+}
+
+.empty-state p {
+    margin-top: 0.5rem;
+}
+
+/* Skip link */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--wb-accent);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    z-index: 100;
+    text-decoration: none;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* Enfoque visible */
+button:focus,
+input:focus,
+textarea:focus,
+[tabindex="0"]:focus {
+    outline: 2px solid var(--wb-accent);
+    outline-offset: 2px;
+}
+
+/* --- Versión Escritorio --- */
+@media (min-width: 768px) {
+    /* Ocultar elementos de móvil en escritorio */
+    .mobile-header,
+    .floating-actions-btn {
+        display: none;
+    }
+
+    /* Mostrar sidebar de escritorio */
+    .desktop-sidebar {
+        display: flex;
+    }
+
+    /* Layout de escritorio */
+    body {
+        display: flex;
+        flex-direction: row;
+    }
+
+    /* Sidebar izquierdo */
+    .desktop-sidebar {
+        width: 200px;
+        background-color: var(--tile-color-3);
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        flex-direction: column;
+        align-items: center;
+        padding: 3vh 0;
+        z-index: 100;
+    }
+
+    .sidebar-title {
+        color: var(--text-color);
+        font-size: clamp(1rem, 2vw, 1.2rem);
+        font-weight: 300;
+        text-align: center;
+        margin-bottom: 2vh;
+    }
+
+    /* Contenido principal (ajustado al sidebar) */
+    .content {
+        margin-left: 200px;
+        width: calc(100% - 200px);
+        min-height: 100vh;
+        background-color: var(--bg-color);
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+    }
+
+    .content-wrapper {
+        flex: 1;
+        padding: 3vh 5vw;
+        overflow-y: auto;
+    }
+
+    /* Barras superior e inferior */
+    .desktop-top-bar,
+    .desktop-bottom-bar {
+        height: 0.3em;
+        background-color: var(--tile-color-1);
+        width: 70%;
+        align-self: left;
+    }
+
+    .desktop-top-bar {
+        order: -1;
+    }
+
+    .desktop-bottom-bar {
+        order: 1;
+    }
+
+    /* Contenedor de categorías en escritorio: transposición a filas */
+    .categories-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    /* Cada categoría como fila (transposición) */
+    .category-card {
+        display: flex;
+        flex-direction: row;
+        overflow: hidden;
+    }
+
+    .category-header {
+        min-width: 150px;
+        flex-shrink: 0;
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+        padding: 1.5rem 0.5rem;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .category-header span:first-child {
+        display: block;
+    }
+
+    .category-header .count {
+        writing-mode: horizontal-tb;
+        transform: rotate(0);
+        margin-top: 0.5rem;
+    }
+
+    .category-content {
+        flex: 1;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    /* Ajustes para items en escritorio */
+    .item-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .item {
+        break-inside: avoid;
+    }
+
+    /* Contenedor de acciones en escritorio */
+    .actions-container {
+        position: fixed;
+        top: 2rem;
+        right: 2rem;
+        bottom: auto;
+    }
+
+    .actions-buttons {
+        position: static;
+        flex-direction: row;
+        background: transparent;
+        padding: 0;
+        border: none;
+        box-shadow: none;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Input de concepto en escritorio */
+    .concept-input-container {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .concept-input-container input {
+        width: auto;
+        flex: 1;
+        min-width: 200px;
+    }
+
+    /* Formulario para añadir items en escritorio */
+    .add-item-form {
+        flex-direction: row;
+    }
+
+    .add-item-form input {
+        width: auto;
+        flex: 1;
+    }
+}
+
+/* --- Ajustes para móvil (scroll) --- */
+@media (max-width: 767px) {
+    .actions-buttons {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .actions-buttons.visible {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    @media (max-width: 480px) {
+        .actions-buttons {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .add-item-form {
+            flex-direction: column;
+        }
+
+        .add-item-form input,
+        .add-item-form button {
+            width: 100%;
+        }
+    }
+}
