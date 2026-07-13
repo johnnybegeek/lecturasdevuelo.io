@@ -374,7 +374,7 @@
                 const newX = enemyX + dx;
                 const newY = enemyY + dy;
 
-                if (map[newY] && map[newY][newX] && map[newY][newX] !== '#') {
+                if (map[newY] && map[newY][newX] && map[newY][newX] !== '#' && map[newY][newX] !== '>' && map[newY][newX] !== 's') {
                     // Verificar si el enemigo alcanza al jugador
                     if (newX === playerX && newY === playerY) {
                         if (hasWeapon) {
