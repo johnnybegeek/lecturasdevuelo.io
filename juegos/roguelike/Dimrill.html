@@ -245,6 +245,7 @@
         let moveCount = 0;
         let hasWeapon = false;
         let gameOver = false;
+        let enemyDefeated = false;
 
         const gameElement = document.getElementById('game');
         const gameContainer = document.getElementById('game-container');
@@ -270,20 +271,28 @@
                 }
             }
 
-            // Colocar salida
-            do {
+            // Colocar salida en una casilla libre
+            let exitPlaced = false;
+            while (!exitPlaced) {
                 exitX = Math.floor(Math.random() * (WIDTH - 2)) + 1;
                 exitY = Math.floor(Math.random() * (HEIGHT - 2)) + 1;
-            } while (exitX === playerX && exitY === playerY);
-            map[exitY][exitX] = '>';
+                if (map[exitY][exitX] === '.') {
+                    map[exitY][exitX] = '>';
+                    exitPlaced = true;
+                }
+            }
 
             // Colocar arma cerca de la puerta
-            do {
+            let weaponPlaced = false;
+            while (!weaponPlaced) {
                 weaponX = exitX + Math.floor(Math.random() * 3) - 1;
                 weaponY = exitY + Math.floor(Math.random() * 3) - 1;
-            } while (weaponX <= 0 || weaponX >= WIDTH - 1 || weaponY <= 0 || weaponY >= HEIGHT - 1 ||
-                     map[weaponY][weaponX] === '#' || (weaponX === playerX && weaponY === playerY));
-            map[weaponY][weaponX] = 's';
+                if (weaponX > 0 && weaponX < WIDTH - 1 && weaponY > 0 && weaponY < HEIGHT - 1 &&
+                    map[weaponY][weaponX] === '.' && !(weaponX === playerX && weaponY === playerY)) {
+                    map[weaponY][weaponX] = 's';
+                    weaponPlaced = true;
+                }
+            }
 
             // Colocar enemigo muy lejos de la @
             let maxDistance = 0;
@@ -309,6 +318,7 @@
             moveCount = 0;
             hasWeapon = false;
             gameOver = false;
+            enemyDefeated = false;
             moveCountElement.textContent = moveCount;
             drawMap();
         }
@@ -373,6 +383,8 @@
                             enemyX = newX;
                             enemyY = newY;
                             map[enemyY][enemyX] = '.';
+                            hasWeapon = false; // El jugador pierde el arma al usarla
+                            enemyDefeated = true;
                             drawMap();
                             return;
                         } else {
@@ -424,8 +436,8 @@
             if (map[newY] && map[newY][newX]) {
                 if (map[newY][newX] === '>') {
                     // Verificar si el jugador ha cumplido las condiciones de victoria
-                    if (hasWeapon && map[enemyY][enemyX] !== '$') {
-                        // El enemigo ya fue eliminado y el jugador tiene el arma
+                    if (enemyDefeated) {
+                        // El enemigo ya fue eliminado
                         victoryModal.style.display = 'block';
                         continueBtn.focus();
                     }
@@ -455,6 +467,8 @@
                         playerY = newY;
                         map[playerY][playerX] = '@';
                         map[enemyY][enemyX] = '.';
+                        hasWeapon = false; // El jugador pierde el arma al usarla
+                        enemyDefeated = true;
                         moveCount++;
                         moveCountElement.textContent = moveCount;
                         drawMap();
