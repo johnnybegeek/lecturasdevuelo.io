@@ -47,6 +47,17 @@ body {
     transform: translateY(-100%);
 }
 
+
+.header-logo-link {
+    display: inline-block;
+    height: 60%;
+}
+
+.header-logo {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+}
 .header-title {
     color: var(--text-color);
     font-size: clamp(1.2rem, 4vw, 1.8rem);
@@ -487,6 +498,14 @@ textarea:focus,
     }
 
     .sidebar-title {
+
+    .sidebar-logo {
+        width: 80%;
+        height: auto;
+        max-width: 120px;
+        margin-bottom: 4vh;
+        object-fit: contain;
+    }
         color: var(--text-color);
         font-size: clamp(1rem, 2vw, 1.2rem);
         font-weight: 300;
