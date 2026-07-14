@@ -34,7 +34,7 @@ body {
     height: 18vh;
     background-color: var(--tile-color-3);
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     padding: 0 5vw;
     position: sticky;
@@ -348,7 +348,7 @@ body {
 
 .floating-actions-btn {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     width: 56px;
     height: 56px;
@@ -567,7 +567,7 @@ textarea:focus,
         writing-mode: vertical-rl;
         transform: rotate(180deg);
         padding: 1.5rem 0.5rem;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
         text-align: center;
     }
@@ -663,7 +663,7 @@ textarea:focus,
 
         .btn {
             width: 100%;
-            justify-content: center;
+            justify-content: space-between;
         }
 
         .add-item-form {
