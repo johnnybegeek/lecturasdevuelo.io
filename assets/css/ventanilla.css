@@ -1,4 +1,7 @@
 /* Archivo ventanilla.css: Estilos específicos para el visor de imágenes */
+/* Importa variables globales */
+@import url("base.css");
+
 /* Solución: Padding Peek (CSS Puro) - Sin transform: scale en imágenes */
 
 /* Contenedor principal de la ventanilla */

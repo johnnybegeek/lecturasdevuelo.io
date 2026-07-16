@@ -1,45 +1,36 @@
+/* Archivo tiles.css: Estilos de tarjetas y componentes visuales reutilizables */
+
+/* Importa variables globales */
 @import url("base.css");
 
-/* Archivo estilo.css: Estilos específicos para la página principal (home) */
+/* --- Clases de colores (backgrounds) --- */
 
-/* --- Versión Móvil (por defecto) --- */
-.carousel {
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory; /* Magia del swipe nativo */
-    
-    /* Ocultar barra de scroll para un look limpio */
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE/Edge */
-}
-.carousel::-webkit-scrollbar {
-    display: none; /* Chrome/Safari */
+.bg-transparent { 
+    background-color: transparent; 
+    border: 2px solid rgba(248, 231, 165, 0.5); /* Borde basado en --tile-color-2 */
 }
 
-/* Cada Sección (S1, S2, S3) */
-.section {
-    /* Cada sección ocupa exactamente el 75% de la pantalla */
-    flex: 0 0 75vw;
-    scroll-snap-align: center; /* Centra la sección en el área visible */
-    
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    padding: 5vh 0; /* Margen vertical del 5%, sin margen lateral */
-    gap: 5vh; /* Separación del 5% entre las dos tiles */
-    
-    /* Efecto de intuir (50% opacidad por defecto) */
-    opacity: 0.5;
-    transition: opacity 0.4s ease;
-}
+.bg-blue { 
+    background-color: var(--tile-color-1); 
+} /* Azul oscuro */
 
-/* La clase que añadiremos con JS para la sección activa */
-.section.is-active {
-    opacity: 1;
-}
+.bg-green { 
+    background-color: var(--tile-color-3); 
+} /* Azul claro */
+
+.bg-orange { 
+    background-color: var(--tile-color-2); 
+} /* Amarillo claro */
+
+.bg-purple { 
+    background-color: var(--tile-color-1); 
+} /* Azul oscuro (alternativa) */
+
+.bg-teal { 
+    background-color: var(--tile-color-3); 
+} /* Azul claro (alternativa) */
+
+/* --- Estilos base de tiles --- */
 
 /* Las Tiles */
 .tile {
@@ -64,37 +55,13 @@
     transform: scale(0.97); /* Pequeño efecto de hundimiento al pulsar (típico de WP) */
 }
 
-/* --- Versión Escritorio --- */
+/* Clase para texto blanco (mayor especificidad para sobrescribir .tile) */
+.tile.white-text {
+    color: white;
+}
+
+/* --- Versión Escritorio para tiles --- */
 @media (min-width: 768px) {
-    body, html {
-        overflow: hidden; /* Evita scroll vertical nativo en la raíz */
-    }
-    
-    .carousel {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr); /* 3 columnas */
-        grid-template-rows: repeat(2, 1fr); /* 2 filas */
-        gap: 2vw; /* Espacio entre tiles */
-        width: 90vw;
-        height: 80vh;
-        margin: 5vh auto; /* Centrado vertical y horizontal */
-        overflow: visible;
-        scroll-snap-type: none;
-        padding: 2vh 2vw;
-    }
-    
-    .section {
-        display: contents; /* Rompe el contenedor section y libera los tiles */
-        opacity: 1; /* Todas las secciones visibles */
-        height: auto;
-        padding: 0;
-        gap: 0;
-    }
-    
-    .section.is-active {
-        opacity: 1;
-    }
-    
     .tile {
         flex: none;
         height: 100%;
@@ -104,17 +71,19 @@
         transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
         box-shadow: 0 4px 12px var(--shadow-color);
     }
-    
+
     .tile:hover {
         transform: scale(var(--hover-scale));
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         z-index: 10;
     }
-    
+
     .tile:active {
         transform: scale(0.98);
     }
 }
+
+/* --- Componentes de tiles --- */
 
 /* Etiqueta de "Destacada" */
 .badge {
@@ -162,11 +131,4 @@
         width: 60%;
         height: 60%;
     }
-}
-
-/* --- Eliminar estilos del modo día/noche (ya no se usa) --- */
-#theme-toggle,
-.menu-toggle,
-.header-fijo {
-    display: none !important;
 }

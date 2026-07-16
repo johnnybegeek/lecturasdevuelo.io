@@ -1,0 +1,358 @@
+/* Archivo layout.css: Componentes de estructura de página */
+
+/* Importa variables globales */
+@import url("base.css");
+
+/* --- Layout principal (Hub) --- */
+
+/* Estilos globales para el Hub (páginas internas) */
+.hub-page {
+    padding: 5vh 2vw;
+    max-width: 90vw;
+    margin: 0 auto;
+    text-align: left;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.hub-page h1 {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    margin-bottom: 2vh;
+    color: var(--text-color);
+}
+
+.hub-page h2 {
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    opacity: 0.8;
+    margin-bottom: 2vh;
+}
+
+.hub-page main {
+    margin-top: 2vh;
+}
+
+.hub-page p {
+    margin-bottom: 2vh;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+}
+
+/* Estilo para listas en el estilo Hub */
+.hub-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.hub-list li {
+    margin-bottom: 3vh;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+}
+
+.hub-list a {
+    color: var(--tile-color-1); /* Azul oscuro */
+    text-decoration: none;
+    padding: 1vh 0;
+    display: block;
+    transition: color 0.2s ease;
+}
+
+.hub-list a:hover {
+    color: var(--tile-color-2); /* Amarillo claro */
+    text-decoration: underline;
+}
+
+.hub-list a:focus {
+    outline: 2px solid var(--tile-color-2); /* Amarillo claro */
+    outline-offset: 2px;
+}
+
+/* --- Carousel de home --- */
+.carousel {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory; /* Magia del swipe nativo */
+    
+    /* Ocultar barra de scroll para un look limpio */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+
+.carousel::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+}
+
+/* Cada Sección (S1, S2, S3) */
+.section {
+    /* Cada sección ocupa exactamente el 75% de la pantalla */
+    flex: 0 0 75vw;
+    scroll-snap-align: center; /* Centra la sección en el área visible */
+    
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 5vh 0; /* Margen vertical del 5%, sin margen lateral */
+    gap: 5vh; /* Separación del 5% entre las dos tiles */
+    
+    /* Efecto de intuir (50% opacidad por defecto) */
+    opacity: 0.5;
+    transition: opacity 0.4s ease;
+}
+
+/* La clase que añadiremos con JS para la sección activa */
+.section.is-active {
+    opacity: 1;
+}
+
+/* --- Layout de páginas secundarias --- */
+
+/* Contenedor principal */
+.secundaria-container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ocultar elementos de escritorio en móviles por defecto */
+.desktop-sidebar,
+.desktop-top-bar,
+.desktop-bottom-bar,
+.mobile-bottom-bar {
+    display: none;
+}
+
+/* --- Versión Móvil (por defecto) --- */
+
+/* Header superior */
+.mobile-header {
+    height: 18vh; /* 10% más baja (antes era 20vh) */
+    background-color: var(--tile-color-3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5vw;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    transition: transform 0.3s ease;
+}
+
+.mobile-header.hide {
+    transform: translateY(-100%);
+}
+
+.header-logo-link {
+    display: inline-block;
+    height: 60%;
+}
+
+.header-logo {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+}
+
+.header-title {
+    color: var(--text-color);
+    font-size: clamp(1.2rem, 4vw, 1.8rem);
+    font-weight: 300;
+}
+
+/* Contenido principal (móvil) */
+.content {
+    flex: 1;
+    background-color: var(--bg-color);
+    padding: 5vw;
+    overflow-y: auto;
+}
+
+.content-wrapper {
+    width: 100%;
+}
+
+.content-text {
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    line-height: 1.6;
+    color: var(--text-color);
+    margin-bottom: 2vh;
+}
+
+/* Barra inferior para móvil (idéntica a la de escritorio) */
+.mobile-bottom-bar {
+    height: 0.3em;
+    background-color: var(--tile-color-1);
+    width: 70%;
+    align-self: center;
+    margin-bottom: 2vh;
+}
+
+/* Logo flotante */
+.floating-logo {
+    position: fixed;
+    top: 2vh;
+    left: 2vw;
+    width: 44px;
+    height: 44px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    cursor: pointer;
+}
+
+.floating-logo.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.floating-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Sidebar navigation */
+.sidebar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.sidebar-nav li {
+    margin-bottom: 2vh;
+}
+
+.sidebar-nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: clamp(0.8rem, 1.2vw, 1rem);
+    font-weight: 300;
+    display: block;
+    padding: 1vh 0;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+}
+
+.sidebar-nav a:hover {
+    color: var(--tile-color-3);
+    text-decoration: underline;
+}
+
+.sidebar-nav a:focus {
+    outline: 2px solid var(--tile-color-3);
+    outline-offset: 2px;
+}
+
+/* --- Versión Escritorio --- */
+@media (min-width: 768px) {
+    .carousel {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+        grid-template-rows: repeat(2, 1fr); /* 2 filas */
+        gap: 2vw; /* Espacio entre tiles */
+        width: 90vw;
+        height: 80vh;
+        margin: 5vh auto; /* Centrado vertical y horizontal */
+        overflow: visible;
+        scroll-snap-type: none;
+        padding: 2vh 2vw;
+    }
+
+    .section {
+        display: contents; /* Rompe el contenedor section y libera los tiles */
+        opacity: 1; /* Todas las secciones visibles */
+        height: auto;
+        padding: 0;
+        gap: 0;
+    }
+
+    .section.is-active {
+        opacity: 1;
+    }
+
+    /* Ocultar elementos de móvil en escritorio */
+    .mobile-header,
+    .mobile-bottom-bar,
+    .floating-logo {
+        display: none;
+    }
+
+    /* Mostrar elementos de escritorio */
+    .desktop-sidebar,
+    .desktop-top-bar,
+    .desktop-bottom-bar {
+        display: flex;
+    }
+
+    .secundaria-container {
+        flex-direction: row;
+    }
+
+    /* Sidebar izquierdo */
+    .desktop-sidebar {
+        width: 200px;
+        background-color: var(--tile-color-3);
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        flex-direction: column;
+        align-items: center;
+        padding: 3vh 0;
+        z-index: 100;
+    }
+
+    .sidebar-logo {
+        width: 80%;
+        height: auto;
+        max-width: 120px;
+        margin-bottom: 4vh;
+        object-fit: contain;
+    }
+
+    /* Contenido principal (ajustado al sidebar) */
+    .content {
+        margin-left: 200px;
+        width: calc(100% - 200px);
+        min-height: 100vh;
+        background-color: var(--bg-color);
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+    }
+
+    .content-wrapper {
+        flex: 1;
+        padding: 3vh 5vw;
+        overflow-y: auto;
+    }
+
+    /* Barras superior e inferior */
+    .desktop-top-bar,
+    .desktop-bottom-bar {
+        height: 0.3em;
+        background-color: var(--tile-color-1);
+        width: 70%;
+        align-self: left;
+    }
+
+    .desktop-top-bar {
+        order: -1; /* Arriba del contenido */
+    }
+
+    .desktop-bottom-bar {
+        order: 1; /* Abajo del contenido */
+    }
+
+    /* Ajuste de texto en escritorio */
+    .content-text {
+        font-size: clamp(1rem, 1.5vw, 1.2rem);
+        font-weight: 300;
+    }
+}

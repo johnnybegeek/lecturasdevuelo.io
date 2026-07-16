@@ -1,0 +1,8 @@
+/* Archivo blog.css: Estilos específicos para el blog */
+
+/* Importa los módulos base */
+@import url("base.css");
+@import url("layout.css");
+@import url("tiles.css");
+
+/* Añadir estilos específicos del blog aquí cuando sean necesarios */
