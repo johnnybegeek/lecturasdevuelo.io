@@ -4,35 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cosmos Manager</title>
-    <link rel="stylesheet" href="../../../assets/css/base.css">
-    <link rel="stylesheet" href="cosmos.css">
+    <link rel="stylesheet" href="/assets/css/base.css">
+    <link rel="stylesheet" href="/assets/css/secundaria.css">
+    <link rel="stylesheet" href="/juegos/wb_op/cosmos.css">
 </head>
 <body>
-    <a href="#main-content" class="skip-link">Saltar al contenido</a>
     
     <!-- Header móvil -->
-    <header class="mobile-header" id="mobileHeader">
-        <a href="../../index.html" class="header-logo-link" aria-label="Ir a la página principal">
-            <img src="../../../assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="header-logo" loading="lazy">
-        </a>
-        <h1 class="header-title">Cosmos Manager</h1>
-    </header>
+        <div id="mobileHeaderContainer">
+            <header class="mobile-header" id="mobileHeader">
+                <a href="/index.html" class="header-logo-link" aria-label="Ir a la página principal">
+                    <img src="/assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="header-logo" loading="lazy">
+                </a>
+                <h1 class="header-title">Cosmos Manager</h1>
+            </header>
+        </div>
 
-    <!-- Sidebar escritorio -->
-    <aside class="desktop-sidebar" aria-label="Navegación principal">
-        <a href="../../index.html"><img src="../../../assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="sidebar-logo" loading="lazy"></a>
-        <nav>
-            <ul class="sidebar-nav">
-                <li><a href="../../blog/">blog</a></li>
-                <li><a href="../../juegos/">juegos</a></li>
-                <li><a href="../../ventanilla/">ventanilla</a></li>
-                <li><a href="../../temas/">temas</a></li>
-                <li><a href="../../recursos/">recursos</a></li>
-                <hr>
-                <li><a href="../../who/">who</a></li>
-            </ul>
-        </nav>
-    </aside>
+
+        <!-- Sidebar escritorio - Contenido de respaldo estático -->
+        <div id="sidebarContainer">
+            <aside class="desktop-sidebar" aria-label="Navegación principal">
+                <a href="/index.html"><img src="/assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="sidebar-logo" loading="lazy"></a>
+                <nav>
+                    <ul class="sidebar-nav">
+                        <li><a href="/blog/">blog</a></li>
+                        <li><a href="/juegos/">juegos</a></li>
+                        <li><a href="/ventanilla/">ventanilla</a></li>
+                        <li><a href="/temas/">temas</a></li>
+                        <li><a href="/recursos/">recursos</a></li>
+                        <hr>
+                        <li><a href="/who/">who</a></li>
+                    </ul>
+                </nav>
+            </aside>
+        </div>
 
     <!-- Contenido principal -->
     <main class="content">
@@ -71,5 +76,11 @@
     <div class="toast-container" id="toastContainer" aria-live="polite"></div>
 
     <script src="cosmos.js"></script>
+
+    <!-- Script para cargar componentes comunes con fallback estático -->
+    <script src="/assets/js/common-components.js"></script>
+    <script src="/assets/js/secundaria.js"></script>
+
+
 </body>
 </html>

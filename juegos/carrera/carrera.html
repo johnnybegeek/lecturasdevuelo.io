@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrera Roguelike - Lecturas de Vuelo</title>
-    <link rel="stylesheet" href="../../assets/css/estilo.css">
+    <link rel="stylesheet" href="/assets/css/base.css">
+    <link rel="stylesheet" href="/assets/css/secundaria.css">
     <style>
         /* Estilos específicos para el juego Carrera */
         .game-container {
@@ -335,28 +336,34 @@
     </style>
 </head>
 <body>
-    <!-- Cabecera con logotipo y título -->
-    <div class="logo-header">
-        <a href="/index.html" class="img-link"><img src="../../assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="logo-img"></a>
-        <h1>Carrera Roguelike</h1>
-    </div>
-    <p>Lecturas de vuelo: Artículos a baja altitud</p>
+    <div class="secundaria-container">
+        <!-- Header móvil - Contenido de respaldo estático -->
+        <div id="mobileHeaderContainer">
+            <header class="mobile-header" id="mobileHeader">
+                <a href="/index.html" class="header-logo-link" aria-label="Ir a la página principal">
+                    <img src="/assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="header-logo" loading="lazy">
+                </a>
+                <h1 class="header-title" id="headerTitle">Carrera roguelike</h1>
+            </header>
+        </div>
 
-    <!-- Barra de navegación superior fija -->
-    <header class="header-fijo">
-        <nav class="menu-principal">
-            <ul>
-                <li><a href=/blog/">Blog</a></li>
-                <li><a href=/ventanilla/">ventanilla</a></li>
-                <li><a href=/recursos/">Recursos</a></li>
-                <li><a href=/temas/">Temas</a></li>
-                <li><a href=/who.html">Who</a></li>
-            </ul>
-            <button class="menu-toggle" aria-label="Abrir menú">☰</button>
-            <button id="theme-toggle" aria-label="Alternar entre modo día y noche" aria-pressed="false"><span aria-hidden="true">🌙</span></button>
-        </nav>
-    </header>
-
+        <!-- Sidebar escritorio - Contenido de respaldo estático -->
+        <div id="sidebarContainer">
+            <aside class="desktop-sidebar" aria-label="Navegación principal">
+                <a href="/index.html"><img src="/assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="sidebar-logo" loading="lazy"></a>
+                <nav>
+                    <ul class="sidebar-nav">
+                        <li><a href="/blog/">blog</a></li>
+                        <li><a href="/juegos/">juegos</a></li>
+                        <li><a href="/ventanilla/">ventanilla</a></li>
+                        <li><a href="/temas/">temas</a></li>
+                        <li><a href="/recursos/">recursos</a></li>
+                        <hr>
+                        <li><a href="/who/">who</a></li>
+                    </ul>
+                </nav>
+            </aside>
+        </div>
     <!-- Contenido principal -->
     <main>
         <!-- Descripción del juego -->

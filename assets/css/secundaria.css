@@ -221,5 +221,6 @@
     /* Ajuste de texto en escritorio */
     .content-text {
         font-size: clamp(1rem, 1.5vw, 1.2rem);
+        font-weight: 300;
     }
 }
