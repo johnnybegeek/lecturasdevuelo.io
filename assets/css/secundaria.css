@@ -6,3 +6,49 @@
 
 /* Estilos específicos de páginas secundarias (si los hay) */
 /* Todo el contenido de layout ha sido movido a layout.css */
+
+/* Aplica estilo de content-text a todos los párrafos y listas en páginas secundarias */
+/* Esto unifica el estilo de texto en todas las páginas que usan secundaria.css */
+.secundaria-container p,
+.secundaria-container li {
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    line-height: 1.6;
+    color: var(--text-color);
+    margin-bottom: 2vh;
+}
+
+/* Estilos para imágenes responsivas en páginas secundarias */
+.secundaria-container img,
+.responsive-img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Estilos para figure y figcaption (centrados siempre) */
+.secundaria-container figure {
+    text-align: center;
+    margin: 1.5em 0;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.secundaria-container figcaption {
+    font-size: 0.85em;
+    color: var(--text-color);
+    opacity: 0.8;
+    text-align: center;
+    margin-top: 0.5em;
+    display: block;
+}
+
+/* En móvil, limitar el tamaño de las imágenes para que no ocupen toda la pantalla */
+@media (max-width: 767px) {
+    .secundaria-container img,
+    .responsive-img {
+        max-width: 90%;
+        margin: 1em auto;
+    }
+}
