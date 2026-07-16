@@ -1,0 +1,22 @@
+/* Archivo home.css: Estilos específicos para la página principal (home) */
+
+/* Importa los módulos base */
+@import url("base.css");
+@import url("layout.css");
+@import url("tiles.css");
+
+/* --- Estilos específicos de home --- */
+
+/* Ocultar elementos del modo día/noche (ya no se usa en home) */
+#theme-toggle,
+.menu-toggle,
+.header-fijo {
+    display: none !important;
+}
+
+/* Ajustes específicos para body/html en escritorio (evita scroll vertical nativo en la raíz) */
+@media (min-width: 768px) {
+    body, html {
+        overflow: hidden;
+    }
+}
