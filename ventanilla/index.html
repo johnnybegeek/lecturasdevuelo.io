@@ -12,28 +12,10 @@
 <body>
     <div class="ventanilla-container">
         <!-- Header móvil -->
-        <header class="mobile-header" id="mobileHeader">
-            <a href="../index.html" class="header-logo-link" aria-label="Ir a la página principal">
-                <img src="../assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="header-logo" loading="lazy">
-            </a>
-            <h1 class="header-title">Ventanilla</h1>
-        </header>
+        <div id="mobileHeaderContainer" data-include="/includes/mobile-header.html"></div>
 
         <!-- Sidebar escritorio -->
-        <aside class="desktop-sidebar" aria-label="Navegación principal">
-            <a href="../index.html"><img src="../assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="sidebar-logo" loading="lazy"></a>
-            <nav>
-                <ul class="sidebar-nav">
-                    <li><a href="../blog/">blog</a></li>
-                    <li><a href="../juegos/">juegos</a></li>
-                    <li><a href="../ventanilla/">ventanilla</a></li>
-                    <li><a href="../temas/">temas</a></li>
-                    <li><a href="../recursos/">recursos</a></li>
-                    <hr>
-                    <li><a href="../who/">who</a></li>
-                </ul>
-            </nav>
-        </aside>
+        <div id="sidebarContainer" data-include="/includes/desktop-sidebar.html"></div>
 
         <!-- Carrusel principal -->
         <main class="ventanilla-carousel" id="ventanillaCarousel">
@@ -59,11 +41,11 @@
         </div>
 
         <!-- Logo flotante para móvil -->
-        <a href="#" class="floating-logo" id="floatingLogo" aria-label="Volver al inicio">
-            <img src="../assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" loading="lazy">
-        </a>
+        <div id="floatingLogoContainer" data-include="/includes/floating-logo.html"></div>
     </div>
 
+    <!-- Script para cargar componentes comunes -->
+    <script src="/assets/js/common-components.js"></script>
     <script src="../assets/js/secundaria.js"></script>
     <script src="../assets/js/ventanilla.js"></script>
 </body>

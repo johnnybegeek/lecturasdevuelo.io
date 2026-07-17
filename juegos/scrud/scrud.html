@@ -152,33 +152,11 @@
 
 <body>
     <div class="secundaria-container">
-        <!-- Header móvil - Contenido de respaldo estático -->
-        <div id="mobileHeaderContainer">
-            <header class="mobile-header" id="mobileHeader">
-                <a href="/index.html" class="header-logo-link" aria-label="Ir a la página principal">
-                    <img src="/assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="header-logo" loading="lazy">
-                </a>
-                <h1 class="header-title" id="headerTitle">Página Secundaria</h1>
-            </header>
-        </div>
+        <!-- Header móvil -->
+        <div id="mobileHeaderContainer" data-include="/includes/mobile-header.html"></div>
 
-        <!-- Sidebar escritorio - Contenido de respaldo estático -->
-        <div id="sidebarContainer">
-            <aside class="desktop-sidebar" aria-label="Navegación principal">
-                <a href="/index.html"><img src="/assets/images/logoblog.avif" alt="Logotipo de Lecturas de Vuelo" class="sidebar-logo" loading="lazy"></a>
-                <nav>
-                    <ul class="sidebar-nav">
-                        <li><a href="/blog/">blog</a></li>
-                        <li><a href="/juegos/">juegos</a></li>
-                        <li><a href="/ventanilla/">ventanilla</a></li>
-                        <li><a href="/temas/">temas</a></li>
-                        <li><a href="/recursos/">recursos</a></li>
-                        <hr>
-                        <li><a href="/who/">who</a></li>
-                    </ul>
-                </nav>
-            </aside>
-        </div>
+        <!-- Sidebar escritorio -->
+        <div id="sidebarContainer" data-include="/includes/desktop-sidebar.html"></div>
     <!-- callout para resumir la sección -->
     <div class="callout">
         <p> S.C.R.U.D. (Simple Combat Resolution Using Dice) - Resuelve combates rápidamente tirando dados.
@@ -445,5 +423,7 @@
             });
         }
     </script>
+    <!-- Script para cargar componentes comunes -->
+    <script src="/assets/js/common-components.js"></script>
 </body>
 </html>
