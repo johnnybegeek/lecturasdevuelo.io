@@ -1,26 +1,27 @@
 // Efecto de scroll para móvil
 // Funciona tanto para scroll en window (páginas normales) como en contenedores (ventanilla)
-// Usa polling para esperar a que el floatingLogo se cargue (por si está en un include)
+// Usa polling para esperar a que los includes se carguen (mobileHeader y floatingLogo)
 document.addEventListener('DOMContentLoaded', function() {
-    const mobileHeader = document.getElementById('mobileHeader');
     const scrollThreshold = 50; // píxeles de scroll antes de ocultar el header
+    let retryCount = 0;
+    const maxRetries = 100; // Máximo 10 segundos de espera (100 * 100ms)
 
     // Detectar si estamos en la ventanilla (tiene carrusel)
     const carousel = document.getElementById('ventanillaCarousel');
     const isVentanilla = carousel !== null;
 
-    // Verificar que mobileHeader existe
-    if (!mobileHeader) {
-        console.error('secundaria.js: No se encontró mobileHeader');
-        return;
-    }
-
-    // Función para inicializar cuando el floatingLogo esté disponible
+    // Función para inicializar cuando TODOS los elementos necesarios estén disponibles
     function initWhenReady() {
+        retryCount++;
+        const mobileHeader = document.getElementById('mobileHeader');
         const floatingLogo = document.getElementById('floatingLogo');
 
-        if (!floatingLogo) {
-            // El logo aún no se ha cargado (está en un include que se carga con common-components.js)
+        if (!mobileHeader || !floatingLogo) {
+            if (retryCount >= maxRetries) {
+                console.error('secundaria.js: No se encontraron mobileHeader o floatingLogo después de ' + maxRetries + ' intentos');
+                return;
+            }
+            // Los elementos aún no se han cargado (están en includes que se cargan con common-components.js)
             // Intentar de nuevo en 100ms
             setTimeout(initWhenReady, 100);
             return;
@@ -88,6 +89,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Empezar a comprobar si el floatingLogo existe
+    // Empezar a comprobar si los elementos existen
     initWhenReady();
 });
