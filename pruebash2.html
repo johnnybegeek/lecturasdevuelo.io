@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba Estilos H2 - Lecturas de Vuelo</title>
+    <meta name="description" content="Página de prueba para estilos de H2">
+    <link rel="stylesheet" href="/assets/css/base.css">
+    <link rel="stylesheet" href="/assets/css/secundaria.css">
+    <style>
+        /* Estilo 13: Degradado texto + barra degradada */
+        .h2-estilo-13 {
+            position: relative;
+            padding-left: 1.2em;
+            background: linear-gradient(to left, var(--text-color), var(--tile-color-1));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+            margin-bottom: 1.5em;
+            font-size: clamp(1.3rem, 3.5vw, 1.6rem);
+        }
+
+        .h2-estilo-13::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--tile-color-1), var(--text-color));
+        }
+
+        /* Estilo para la barra lateral - efecto REBOTE en subrayado */
+        .sidebar-nav a {
+            position: relative;
+            text-decoration: none !important;
+            color: var(--text-color) !important;
+            font-size: clamp(0.8rem, 1.2vw, 1rem);
+            font-weight: 300;
+            display: inline-block;
+            padding: 1vh 0;
+            white-space: nowrap;
+        }
+
+        /* Expansión: izquierda a derecha (amarillo → azul oscuro) */
+        .sidebar-nav a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, var(--tile-color-2), var(--tile-color-1));
+            z-index: 2;
+            transition: width 0.45s ease;
+        }
+
+        /* Contracción: derecha a izquierda (azul oscuro → amarillo) */
+        .sidebar-nav a::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to left, var(--tile-color-1), var(--tile-color-2));
+            z-index: 3;
+            transition: width 0.45s ease 0.45s;
+        }
+
+        .sidebar-nav a:hover::after {
+            width: 100%;
+        }
+
+        .sidebar-nav a:hover::before {
+            width: 100%;
+        }
+
+        /* Separador entre secciones */
+        .seccion-estilo {
+            margin-bottom: 4em;
+            padding: 2em;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+        }
+
+        .seccion-estilo:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="secundaria-container">
+        <!-- Header móvil -->
+        <div id="mobileHeaderContainer" data-include="/includes/mobile-header.html"></div>
+
+        <!-- Sidebar escritorio -->
+        <div id="sidebarContainer" data-include="/includes/desktop-sidebar.html"></div>
+
+        <!-- Contenido principal -->
+        <main class="content">
+            <div class="desktop-top-bar" aria-hidden="true"></div>
+            <div class="content-wrapper">
+                
+                <!-- Sección 13: Estilo Degradado texto + barra degradada -->
+                <div class="seccion-estilo">
+                    <h2 class="h2-estilo-13">Estilo 13: Degradado texto + barra degradada</h2>
+                    <p class="content-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </p>
+                    <p class="content-text">
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </p>
+                </div>
+
+            </div>
+            <div class="desktop-bottom-bar" aria-hidden="true"></div>
+        </main>
+
+        <!-- Logo flotante para móvil -->
+        <div id="floatingLogoContainer" data-include="/includes/floating-logo.html"></div>
+    </div>
+
+    <!-- Script para cargar componentes comunes -->
+    <script src="/assets/js/common-components.js"></script>
+    <script src="/assets/js/secundaria.js"></script>
+</body>
+</html>
