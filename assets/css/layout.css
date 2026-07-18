@@ -185,6 +185,17 @@
     line-height: 1.6;
     color: var(--text-color);
     margin-bottom: 2vh;
+    font-weight: 300;
+}
+
+/* Estilo para todos los párrafos y listas en páginas secundarias */
+.secundaria-container p,
+.secundaria-container li {
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    line-height: 1.6;
+    color: var(--text-color);
+    margin-bottom: 2vh;
+    font-weight: 300;
 }
 
 /* Barra inferior para móvil (idéntica a la de escritorio) */
