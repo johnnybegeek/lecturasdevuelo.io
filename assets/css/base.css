@@ -47,3 +47,27 @@ button:focus,
     white-space: nowrap !important;
     border: 0 !important;
 }
+
+/* Estilo H2 para páginas secundarias - Degradado texto + barra degradada */
+.secundaria-container h2,
+.hub-page h2 {
+    position: relative;
+    padding-left: 1.2em;
+    background: linear-gradient(to left, var(--text-color), var(--tile-color-1));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 600;
+    margin-bottom: 1.5em;
+    font-size: clamp(1.3rem, 3.5vw, 1.6rem);
+}
+
+.secundaria-container h2::before,
+.hub-page h2::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--tile-color-1), var(--text-color));
+}
