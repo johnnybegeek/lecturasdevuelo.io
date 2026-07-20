@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Juego de carreras por turnos simultáneos inspirado en La liebre y la Tortuga - Lecturas de Vuelo">
     <title>Carrera Roguelike - Lecturas de Vuelo</title>
     <link rel="stylesheet" href="/assets/css/base.css">
     <link rel="stylesheet" href="/assets/css/secundaria.css">
@@ -342,128 +343,133 @@
 
         <!-- Sidebar escritorio -->
         <div id="sidebarContainer" data-include="/includes/desktop-sidebar.html"></div>
-    <!-- Contenido principal -->
-    <main>
-        <!-- Descripción del juego -->
-        <div class="game-description">
-            <h2>Juego de Carreras</h2>
-            <p>
-                <strong>Carrera</strong> es un juego de carreras por turnos simultáneos con mecánicas inspiradas en el juego de mesa "La liebre y la Tortuga", de David Parlett.
-                Hasta 6 jugadores compiten en un tablero de 65 casillas (del 64 al 0) para alcanzar la meta.
-            </p>
-            <p>
-                Cada jugador introduce su movimiento (positivo para avanzar, negativo para retroceder) y todos se mueven al mismo tiempo.
-                Gana el que antes llega a la meta con menos gasto de zanahorias. 
 
-                Versión Beta: falta implementar el cálculo correcto de la puntuación.
-            </p>
-        </div>
+        <!-- Contenido principal -->
+        <main class="content">
+            <div class="desktop-top-bar" aria-hidden="true"></div>
+            <div class="content-wrapper">
+            <!-- Descripción del juego -->
+            <div class="game-description">
+                <h2>Juego de Carreras</h2>
+                <p class="content-text">
+                    <strong>Carrera</strong> es un juego de carreras por turnos simultáneos con mecánicas inspiradas en el juego de mesa "La liebre y la Tortuga", de David Parlett.
+                    Hasta 6 jugadores compiten en un tablero de 65 casillas (del 64 al 0) para alcanzar la meta.
+                </p>
+                <p class="content-text">
+                    Cada jugador introduce su movimiento (positivo para avanzar, negativo para retroceder) y todos se mueven al mismo tiempo.
+                    Gana el que antes llega a la meta con menos gasto de zanahorias. 
 
-        <!-- Sección de entrada de movimientos -->
-        <div class="input-section">
-            <div class="player-inputs">
-                <div class="player-input">
-                    <label class="player-label">
+                    Versión Beta: falta implementar el cálculo correcto de la puntuación.
+                </p>
+            </div>
+
+            <!-- Sección de entrada de movimientos -->
+            <div class="input-section">
+                <div class="player-inputs">
+                    <div class="player-input">
+                        <label class="player-label">
+                            <span class="player-color" style="background-color: #00ff00;"></span>
+                            Jugador 1
+                        </label>
+                        <input type="number" id="move-0" value="" min="-64" max="64">
+                    </div>
+                    <div class="player-input">
+                        <label class="player-label">
+                            <span class="player-color" style="background-color: #ffffff; border: 1px solid #888;"></span>
+                            Jugador 2
+                        </label>
+                        <input type="number" id="move-1" value="" min="-64" max="64">
+                    </div>
+                    <div class="player-input">
+                        <label class="player-label">
+                            <span class="player-color" style="background-color: #ffff00;"></span>
+                            Jugador 3
+                        </label>
+                        <input type="number" id="move-2" value="" min="-64" max="64">
+                    </div>
+                    <div class="player-input">
+                        <label class="player-label">
+                            <span class="player-color" style="background-color: #000000; border: 1px solid #fff;"></span>
+                            Jugador 4
+                        </label>
+                        <input type="number" id="move-3" value="" min="-64" max="64">
+                    </div>
+                    <div class="player-input">
+                        <label class="player-label">
+                            <span class="player-color" style="background-color: #0000ff;"></span>
+                            Jugador 5
+                        </label>
+                        <input type="number" id="move-4" value="" min="-64" max="64">
+                    </div>
+                    <div class="player-input">
+                        <label class="player-label">
+                            <span class="player-color" style="background-color: #ff0000;"></span>
+                            Jugador 6
+                        </label>
+                        <input type="number" id="move-5" value="" min="-64" max="64">
+                    </div>
+                </div>
+                <button id="engage">¡Vamos!</button>
+            </div>
+
+            <!-- Tablero de juego -->
+            <div class="board-container">
+                <div class="board" id="board"></div>
+            </div>
+
+            <!-- Marcadores de zanahorias -->
+            <div class="scores-section">
+                <div class="score">
+                    <div class="score-label">
                         <span class="player-color" style="background-color: #00ff00;"></span>
                         Jugador 1
-                    </label>
-                    <input type="number" id="move-0" value="" min="-64" max="64">
+                    </div>
+                    <div class="score-value" id="score-0">0</div>
+                    <div class="position-info" id="position-0">Pos: 64</div>
                 </div>
-                <div class="player-input">
-                    <label class="player-label">
+                <div class="score">
+                    <div class="score-label">
                         <span class="player-color" style="background-color: #ffffff; border: 1px solid #888;"></span>
                         Jugador 2
-                    </label>
-                    <input type="number" id="move-1" value="" min="-64" max="64">
+                    </div>
+                    <div class="score-value" id="score-1">0</div>
+                    <div class="position-info" id="position-1">Pos: 64</div>
                 </div>
-                <div class="player-input">
-                    <label class="player-label">
+                <div class="score">
+                    <div class="score-label">
                         <span class="player-color" style="background-color: #ffff00;"></span>
                         Jugador 3
-                    </label>
-                    <input type="number" id="move-2" value="" min="-64" max="64">
+                    </div>
+                    <div class="score-value" id="score-2">0</div>
+                    <div class="position-info" id="position-2">Pos: 64</div>
                 </div>
-                <div class="player-input">
-                    <label class="player-label">
+                <div class="score">
+                    <div class="score-label">
                         <span class="player-color" style="background-color: #000000; border: 1px solid #fff;"></span>
                         Jugador 4
-                    </label>
-                    <input type="number" id="move-3" value="" min="-64" max="64">
+                    </div>
+                    <div class="score-value" id="score-3">0</div>
+                    <div class="position-info" id="position-3">Pos: 64</div>
                 </div>
-                <div class="player-input">
-                    <label class="player-label">
+                <div class="score">
+                    <div class="score-label">
                         <span class="player-color" style="background-color: #0000ff;"></span>
                         Jugador 5
-                    </label>
-                    <input type="number" id="move-4" value="" min="-64" max="64">
+                    </div>
+                    <div class="score-value" id="score-4">0</div>
+                    <div class="position-info" id="position-4">Pos: 64</div>
                 </div>
-                <div class="player-input">
-                    <label class="player-label">
+                <div class="score">
+                    <div class="score-label">
                         <span class="player-color" style="background-color: #ff0000;"></span>
                         Jugador 6
-                    </label>
-                    <input type="number" id="move-5" value="" min="-64" max="64">
+                    </div>
+                    <div class="score-value" id="score-5">0</div>
+                    <div class="position-info" id="position-5">Pos: 64</div>
                 </div>
-            </div>
-            <button id="engage">¡Vamos!</button>
-        </div>
-
-        <!-- Tablero de juego -->
-        <div class="board-container">
-            <div class="board" id="board"></div>
-        </div>
-
-        <!-- Marcadores de zanahorias -->
-        <div class="scores-section">
-            <div class="score">
-                <div class="score-label">
-                    <span class="player-color" style="background-color: #00ff00;"></span>
-                    Jugador 1
-                </div>
-                <div class="score-value" id="score-0">0</div>
-                <div class="position-info" id="position-0">Pos: 64</div>
-            </div>
-            <div class="score">
-                <div class="score-label">
-                    <span class="player-color" style="background-color: #ffffff; border: 1px solid #888;"></span>
-                    Jugador 2
-                </div>
-                <div class="score-value" id="score-1">0</div>
-                <div class="position-info" id="position-1">Pos: 64</div>
-            </div>
-            <div class="score">
-                <div class="score-label">
-                    <span class="player-color" style="background-color: #ffff00;"></span>
-                    Jugador 3
-                </div>
-                <div class="score-value" id="score-2">0</div>
-                <div class="position-info" id="position-2">Pos: 64</div>
-            </div>
-            <div class="score">
-                <div class="score-label">
-                    <span class="player-color" style="background-color: #000000; border: 1px solid #fff;"></span>
-                    Jugador 4
-                </div>
-                <div class="score-value" id="score-3">0</div>
-                <div class="position-info" id="position-3">Pos: 64</div>
-            </div>
-            <div class="score">
-                <div class="score-label">
-                    <span class="player-color" style="background-color: #0000ff;"></span>
-                    Jugador 5
-                </div>
-                <div class="score-value" id="score-4">0</div>
-                <div class="position-info" id="position-4">Pos: 64</div>
-            </div>
-            <div class="score">
-                <div class="score-label">
-                    <span class="player-color" style="background-color: #ff0000;"></span>
-                    Jugador 6
-                </div>
-                <div class="score-value" id="score-5">0</div>
-                <div class="position-info" id="position-5">Pos: 64</div>
             </div>
         </div>
+        <div class="desktop-bottom-bar" aria-hidden="true"></div>
     </main>
 
     <!-- Logo flotante para móvil -->
