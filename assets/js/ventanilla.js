@@ -1,29 +1,21 @@
 /**
  * Lógica del visor de imágenes (Ventanilla)
- * - Carga imágenes de la carpeta blog/paytowin050626/
+ * - Carga imágenes dinámicamente de /ventanilla/ventana/images.json
  * - Carrusel vertical con efecto "intuición" (usando scroll-snap y CSS puro)
  * - Modal para ver imágenes ampliadas
  * - Barra de miniaturas para escritorio y móvil
  * NOTA: El comportamiento del header y logo flotante se maneja en secundaria.js
  */
 
-// Lista de imágenes en la carpeta blog/paytowin050626/
-// Las rutas son relativas a la raíz del sitio (usando ../ para subir desde /ventanilla/)
-const images = [
-    { src: '../blog/paytowin050626/blacklotus.webp', alt: 'Black Lotus' },
-    { src: '../blog/paytowin050626/ghostintheshell.webp', alt: 'Ghost in the Shell' },
-    { src: '../blog/paytowin050626/kickstarter.webp', alt: 'Kickstarter' },
-    { src: '../blog/paytowin050626/travian.webp', alt: 'Travian' }
-];
-
 // Variables globales
+let images = [];
 let currentImageIndex = 0;
 let isModalOpen = false;
 let touchStartX = 0;
 let touchEndX = 0;
 
 // Elementos DOM
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const carousel = document.getElementById('ventanillaCarousel');
     const thumbnailBar = document.getElementById('thumbnailBar');
     const mobileThumbnailBar = document.getElementById('mobileThumbnailBar');
@@ -32,6 +24,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalClose = document.getElementById('modalClose');
     const modalPrev = document.getElementById('modalPrev');
     const modalNext = document.getElementById('modalNext');
+
+    // Cargar imágenes dinámicamente desde el JSON
+    try {
+        const response = await fetch('/ventanilla/ventana/images.json');
+        if (response.ok) {
+            images = await response.json();
+        } else {
+            console.error('No se pudo cargar images.json, usando imágenes por defecto');
+            // Fallback: usar imágenes hardcodeadas si el JSON no existe
+            images = [
+                { src: '/ventanilla/ventana/Undercover.jpeg', alt: 'Undercover', name: 'Undercover' },
+                { src: '/ventanilla/ventana/Fuji en el mar.jpeg', alt: 'Fuji en el mar', name: 'Fuji en el mar' },
+                { src: '/ventanilla/ventana/Hola.jpeg', alt: 'Hola', name: 'Hola' },
+                { src: '/ventanilla/ventana/Island.jpeg', alt: 'Island', name: 'Island' },
+                { src: '/ventanilla/ventana/Relevo.JPG', alt: 'Relevo', name: 'Relevo' },
+                { src: '/ventanilla/ventana/Camino erroróneo.jpeg', alt: 'Camino erroróneo', name: 'Camino erroróneo' }
+            ];
+        }
+    } catch (error) {
+        console.error('Error al cargar images.json:', error);
+        // Fallback: usar imágenes hardcodeadas
+        images = [
+            { src: '/ventanilla/ventana/Undercover.jpeg', alt: 'Undercover', name: 'Undercover' },
+            { src: '/ventanilla/ventana/Fuji en el mar.jpeg', alt: 'Fuji en el mar', name: 'Fuji en el mar' },
+            { src: '/ventanilla/ventana/Hola.jpeg', alt: 'Hola', name: 'Hola' },
+            { src: '/ventanilla/ventana/Island.jpeg', alt: 'Island', name: 'Island' },
+            { src: '/ventanilla/ventana/Relevo.JPG', alt: 'Relevo', name: 'Relevo' },
+            { src: '/ventanilla/ventana/Camino erroróneo.jpeg', alt: 'Camino erroróneo', name: 'Camino erroróneo' }
+        ];
+    }
 
     // Inicializar el carrusel
     initCarousel(carousel, thumbnailBar, mobileThumbnailBar);
@@ -68,6 +90,15 @@ function initCarousel(carousel, thumbnailBar, mobileThumbnailBar) {
         img.addEventListener('click', () => openModal(index));
 
         imageContainer.appendChild(img);
+
+        // Añadir el nombre de la imagen como pie de foto
+        if (image.name) {
+            const caption = document.createElement('div');
+            caption.className = 'image-caption';
+            caption.textContent = image.name;
+            imageContainer.appendChild(caption);
+        }
+
         carousel.appendChild(imageContainer);
 
         // Crear miniatura para la barra lateral (escritorio)
