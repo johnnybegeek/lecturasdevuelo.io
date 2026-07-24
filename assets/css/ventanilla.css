@@ -24,7 +24,7 @@
     -webkit-overflow-scrolling: touch; /* Suaviza el scroll en iOS */
     
     /* Padding para el efecto "intuición": deja espacio arriba y abajo */
-    padding: 10vh 0;
+    padding: 5vh 0;
     
     /* Ocultar barra de scroll para un look limpio */
     scrollbar-width: none; /* Firefox */
@@ -39,10 +39,10 @@
 .ventanilla-image-container {
     position: relative;
     width: 100%;
-    height: 80vh; /* Las imágenes ocupan el 80% del viewport */
+    height: 72vh; /* Ajustado para menos espacio vertical */
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     scroll-snap-align: center;
     overflow: hidden;
 }
@@ -134,22 +134,41 @@
 /* Pie de foto con el nombre de la imagen */
 .image-caption {
     position: absolute;
-    bottom: 10px;
+    top: 15px;
     left: 50%;
     transform: translateX(-50%);
     background-color: rgba(0, 0, 0, 0.7);
     color: white;
-    padding: 8px 16px;
+    padding: 3px 8px;
     border-radius: 20px;
     font-size: 0.9rem;
     font-weight: 300;
     text-align: center;
-    max-width: 80%;
+    max-width: 60%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     pointer-events: none;
 }
+
+/* Separador horizontal entre imágenes */
+.ventanilla-image-container:not(:last-child) {
+    margin-bottom: 8px;
+    position: relative;
+}
+
+.ventanilla-image-container:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50vw;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+
 
 /* Estilos específicos para miniaturas móviles */
 .mobile-thumbnail-bar .thumbnail-item {
