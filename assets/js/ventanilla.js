@@ -34,24 +34,24 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.error('No se pudo cargar images.json, usando imágenes por defecto');
             // Fallback: usar imágenes hardcodeadas si el JSON no existe
             images = [
-                { src: '/ventanilla/ventana/Undercover.jpeg', alt: 'Undercover', name: 'Undercover' },
-                { src: '/ventanilla/ventana/Fuji en el mar.jpeg', alt: 'Fuji en el mar', name: 'Fuji en el mar' },
-                { src: '/ventanilla/ventana/Hola.jpeg', alt: 'Hola', name: 'Hola' },
-                { src: '/ventanilla/ventana/Island.jpeg', alt: 'Island', name: 'Island' },
-                { src: '/ventanilla/ventana/Relevo.JPG', alt: 'Relevo', name: 'Relevo' },
-                { src: '/ventanilla/ventana/Camino erroróneo.jpeg', alt: 'Camino erroróneo', name: 'Camino erroróneo' }
+                { src: '/ventanilla/ventana/Undercover.avif', alt: 'Undercover', name: 'Undercover' },
+                { src: '/ventanilla/ventana/Fuji en el mar.avif', alt: 'Fuji en el mar', name: 'Fuji en el mar' },
+                { src: '/ventanilla/ventana/Hola.avif', alt: 'Hola', name: 'Hola' },
+                { src: '/ventanilla/ventana/Island.avif', alt: 'Island', name: 'Island' },
+                { src: '/ventanilla/ventana/Relevo.avif', alt: 'Relevo', name: 'Relevo' },
+                { src: '/ventanilla/ventana/Camino erroneo.avif', alt: 'Camino erróneo', name: 'Camino erróneo' }
             ];
         }
     } catch (error) {
         console.error('Error al cargar images.json:', error);
         // Fallback: usar imágenes hardcodeadas
         images = [
-            { src: '/ventanilla/ventana/Undercover.jpeg', alt: 'Undercover', name: 'Undercover' },
-            { src: '/ventanilla/ventana/Fuji en el mar.jpeg', alt: 'Fuji en el mar', name: 'Fuji en el mar' },
-            { src: '/ventanilla/ventana/Hola.jpeg', alt: 'Hola', name: 'Hola' },
-            { src: '/ventanilla/ventana/Island.jpeg', alt: 'Island', name: 'Island' },
-            { src: '/ventanilla/ventana/Relevo.JPG', alt: 'Relevo', name: 'Relevo' },
-            { src: '/ventanilla/ventana/Camino erroróneo.jpeg', alt: 'Camino erroróneo', name: 'Camino erroróneo' }
+            { src: '/ventanilla/ventana/Undercover.avif', alt: 'Undercover', name: 'Undercover' },
+            { src: '/ventanilla/ventana/Fuji en el mar.avif', alt: 'Fuji en el mar', name: 'Fuji en el mar' },
+            { src: '/ventanilla/ventana/Hola.avif', alt: 'Hola', name: 'Hola' },
+            { src: '/ventanilla/ventana/Island.avif', alt: 'Island', name: 'Island' },
+            { src: '/ventanilla/ventana/Relevo.avif', alt: 'Relevo', name: 'Relevo' },
+            { src: '/ventanilla/ventana/Camino erroneo.avif', alt: 'Camino erróneo', name: 'Camino erróneo' }
         ];
     }
 

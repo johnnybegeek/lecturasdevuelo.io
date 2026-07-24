@@ -1,31 +1,32 @@
 [
-  {
-    "src": "/ventanilla/ventana/Camino erroneo.jpeg",
-    "alt": "Camino erroróneo",
-    "name": "Camino erroróneo"
-  },
-  {
-    "src": "/ventanilla/ventana/Fuji en el mar.jpeg",
-    "alt": "Fuji en el mar",
-    "name": "Fuji en el mar"
-  },
-  {
-    "src": "/ventanilla/ventana/Hola.jpeg",
+ {
+    "src": "/ventanilla/ventana/Hola.avif",
     "alt": "Hola",
     "name": "Hola"
   },
   {
-    "src": "/ventanilla/ventana/Island.jpeg",
+    "src": "/ventanilla/ventana/Camino erroneo.avif",
+    "alt": "Camino erroróneo",
+    "name": "Camino erroróneo"
+  },
+  {
+    "src": "/ventanilla/ventana/Fuji en el mar.avif",
+    "alt": "Fuji en el mar",
+    "name": "Fuji en el mar"
+  },
+
+  {
+    "src": "/ventanilla/ventana/Island.avif",
     "alt": "Island",
     "name": "Island"
   },
   {
-    "src": "/ventanilla/ventana/Relevo.JPG",
+    "src": "/ventanilla/ventana/Relevo.avif",
     "alt": "Relevo",
     "name": "Relevo"
   },
   {
-    "src": "/ventanilla/ventana/Undercover.jpeg",
+    "src": "/ventanilla/ventana/Undercover.avif",
     "alt": "Undercover",
     "name": "Undercover"
   }
