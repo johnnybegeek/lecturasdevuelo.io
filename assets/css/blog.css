@@ -6,3 +6,18 @@
 @import url("tiles.css");
 
 /* Añadir estilos específicos del blog aquí cuando sean necesarios */
+
+/* Estilo para citas en formato de poesía */
+blockquote.poetry {
+    font-style: italic;
+    text-align: center;
+    font-family: Georgia, "Times New Roman", serif;
+    margin: 1.5em auto;
+    line-height: 1.6;
+    color: var(--text-color);
+    opacity: 0.9;
+    max-width: 80%;
+    padding: 0.5em 1em;
+    border-left: 3px solid var(--tile-color-1);
+    background-color: rgba(255, 255, 255, 0.3);
+}
