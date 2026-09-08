@@ -109,12 +109,12 @@
     border-radius: 20px;
 }
 
-/* Texto de las tiles alineado a la derecha y abajo */
+/* Texto de las tiles: centrado vertical, alineado a la derecha */
 .tile-text {
     margin-top: auto;
-    margin-bottom: 15px; /* Espacio inferior */
+    margin-bottom: auto;
     margin-left: auto;
-    margin-right: 15px; /* Espacio derecho */
+    margin-right: 15px;
     text-align: right;
 }
 
