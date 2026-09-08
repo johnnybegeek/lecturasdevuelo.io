@@ -52,22 +52,35 @@ button:focus,
 .secundaria-container h2,
 .hub-page h2 {
     position: relative;
-    padding-left: 1.2em;
-    background: linear-gradient(to left, var(--text-color), var(--tile-color-1));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 600;
+    display: inline-block;
+    padding: 0.2em 0.5em 0.2em 1.6em;
+    border-radius: 0.5em;
     margin-bottom: 1.5em;
+    font-weight: 600;
     font-size: clamp(1.3rem, 3.5vw, 1.6rem);
+    background-color: #D8D4CE;
 }
 
+/* Degradado EN EL TEXTO (span) */
+.secundaria-container h2 span,
+.hub-page h2 span {
+    background: linear-gradient(to right, var(--tile-color-1), var(--tile-color-3));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #8B9FCC;
+}
+
+/* Barra vertical izquierda con degradado */
 .secundaria-container h2::before,
 .hub-page h2::before {
     content: "";
     position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
+    left: 0.4em;
+    top: 0.2em;
+    bottom: 0.2em;
     width: 4px;
-    background: linear-gradient(to bottom, var(--tile-color-1), var(--text-color));
+    background: linear-gradient(to bottom, var(--tile-color-1), var(--tile-color-3));
+    border-radius: 0.5em 0 0 0.5em;
+    z-index: 1;
 }
