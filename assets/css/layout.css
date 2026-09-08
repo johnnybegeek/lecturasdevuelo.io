@@ -184,6 +184,7 @@
     color: var(--text-color);
     font-size: clamp(1.2rem, 4vw, 1.8rem);
     font-weight: 300;
+    text-align: right;
 }
 
 /* Contenido principal (móvil) */

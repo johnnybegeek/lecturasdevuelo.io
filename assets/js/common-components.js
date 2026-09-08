@@ -40,13 +40,21 @@
         const titleElement = document.getElementById('headerTitle');
         if (!titleElement) return;
 
-        // Extraer título de la página desde <title> o meta
-        const pageTitle = document.title
-            .replace(' - Lecturas de Vuelo', '')
-            .replace('Lecturas de Vuelo - ', '');
-        
-        if (pageTitle && pageTitle !== 'Página Secundaria') {
-            titleElement.textContent = pageTitle;
+        // Buscar el primer h1 o h2 en el contenido para usar como título
+        const heading = document.querySelector('.content-wrapper h1, .content-wrapper h2');
+        if (heading) {
+            titleElement.textContent = heading.textContent;
+            // Ocultar el heading original para evitar duplicación
+            heading.style.display = 'none';
+        } else {
+            // Fallback: Extraer título de la página desde <title>
+            const pageTitle = document.title
+                .replace(' - Lecturas de Vuelo', '')
+                .replace('Lecturas de Vuelo - ', '');
+            
+            if (pageTitle && pageTitle !== 'Página Secundaria') {
+                titleElement.textContent = pageTitle;
+            }
         }
     }
 
@@ -61,15 +69,15 @@
     /**
      * Inicializa la carga de componentes comunes
      */
-    function initCommonComponents() {
+    async function initCommonComponents() {
         const basePath = getBasePath();
         
         // Cargar componentes con contenido de respaldo estático
-        loadComponent('mobileHeaderContainer', basePath + 'includes/mobile-header.html');
-        loadComponent('sidebarContainer', basePath + 'includes/desktop-sidebar.html');
-        loadComponent('floatingLogoContainer', basePath + 'includes/floating-logo.html');
+        await loadComponent('mobileHeaderContainer', basePath + 'includes/mobile-header.html');
+        await loadComponent('sidebarContainer', basePath + 'includes/desktop-sidebar.html');
+        await loadComponent('floatingLogoContainer', basePath + 'includes/floating-logo.html');
 
-        // Actualizar título del header móvil según la página
+        // Actualizar título del header móvil según la página (ahora el header está cargado)
         updateHeaderTitle();
     }
 
