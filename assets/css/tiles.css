@@ -51,6 +51,16 @@
     border-radius: 12px;
 }
 
+/* Ajustes para grid 3x2 en móvil */
+@media (max-width: 767px) {
+    .tile {
+        margin: 0;
+        font-size: 2rem;
+        height: 100%;
+        width: 100%;
+    }
+}
+
 .tile:active {
     transform: scale(0.97); /* Pequeño efecto de hundimiento al pulsar (típico de WP) */
 }

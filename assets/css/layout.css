@@ -106,6 +106,24 @@
     opacity: 1;
 }
 
+/* --- Versión Móvil: Grid 3 filas x 2 columnas --- */
+@media (max-width: 767px) {
+    .carousel {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        height: 100vh;
+        width: 100vw;
+        gap: 1vh 1vw;
+        overflow: hidden;
+        scroll-snap-type: none;
+    }
+    
+    .section {
+        display: contents;
+    }
+}
+
 /* --- Layout de páginas secundarias --- */
 
 /* Contenedor principal */
