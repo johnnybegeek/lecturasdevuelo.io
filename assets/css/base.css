@@ -66,7 +66,7 @@ button:focus,
 /* Degradado EN EL TEXTO (span) */
 .secundaria-container h2 span,
 .hub-page h2 span {
-    background: linear-gradient(to right, var(--tile-color-1), #087BF5);
+    background: linear-gradient(to right, var(--tile-color-1), var(--h2bis-color-4));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
