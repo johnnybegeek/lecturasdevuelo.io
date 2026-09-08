@@ -8,6 +8,8 @@
     --tile-color-1: #0F499A;   /* Azul oscuro (para tiles) */
     --tile-color-2: #F8E7A5;   /* Amarillo claro (destacado) */
     --tile-color-3: #E6F2FF;   /* Azul claro (acento) */
+    --h2bis-color-4: #087bf5;   /* Azul medio (para h2) */
+    --h2-bg-color: #D8D4CE;    /* Fondo sólido para H2 en páginas secundarias */
     --shadow-color: rgba(0, 0, 0, 0.1); /* Sombra sutil */
     --hover-scale: 1.02; /* Escala al hacer hover */
 }
@@ -58,13 +60,13 @@ button:focus,
     margin-bottom: 1.5em;
     font-weight: 600;
     font-size: clamp(1.3rem, 3.5vw, 1.6rem);
-    background-color: #D8D4CE;
+    background-color: var(--h2-bg-color);
 }
 
 /* Degradado EN EL TEXTO (span) */
 .secundaria-container h2 span,
 .hub-page h2 span {
-    background: linear-gradient(to right, var(--tile-color-1), var(--tile-color-3));
+    background: linear-gradient(to right, var(--tile-color-1), #087BF5);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
