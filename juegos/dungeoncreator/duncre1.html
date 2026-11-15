@@ -5,23 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mazmorra aleatoria</title>
     <style>
+      /* Paleta de colores de Lecturas de Vuelo */
+      :root {
+        --bg-primary: #0F499A;    /* Azul oscuro - fondo principal */
+        --bg-secondary: #1A1A1A;  /* Negro - fondos secundarios */
+        --text-primary: #E6E4E0;  /* Gris claro - texto principal */
+        --text-secondary: #D8D4CE; /* Gris medio - texto secundario */
+        --accent-light: #E6F2FF;   /* Azul claro - acento */
+        --accent-gold: #F8E7A5;   /* Amarillo claro - acento dorado */
+        --accent-blue: #087bf5;    /* Azul medio - acento */
+        --border-color: #087bf5;   /* Azul medio - bordes */
+      }
+      
       body {
         margin: 0;
         font-family: system-ui, sans-serif;
-        background: #0d0f12;
-        color: #c8cdd4;
+        background: var(--bg-primary);
+        color: var(--text-primary);
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 10px;
         padding: 16px;
       }
-      h1 { font-size: 16px; margin: 0; }
+      h1 { font-size: 16px; margin: 0; color: var(--text-primary); }
       canvas {
-        border: 1px solid #333a42; border-radius: 8px; background: #000;
+        border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-secondary);
         max-width: 100%; height: auto; touch-action: manipulation;
       }
-      .hud { font-size: 13px; color: #8b939e; text-align: center; line-height: 1.6; }
+      .hud { font-size: 13px; color: var(--text-secondary); text-align: center; line-height: 1.6; }
       /* Cruceta táctil / ratón: 8 direcciones + botón central */
       .dpad {
         display: grid;
@@ -34,25 +46,25 @@
       }
       .dpad button {
         font-size: 22px;
-        border: 1px solid #3a424c;
+        border: 1px solid var(--border-color);
         border-radius: 10px;
-        background: #1b2027;
-        color: #c8cdd4;
+        background: var(--bg-secondary);
+        color: var(--text-primary);
         touch-action: manipulation;
       }
-      .dpad button:active { background: #2c3a4d; border-color: #4da3ff; }
-      .dpad button.centro { font-size: 28px; color: #8b939e; }
+      .dpad button:active { background: var(--accent-blue); border-color: var(--accent-light); }
+      .dpad button.centro { font-size: 28px; color: var(--text-secondary); }
       .reset-btn {
         font-size: 13px;
-        border: 1px solid #3a424c;
+        border: 1px solid var(--border-color);
         border-radius: 10px;
-        background: #1b2027;
-        color: #c8cdd4;
+        background: var(--bg-secondary);
+        color: var(--text-primary);
         touch-action: manipulation;
         padding: 8px 12px;
         margin-right: 10px;
       }
-      .reset-btn:active { background: #2c3a4d; border-color: #4da3ff; }
+      .reset-btn:active { background: var(--accent-blue); border-color: var(--accent-light); }
       .controls-row {
         display: flex;
         align-items: center;
@@ -63,12 +75,12 @@
       }
       .toggle {
         font-family: inherit; font-size: 13px;
-        background: #1b2027; color: #c8cdd4;
-        border: 1px solid #3a424c; border-radius: 8px;
+        background: var(--bg-secondary); color: var(--text-primary);
+        border: 1px solid var(--border-color); border-radius: 8px;
         padding: 6px 14px; touch-action: manipulation;
         user-select: none; -webkit-user-select: none;
       }
-      .toggle.off { color: #6b7280; border-color: #2b3138; }
+      .toggle.off { color: var(--text-secondary); border-color: var(--accent-blue); }
     </style>
   </head>
   <body>
@@ -404,7 +416,7 @@
       const T = 26; // tamaño de casilla
 
       function draw() {
-        ctx.fillStyle = "#000";
+        ctx.fillStyle = "#1A1A1A";
         ctx.fillRect(0, 0, cv.width, cv.height);
         const ox = Math.round(cv.width / 2 - (player.x + 0.5) * T);
         const oy = Math.round(cv.height / 2 - (player.y + 0.5) * T);
@@ -419,15 +431,15 @@
             const vis = visible.has(k);
             const t = tiles.get(k);
             let color;
-            if (t === ".") color = vis ? "#8a7f68" : "#35322b";  // suelo
-            else if (t === "+") color = vis ? "#d4a62a" : "#5c4c1d"; // puerta
-            else color = vis ? "#5a6470" : "#212429";               // muro
+            if (t === ".") color = vis ? "#F8E7A5" : "#D8D4CE";  // suelo: amarillo claro / gris medio
+            else if (t === "+") color = vis ? "#E6F2FF" : "#8B9FCC"; // puerta: azul claro / azul del degradado
+            else color = vis ? "#0F499A" : "#087bf5";               // muro: azul oscuro / azul medio
             ctx.fillStyle = color;
             ctx.fillRect(ox + wx * T + 1, oy + wy * T + 1, T - 2, T - 2);
           }
         }
         // jugador
-        ctx.fillStyle = "#4da3ff";
+        ctx.fillStyle = "#E6F2FF";
         ctx.beginPath();
         ctx.arc(ox + (player.x + 0.5) * T, oy + (player.y + 0.5) * T, T * 0.32, 0, 7);
         ctx.fill();
