@@ -41,7 +41,26 @@
         touch-action: manipulation;
       }
       .dpad button:active { background: #2c3a4d; border-color: #4da3ff; }
-      .dpad button.centro { font-size: 13px; color: #8b939e; }
+      .dpad button.centro { font-size: 28px; color: #8b939e; }
+      .reset-btn {
+        font-size: 13px;
+        border: 1px solid #3a424c;
+        border-radius: 10px;
+        background: #1b2027;
+        color: #c8cdd4;
+        touch-action: manipulation;
+        padding: 8px 12px;
+        margin-right: 10px;
+      }
+      .reset-btn:active { background: #2c3a4d; border-color: #4da3ff; }
+      .controls-row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+      }
       .toggle {
         font-family: inherit; font-size: 13px;
         background: #1b2027; color: #c8cdd4;
@@ -55,16 +74,19 @@
   <body>
     <h1>Mazmorra aleatoria con niebla de guerra</h1>
     <canvas id="cv" width="780" height="520"></canvas>
-    <div class="dpad" id="dpad">
-      <button data-mv="-1,-1" aria-label="Arriba izquierda">↖</button>
-      <button data-mv="0,-1"  aria-label="Arriba">↑</button>
-      <button data-mv="1,-1"  aria-label="Arriba derecha">↗</button>
-      <button data-mv="-1,0"  aria-label="Izquierda">←</button>
-      <button class="centro" id="btnNueva" aria-label="Mapa nuevo">nueva</button>
-      <button data-mv="1,0"   aria-label="Derecha">→</button>
-      <button data-mv="-1,1"  aria-label="Abajo izquierda">↙</button>
-      <button data-mv="0,1"   aria-label="Abajo">↓</button>
-      <button data-mv="1,1"   aria-label="Abajo derecha">↘</button>
+    <div class="controls-row">
+      <button id="btnNueva" class="reset-btn" aria-label="Mapa nuevo">nueva</button>
+      <div class="dpad" id="dpad">
+        <button data-mv="-1,-1" aria-label="Arriba izquierda">↖</button>
+        <button data-mv="0,-1"  aria-label="Arriba">↑</button>
+        <button data-mv="1,-1"  aria-label="Arriba derecha">↗</button>
+        <button data-mv="-1,0"  aria-label="Izquierda">←</button>
+        <button class="centro" aria-label="Logo">✈️</button>
+        <button data-mv="1,0"   aria-label="Derecha">→</button>
+        <button data-mv="-1,1"  aria-label="Abajo izquierda">↙</button>
+        <button data-mv="0,1"   aria-label="Abajo">↓</button>
+        <button data-mv="1,1"   aria-label="Abajo derecha">↘</button>
+      </div>
     </div>
     <button id="btnSecretas" class="toggle">Puertas secretas: SÍ</button>
     <div class="hud" id="hud"></div>
