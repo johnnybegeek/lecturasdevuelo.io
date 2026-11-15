@@ -9,6 +9,21 @@ Juego web autocontenido: un único archivo HTML con CSS y JavaScript en línea, 
 - Puertas secretas retroactivas: aparecen cuando dos estructuras cercanas se conectan, con la explicación temática de que "ya estaban ahí".
 - Semilla reproducible y controles por teclado numérico y cruceta táctil.
 
+## Paleta de colores (Lecturas de Vuelo)
+
+El juego utiliza la paleta de colores de la web principal:
+
+| Variable CSS | Valor hex | Uso |
+|---|---|---|
+| `--bg-primary` | `#0F499A` | Azul oscuro - fondo principal |
+| `--bg-secondary` | `#1A1A1A` | Negro - fondos secundarios (botones, canvas) |
+| `--text-primary` | `#E6E4E0` | Gris claro - texto principal |
+| `--text-secondary` | `#D8D4CE` | Gris medio - texto secundario |
+| `--accent-light` | `#E6F2FF` | Azul claro - acentos (jugador, puertas visibles) |
+| `--accent-gold` | `#F8E7A5` | Amarillo claro - acentos (suelo visible) |
+| `--accent-blue` | `#087bf5` | Azul medio - acentos (bordes, muros no visibles) |
+| `--border-color` | `#087bf5` | Azul medio - bordes de botones |
+
 ## Estructura del archivo
 
 | Sección del script | Funciones principales | Responsabilidad |
@@ -83,9 +98,9 @@ Tres estados de render: no explorado (negro), explorado sin visión actual (tono
 ## Movimiento, dibujo y entrada
 
 - `tryMove`: solo `"."` y `"+"` son pasables. Tras moverse recalcula niebla y dibuja.
-- Dibujo: canvas 2D de 780x520, casillas de 26 px, viewport centrado en el jugador. Colores: suelo ocre, puerta dorada, muro gris, jugador círculo azul.
+- Dibujo: canvas 2D de 780x520, casillas de 26 px, viewport centrado en el jugador. Colores adaptados a la paleta de Lecturas de Vuelo: suelo amarillo claro (#F8E7A5), puerta azul claro (#E6F2FF), muro azul oscuro (#0F499A), jugador círculo azul claro (#E6F2FF).
 - Teclado: se lee `e.code` (no `e.key`), por lo que el teclado numérico funciona con o sin Bloq Numérico; las cifras de la fila superior son alternativa. R genera mapa nuevo, S alterna las secretas.
-- Cruceta táctil: botones con `pointerdown` (dedo, ratón o lápiz), repetición automática cada 170 ms mientras se mantiene pulsado. `touch-action: manipulation` evita zoom por doble toque; el menú contextual de pulsación larga está bloqueado.
+- Cruceta táctil: el botón de reinicio ("nueva") está fuera del pad a la izquierda para evitar pulsaciones accidentales, mientras que el centro del pad muestra el logo de la web (✈️) sin funcionalidad. Los botones usan `pointerdown` (dedo, ratón o lápiz), con repetición automática cada 170 ms mientras se mantiene pulsado. `touch-action: manipulation` evita zoom por doble toque; el menú contextual de pulsación larga está bloqueado.
 
 ## Semillas
 
