@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mazmorra aleatoria</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: system-ui, sans-serif;
+        background: #0d0f12;
+        color: #c8cdd4;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding: 16px;
+      }
+      h1 { font-size: 16px; margin: 0; }
+      canvas {
+        border: 1px solid #333a42; border-radius: 8px; background: #000;
+        max-width: 100%; height: auto; touch-action: manipulation;
+      }
+      .hud { font-size: 13px; color: #8b939e; text-align: center; line-height: 1.6; }
+      /* Cruceta táctil / ratón: 8 direcciones + botón central */
+      .dpad {
+        display: grid;
+        grid-template-columns: repeat(3, 58px);
+        grid-template-rows: repeat(3, 58px);
+        gap: 6px;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+      }
+      .dpad button {
+        font-size: 22px;
+        border: 1px solid #3a424c;
+        border-radius: 10px;
+        background: #1b2027;
+        color: #c8cdd4;
+        touch-action: manipulation;
+      }
+      .dpad button:active { background: #2c3a4d; border-color: #4da3ff; }
+      .dpad button.centro { font-size: 13px; color: #8b939e; }
+      .toggle {
+        font-family: inherit; font-size: 13px;
+        background: #1b2027; color: #c8cdd4;
+        border: 1px solid #3a424c; border-radius: 8px;
+        padding: 6px 14px; touch-action: manipulation;
+        user-select: none; -webkit-user-select: none;
+      }
+      .toggle.off { color: #6b7280; border-color: #2b3138; }
+    </style>
+  </head>
+  <body>
+    <h1>Mazmorra aleatoria con niebla de guerra</h1>
+    <canvas id="cv" width="780" height="520"></canvas>
+    <div class="dpad" id="dpad">
+      <button data-mv="-1,-1" aria-label="Arriba izquierda">↖</button>
+      <button data-mv="0,-1"  aria-label="Arriba">↑</button>
+      <button data-mv="1,-1"  aria-label="Arriba derecha">↗</button>
+      <button data-mv="-1,0"  aria-label="Izquierda">←</button>
+      <button class="centro" id="btnNueva" aria-label="Mapa nuevo">nueva</button>
+      <button data-mv="1,0"   aria-label="Derecha">→</button>
+      <button data-mv="-1,1"  aria-label="Abajo izquierda">↙</button>
+      <button data-mv="0,1"   aria-label="Abajo">↓</button>
+      <button data-mv="1,1"   aria-label="Abajo derecha">↘</button>
+    </div>
+    <button id="btnSecretas" class="toggle">Puertas secretas: SÍ</button>
+    <div class="hud" id="hud"></div>
+
+    <script>
+      // ============================================================
+      // MAZMORRA ALEATORIA - visión general del código
+      // ------------------------------------------------------------
+      // Archivo autocontenido, sin dependencias. Secciones:
+      //   1. RNG con semilla      -> misma semilla, misma mazmorra
+      //   2. Estado del mundo     -> tiles, doors, rects, jugador, niebla
+      //   3. Puertas              -> addDoors coloca puertas en los muros
+      //   4. Generación perezosa  -> generateBeyond: solo al pisar una puerta
+      //   5. Puertas secretas     -> conexiones retroactivas entre estructuras
+      //   6. Niebla de guerra     -> fov: radio 3 con bloqueo por muros
+      //   7. Movimiento           -> tryMove: pasables "." y "+"
+      //   8. Dibujo               -> canvas 2D centrado en el jugador
+      //   9. Inicio y entrada    -> teclado numérico, cruceta táctil, botones
+      // Reglas base:
+      //   - "Tallar" = escribir en tiles; toda casilla ausente es muro.
+      //   - Cada zona tallada reclama su rectángulo + margen de 1 (rects)
+      //     para no solaparse con otra ni quedarse sin muro mediano.
+      //   - Las puertas normales se registran en doors y generan contenido
+      //     al pisarlas; las secretas (retroactivas) se tallan tarde como
+      //     "+" sin registrar: al pisarlas no generan nada, solo conectan.
+      // ============================================================
+
+      // ================= RNG con semilla =================
+      // Cada partida tiene una semilla; con la misma semilla sale la misma mazmorra.
+      let seed = (Math.random() * 0xffffffff) >>> 0;
+      let rng;
+      function mulberry32(a) {
+        return function () {
+          a |= 0; a = (a + 0x6d2b79f5) | 0;
+          let t = Math.imul(a ^ (a >>> 15), 1 | a);
+          t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+      function ri(a, b) { return a + Math.floor(rng() * (b - a + 1)); }
+
+      // ================= Estado del mundo =================
+      // Solo existe lo que se ha generado. El vacío (tile sin carve) es muro.
+      // tiles:  "x,y" -> '.' suelo | '+' puerta (pasable)
+      // doors:  "x,y" -> { x, y, dir, generated }
+      // rects:  zonas "reclamadas" (con margen de muro) para evitar solapes
+      const tiles = new Map();
+      const doors = new Map();
+      const rects = [];
+      let roomCount = 0;
+      let secretas = 0;      // puertas secretas (retroactivas) creadas
+      let secretosOn = true; // opción activable/desactivable (tecla S o botón)
+      let player = { x: 0, y: 0 };
+      let explored = new Set(); // lo que el jugador ha visto alguna vez
+      let visible = new Set();  // lo que ve ahora (radio 3)
+
+      const DIRV = { N: [0, -1], S: [0, 1], E: [1, 0], W: [-1, 0] };
+      const OPP = { N: "S", S: "N", E: "W", W: "E" };
+      const DIRS4 = [[0, -1], [0, 1], [-1, 0], [1, 0]];
+      const K = (x, y) => x + "," + y;
+
+      function overlaps(x, y, w, h) {
+        for (const r of rects) {
+          if (x < r.x + r.w && r.x < x + w && y < r.y + r.h && r.y < y + h) return true;
+        }
+        return false;
+      }
+
+      // Añade 1-3 puertas en muros aleatorios de la sala (salvo el muro de entrada).
+      function addDoors(x0, y0, w, h, skip) {
+        const sides = ["N", "S", "E", "W"].filter((s) => s !== skip);
+        for (let i = sides.length - 1; i > 0; i--) {
+          const j = ri(0, i);
+          [sides[i], sides[j]] = [sides[j], sides[i]];
+        }
+        const n = ri(1, Math.min(3, sides.length));
+        for (let i = 0; i < n; i++) {
+          const s = sides[i];
+          let dx, dy;
+          if (s === "N") { dx = x0 + ri(1, w - 2); dy = y0 - 1; }
+          if (s === "S") { dx = x0 + ri(1, w - 2); dy = y0 + h; }
+          if (s === "E") { dx = x0 + w;     dy = y0 + ri(1, h - 2); }
+          if (s === "W") { dx = x0 - 1;     dy = y0 + ri(1, h - 2); }
+          if (tiles.has(K(dx, dy))) continue; // posición ya ocupada
+          tiles.set(K(dx, dy), "+");
+          doors.set(K(dx, dy), { x: dx, y: dy, dir: s, generated: false });
+        }
+      }
+
+      // ============ Generación perezosa ============
+      // Al pisar una puerta se genera lo que hay al otro lado:
+      // un pasillo de 1-5 casillas y una sala nueva con sus propias puertas.
+      function generateBeyond(door) {
+        door.generated = true;
+        const [dx, dy] = DIRV[door.dir];
+        for (let att = 0; att < 100; att++) {
+          const L = ri(1, 5);            // largo del pasillo
+          const rw = ri(3, 10);          // tamaño de la sala
+          const rh = ri(3, 8);
+          let x0, y0;
+          // La sala se ancla de modo que el pasillo entre por un muro.
+          if (door.dir === "E") { x0 = door.x + L + 1;  y0 = door.y - ri(0, rh - 1); }
+          if (door.dir === "W") { x0 = door.x - L - rw; y0 = door.y - ri(0, rh - 1); }
+          if (door.dir === "S") { y0 = door.y + L + 1;  x0 = door.x - ri(0, rw - 1); }
+          if (door.dir === "N") { y0 = door.y - L - rh; x0 = door.x - ri(0, rw - 1); }
+
+          // Región candidata: pasillo + sala + margen de 1 para los muros,
+          // quitando la columna/fila de la propia puerta (ya pertenece a su sala).
+          let minX = Math.min(door.x + dx, x0, door.x + dx * L) - 1;
+          let maxX = Math.max(door.x + dx, x0 + rw - 1, door.x + dx * L) + 1;
+          let minY = Math.min(door.y + dy, y0, door.y + dy * L) - 1;
+          let maxY = Math.max(door.y + dy, y0 + rh - 1, door.y + dy * L) + 1;
+          if (door.dir === "E") minX += 1;
+          if (door.dir === "W") maxX -= 1;
+          if (door.dir === "S") minY += 1;
+          if (door.dir === "N") maxY -= 1;
+          const w = maxX - minX + 1, h = maxY - minY + 1;
+
+          if (overlaps(minX, minY, w, h)) continue;
+
+          // El pasillo no debe atravesar nada ya tallado.
+          let libre = true;
+          for (let i = 1; i <= L; i++) {
+            if (tiles.has(K(door.x + dx * i, door.y + dy * i))) { libre = false; break; }
+          }
+          if (!libre) continue;
+
+          // Comprometer: reclamar región, tallar pasillo y sala, poner puertas.
+          rects.push({ x: minX, y: minY, w: w, h: h });
+          const nuevos = []; // casillas talladas ahora (para las secretas)
+          for (let i = 1; i <= L; i++) {
+            tiles.set(K(door.x + dx * i, door.y + dy * i), ".");
+            nuevos.push([door.x + dx * i, door.y + dy * i]);
+          }
+          for (let y = y0; y < y0 + rh; y++)
+            for (let x = x0; x < x0 + rw; x++) {
+              tiles.set(K(x, y), ".");
+              nuevos.push([x, y]);
+            }
+          roomCount++;
+          addDoors(x0, y0, rw, rh, OPP[door.dir]);
+          if (secretosOn) maybeSecretDoor(nuevos);
+          return;
+        }
+        // Nada cabe: la zona está ocupada por estructuras ya generadas.
+        // En vez de dejar la puerta tapiada, se conecta con la estructura
+        // previa más cercana: se talla el pasillo y aparece la puerta
+        // "secreta" que las une, generada a posteriori.
+        if (secretosOn) conectarCercana(door, dx, dy);
+      }
+
+      // ============ Puertas secretas (retroactivas) ============
+      // No son casillas ocultas: son puertas normales que se tallan tarde,
+      // como si "ya estuvieran ahí" sin haberse visto antes. El mismo
+      // mecanismo cubre dos casos: (1) al abrir una puerta tapiada, se conecta
+      // con la estructura previa más próxima; (2) si una sala nueva queda
+      // pegada a una antigua, hay un 60% de probabilidad por hueco cercano.
+      // El hueco se talla como pasillo y su última casilla, pegada a la
+      // estructura antigua, se convierte en la puerta que las conecta.
+      function tallarConexion(muro) {
+        let a = Infinity, b = -Infinity, c = Infinity, d = -Infinity;
+        for (let i = 0; i < muro.length; i++) {
+          const [tx, ty] = muro[i];
+          tiles.set(K(tx, ty), i === muro.length - 1 ? "+" : ".");
+          a = Math.min(a, tx); b = Math.max(b, tx);
+          c = Math.min(c, ty); d = Math.max(d, ty);
+        }
+        rects.push({ x: a - 1, y: c - 1, w: b - a + 3, h: d - c + 3 });
+        secretas++;
+      }
+
+      // Traza un pasillo en L desde la puerta hasta la casilla tallada (tx, ty):
+      // primero de lado o primero de frente, lo que salga limpio. Las casillas
+      // del trayecto deben ser muro virgen y no rozar suelos ajenos; la última,
+      // que es la puerta, sí toca el destino. Devuelve null si no hay camino.
+      function trazarL(door, dx, dy, tx, ty) {
+        const ndir = (tx - door.x) * dx + (ty - door.y) * dy;      // pasos al frente
+        const lateral = (tx - door.x) * -dy + (ty - door.y) * dx; // pasos de lado
+        const nperp = Math.abs(lateral);
+        if (ndir < 1 || ndir + nperp - 1 < 1 || ndir + nperp - 1 > 10) return null;
+        const s = lateral > 0 ? 1 : -1;
+        const px = -dy * s, py = dx * s;
+        const variantes = [];
+        for (const ladoPrimero of [true, false]) {
+          const p = [];
+          let x = door.x, y = door.y;
+          if (ladoPrimero) {
+            for (let i = 0; i < nperp; i++) { x += px; y += py; p.push([x, y]); }
+            for (let i = 0; i < ndir - 1; i++) { x += dx; y += dy; p.push([x, y]); }
+          } else {
+            for (let i = 0; i < ndir - 1; i++) { x += dx; y += dy; p.push([x, y]); }
+            for (let i = 0; i < nperp; i++) { x += px; y += py; p.push([x, y]); }
+          }
+          variantes.push(p);
+        }
+        const kd = K(door.x, door.y);
+        for (const p of variantes) {
+          let ok = true;
+          for (let i = 0; i < p.length && ok; i++) {
+            const [x, y] = p[i];
+            if (tiles.get(K(x, y)) !== undefined) { ok = false; break; } // virgen
+            if (i === p.length - 1) break; // la puerta: puede tocar el destino
+            for (const [cx, cy] of DIRS4) {
+              const k2 = K(x + cx, y + cy);
+              if (k2 === kd) continue; // la propia puerta de origen
+              if (i > 0 && x + cx === p[i - 1][0] && y + cy === p[i - 1][1]) continue;
+              if (tiles.get(k2) !== undefined) { ok = false; break; } // roza suelo ajeno
+            }
+          }
+          if (ok) return p;
+        }
+        return null;
+      }
+
+      // Busca la casilla tallada más próxima delante de la puerta y la conecta.
+      function conectarCercana(door, dx, dy) {
+        const cands = [];
+        for (let oy = -9; oy <= 9; oy++)
+          for (let ox = -9; ox <= 9; ox++) {
+            if (ox * dx + oy * dy <= 0) continue; // solo el semiplano de delante
+            const t = tiles.get(K(door.x + ox, door.y + oy));
+            if (t === "." || t === "+") cands.push([door.x + ox, door.y + oy]);
+          }
+        cands.sort((p, q) =>
+          Math.abs(p[0] - door.x) + Math.abs(p[1] - door.y) -
+          (Math.abs(q[0] - door.x) + Math.abs(q[1] - door.y)));
+        for (const [tx, ty] of cands) {
+          if (Math.abs(tx - door.x) + Math.abs(ty - door.y) > 12) break;
+          const camino = trazarL(door, dx, dy, tx, ty);
+          if (camino) { tallarConexion(camino); return; }
+        }
+      }
+
+      // Tras tallar una sala o pasillo nuevo, se escanea desde cada casilla
+      // nueva en las 4 direcciones: si a 1-3 casillas de muro hay una
+      // estructura ANTERIOR (sala o pasillo), esa dirección es candidata.
+      // Cada candidata tiene un 60% de probabilidad, hasta 2 por generación.
+      function maybeSecretDoor(nuevos) {
+        const nuevoSet = new Set(nuevos.map(([x, y]) => K(x, y)));
+        const candidatas = new Map(); // casilla de la futura puerta -> hueco
+        for (const [x, y] of nuevos) {
+          for (const [dx, dy] of DIRS4) {
+            const muro = [];
+            for (let i = 1; i <= 4; i++) {
+              const tx = x + dx * i, ty = y + dy * i, k = K(tx, ty);
+              if (tiles.get(k) === undefined) { muro.push([tx, ty]); continue; }
+              // Casilla tallada: si es de esta generación (p. ej. el pasillo
+              // de entrada propio), esta dirección no une nada antiguo.
+              if (nuevoSet.has(k)) break;
+              if (muro.length >= 1 && muro.length <= 3)
+                candidatas.set(K(muro[muro.length - 1][0], muro[muro.length - 1][1]), { muro });
+              break;
+            }
+          }
+        }
+        let creadas = 0;
+        for (const { muro } of candidatas.values()) {
+          if (creadas >= 2) break;
+          if (muro.some(([tx, ty]) => tiles.has(K(tx, ty)))) continue; // ocupado
+          if (rng() > 0.6) continue;
+          tallarConexion(muro);
+          creadas++;
+        }
+      }
+
+      // ================= Niebla de guerra =================
+      // Radio 3: se ve una casilla si dista <= ~3 en línea recta y no
+      // hay muro que bloquee la línea de visión (Bresenham casilla a casilla).
+      function opaque(x, y) {
+        return tiles.get(K(x, y)) === undefined; // vacío = muro
+      }
+      function lineVisible(x0, y0, x1, y1) {
+        let dx = Math.abs(x1 - x0), dy = Math.abs(y1 - y0);
+        const sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1;
+        let err = dx - dy, x = x0, y = y0;
+        while (true) {
+          if (x === x1 && y === y1) return true;
+          const e2 = 2 * err;
+          if (e2 > -dy) { err -= dy; x += sx; }
+          if (e2 < dx)  { err += dx; y += sy; }
+          if (x === x1 && y === y1) return true; // el destino se ve aunque sea muro
+          if (opaque(x, y)) return false;
+        }
+      }
+      const R = 3;
+      function fov() {
+        visible = new Set();
+        for (let ty = player.y - R; ty <= player.y + R; ty++) {
+          for (let tx = player.x - R; tx <= player.x + R; tx++) {
+            const d2 = (tx - player.x) ** 2 + (ty - player.y) ** 2;
+            if (d2 > R * R + 3) continue; // círculo aproximado de radio 3
+            if (lineVisible(player.x, player.y, tx, ty)) visible.add(K(tx, ty));
+          }
+        }
+        for (const k of visible) explored.add(k);
+      }
+
+      // ================= Movimiento =================
+      function tryMove(dx, dy) {
+        const nx = player.x + dx, ny = player.y + dy;
+        const t = tiles.get(K(nx, ny));
+        if (t !== "." && t !== "+") return; // muro o vacío: bloqueado
+        player.x = nx; player.y = ny;
+        const d = doors.get(K(nx, ny));
+        if (d && !d.generated) generateBeyond(d); // pisar la puerta genera su sala
+        fov();
+        draw();
+      }
+
+      // ================= Dibujo =================
+      const cv = document.getElementById("cv");
+      const ctx = cv.getContext("2d");
+      const hud = document.getElementById("hud");
+      const btnSecretas = document.getElementById("btnSecretas");
+      const T = 26; // tamaño de casilla
+
+      function draw() {
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, cv.width, cv.height);
+        const ox = Math.round(cv.width / 2 - (player.x + 0.5) * T);
+        const oy = Math.round(cv.height / 2 - (player.y + 0.5) * T);
+        const cols = Math.ceil(cv.width / T), rows = Math.ceil(cv.height / T);
+        const left = player.x - Math.floor(cols / 2), top = player.y - Math.floor(rows / 2);
+
+        for (let sy = 0; sy < rows; sy++) {
+          for (let sx = 0; sx < cols; sx++) {
+            const wx = left + sx, wy = top + sy;
+            const k = K(wx, wy);
+            if (!explored.has(k)) continue; // nunca vista: negro
+            const vis = visible.has(k);
+            const t = tiles.get(k);
+            let color;
+            if (t === ".") color = vis ? "#8a7f68" : "#35322b";  // suelo
+            else if (t === "+") color = vis ? "#d4a62a" : "#5c4c1d"; // puerta
+            else color = vis ? "#5a6470" : "#212429";               // muro
+            ctx.fillStyle = color;
+            ctx.fillRect(ox + wx * T + 1, oy + wy * T + 1, T - 2, T - 2);
+          }
+        }
+        // jugador
+        ctx.fillStyle = "#4da3ff";
+        ctx.beginPath();
+        ctx.arc(ox + (player.x + 0.5) * T, oy + (player.y + 0.5) * T, T * 0.32, 0, 7);
+        ctx.fill();
+
+        hud.textContent =
+          "Semilla " + seed + "  ·  Salas: " + roomCount +
+          "  ·  Secretas: " + secretas +
+          "  ·  8/2/4/6 mover, 7/9/1/3 diagonal, R mapa nuevo, S secretas" +
+          "  ·  Si el teclado no responde, haz clic en el mapa";
+      }
+
+      // ================= Inicio =================
+      function newDungeon() {
+        tiles.clear(); doors.clear(); rects.length = 0;
+        roomCount = 0; secretas = 0;
+        explored = new Set(); visible = new Set();
+        seed = (Math.random() * 0xffffffff) >>> 0;
+        rng = mulberry32(seed);
+
+        // Sala inicial 7x7 centrada en el origen.
+        const w = 7, h = 7, x0 = -3, y0 = -3;
+        for (let y = y0; y < y0 + h; y++)
+          for (let x = x0; x < x0 + w; x++) tiles.set(K(x, y), ".");
+        rects.push({ x: x0 - 1, y: y0 - 1, w: w + 2, h: h + 2 });
+        roomCount = 1;
+        addDoors(x0, y0, w, h, null);
+
+        player = { x: 0, y: 0 };
+        fov();
+        draw();
+      }
+
+      window.addEventListener("keydown", (e) => {
+        if (e.code === "KeyR") { e.preventDefault(); newDungeon(); return; }
+        if (e.code === "KeyS") { e.preventDefault(); toggleSecretas(); return; }
+        let n = null;
+        if (e.code.startsWith("Numpad")) n = e.code.slice(6);
+        else if (e.code.startsWith("Digit")) n = e.code.slice(5);
+        const moves = {
+          "8": [0, -1], "2": [0, 1], "4": [-1, 0], "6": [1, 0],
+          "7": [-1, -1], "9": [1, -1], "1": [-1, 1], "3": [1, 1],
+        };
+        const m = moves[n];
+        if (m) { e.preventDefault(); tryMove(m[0], m[1]); }
+      });
+
+      // ============ Cruceta táctil (móvil) y clic con ratón ============
+      // Un toque mueve una casilla; mantener pulsado repite el movimiento.
+      const dpad = document.getElementById("dpad");
+      let repetir = null;
+
+      dpad.addEventListener("contextmenu", (e) => e.preventDefault());
+
+      dpad.addEventListener("pointerdown", (e) => {
+        const btn = e.target.closest("button[data-mv]");
+        if (!btn) return;
+        e.preventDefault();
+        const [dx, dy] = btn.dataset.mv.split(",").map(Number);
+        tryMove(dx, dy);
+        clearInterval(repetir);
+        repetir = setInterval(() => tryMove(dx, dy), 170);
+      });
+      const soltar = () => clearInterval(repetir);
+      window.addEventListener("pointerup", soltar);
+      window.addEventListener("pointercancel", soltar);
+
+      document.getElementById("btnNueva").addEventListener("pointerdown", (e) => {
+        e.preventDefault();
+        newDungeon();
+      });
+
+      // Opción de puertas secretas: afecta a las salas que se generen
+      // a partir de ese momento (las ya talladas se quedan).
+      function toggleSecretas() {
+        secretosOn = !secretosOn;
+        btnSecretas.textContent = "Puertas secretas: " + (secretosOn ? "SÍ" : "NO");
+        btnSecretas.classList.toggle("off", !secretosOn);
+        draw();
+      }
+      btnSecretas.addEventListener("pointerdown", (e) => {
+        e.preventDefault();
+        toggleSecretas();
+      });
+
+      newDungeon();
+    </script>
+  </body>
+</html>
